@@ -1,4 +1,10 @@
-export default {
+import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
+
+export const resolvers = {
+  DateTime: GraphQLDateTime,
+
+  DateOnly: GraphQLDate,
+
   RootQuery: {
     notablePerson() {
       return {
@@ -11,7 +17,7 @@ export default {
             isQuoteByNotablePerson: true,
             sourceUrl: 'https://example.com/',
             addedAt: new Date(),
-            happenedOn: new Date(),
+            happenedOn: '2010-10-10',
           },
         ],
       };
