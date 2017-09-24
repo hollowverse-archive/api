@@ -18,7 +18,7 @@ type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
   name: String!
-  events: [Event]
+  events: [Event]!
 }
 
 type RootQuery {
