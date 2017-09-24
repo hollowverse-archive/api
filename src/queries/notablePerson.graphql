@@ -1,0 +1,14 @@
+query {
+  notablePerson(slug: "Tom_Hanks") {
+    slug
+    name
+    events {
+      id
+      text
+      sourceUrl
+      isQuoteByNotablePerson
+      addedAt
+      happenedOn
+    }
+  }
+}

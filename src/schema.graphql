@@ -1,0 +1,26 @@
+scalar DateOnly
+
+scalar DateTime
+
+type Event {
+  id: ID!
+  text: String!
+  isQuoteByNotablePerson: Boolean!
+  sourceUrl: String!
+  addedAt: DateTime!
+  happenedOn: DateOnly!
+}
+
+type NotablePerson {
+  slug: String!
+  name: String!
+  events: [Event]
+}
+
+type RootQuery {
+  notablePerson(slug: String!): NotablePerson
+}
+
+schema {
+  query: RootQuery
+}
