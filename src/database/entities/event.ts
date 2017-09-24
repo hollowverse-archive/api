@@ -5,13 +5,13 @@ import { NotablePerson } from './notablePerson';
 export class Event {
   @PrimaryGeneratedColumn('uuid') id: string;
 
-  @Column({ nullable: false })
+  @Column({ type: 'text', nullable: false })
   text: string;
 
   @Column({ nullable: false })
   isQuoteByNotablePerson: boolean;
 
-  @Column({ nullable: false })
+  @Column({ type: 'text', nullable: false })
   sourceUrl: string;
 
   @Column({ type: 'datetime', nullable: false })
