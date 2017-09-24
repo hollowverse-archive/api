@@ -1,0 +1,7 @@
+{
+  "extends": "./node_modules/@hollowverse/common/tsconfig.json",
+  "exclude": [
+    "*/**/dist",
+    "node_modules"
+  ]
+}
