@@ -3,7 +3,7 @@ import { NotablePerson } from './notablePerson';
 
 @Entity()
 export class Event {
-  @PrimaryGeneratedColumn('increment') id: number;
+  @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ nullable: false })
   text: string;
