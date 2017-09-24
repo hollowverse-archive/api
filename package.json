@@ -22,7 +22,7 @@
       "prettier --write --single-quote --trailing-comma all",
       "git add"
     ],
-    "**/*.graphql": [
+    "**/*.{graphql,gql}": [
       "prettier --write --single-quote --trailing-comma all",
       "git add"
     ],
