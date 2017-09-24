@@ -1,4 +1,6 @@
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
+import { connection } from '../database/connection';
+import { NotablePerson } from '../database/entities/notablePerson';
 
 export const resolvers = {
   DateTime: GraphQLDateTime,
@@ -6,21 +8,16 @@ export const resolvers = {
   DateOnly: GraphQLDate,
 
   RootQuery: {
-    notablePerson() {
-      return {
-        slug: 'Tom_Hanks',
-        name: 'Tom Hanks',
-        events: [
-          {
-            id: 1,
-            text: 'Lorem ipsum dolor sit amet',
-            isQuoteByNotablePerson: true,
-            sourceUrl: 'https://example.com/',
-            addedAt: new Date(),
-            happenedOn: '2010-10-10',
-          },
-        ],
-      };
+    async notablePerson(_: any, { slug }: { slug: string }) {
+      const db = await connection;
+      const npRepository = db.getRepository(NotablePerson);
+
+      return npRepository.findOne({
+        where: {
+          slug,
+        },
+        relations: ['events'],
+      });
     },
   },
 };
