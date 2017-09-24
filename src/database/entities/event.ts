@@ -1,12 +1,20 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
 import { NotablePerson } from './notablePerson';
+import { User } from './user';
+import { Comment } from './comment';
 
 @Entity()
 export class Event {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ type: 'text', nullable: false })
-  text: string;
+  quote: string;
 
   @Column({ nullable: false })
   isQuoteByNotablePerson: boolean;
@@ -15,7 +23,7 @@ export class Event {
   sourceUrl: string;
 
   @Column({ type: 'datetime', nullable: false })
-  addedAt: Date;
+  postedAt: Date;
 
   @Column({ type: 'date', nullable: false })
   happenedOn: Date;
@@ -24,4 +32,15 @@ export class Event {
     nullable: false,
   })
   notablePerson: NotablePerson;
+
+  @ManyToOne(_ => User, user => user.events, {
+    nullable: false,
+  })
+  owner: User;
+
+  @OneToMany(_ => Comment, comment => comment.event, {
+    cascadeInsert: true,
+    cascadeUpdate: true,
+  })
+  comments: Comment[];
 }

@@ -1,20 +1,13 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { Event } from './event';
-import { Label } from './label';
+import { Comment } from './comment';
 
 @Entity()
-export class NotablePerson {
+export class User {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ unique: true, nullable: false })
-  slug: string;
+  email: string;
 
   @Column({ type: 'varchar', nullable: false })
   name: string;
@@ -22,16 +15,18 @@ export class NotablePerson {
   @Column({ type: 'text', nullable: false })
   photoUrl: string;
 
-  @OneToMany(_ => Event, event => event.notablePerson, {
+  @OneToMany(_ => Event, event => event.owner, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
   events: Event[];
 
-  @ManyToMany(_ => Label, label => label.notablePerson, {
+  @OneToMany(_ => Comment, comment => comment.owner, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  @JoinTable()
-  labels: Label[];
+  comments: Comment[];
+
+  @Column({ type: 'datetime', nullable: false })
+  signedUpAt: Date;
 }

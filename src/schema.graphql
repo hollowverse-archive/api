@@ -2,23 +2,37 @@ scalar DateOnly
 
 scalar DateTime
 
+type Label {
+  id: ID!
+  text: String!
+  createdAt: String!
+}
+
+type UserComment {
+  userId: ID!
+  text: String!
+}
+
 # An event about a notable person, must have a source link
 type Event {
   id: ID!
-  text: String!
+  quote: String!
   isQuoteByNotablePerson: Boolean!
   sourceUrl: String!
   # The date and time the event was added to the database (ISO date string)
-  addedAt: DateTime!
+  postedAt: DateTime!
   # The date the event happened (string formatted as YYYY-MM-DD)
   happenedOn: DateOnly!
+  comment: UserComment!
 }
 
 type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
   name: String!
+  photoUrl: String!
   events: [Event]!
+  labels: [Label]!
 }
 
 type RootQuery {

@@ -4,10 +4,10 @@ query {
     name
     events {
       id
-      text
+      quote
       sourceUrl
       isQuoteByNotablePerson
-      addedAt
+      postedAt
       happenedOn
     }
   }

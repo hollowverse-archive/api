@@ -17,10 +17,10 @@ connection.then(async db => {
     notablePerson.events = times(10, () => {
       const event = new Event();
       event.happenedOn = chance.date();
-      event.addedAt = new Date();
+      event.postedAt = new Date();
       event.isQuoteByNotablePerson = chance.bool();
       event.sourceUrl = chance.url();
-      event.text = chance.sentence({ words: 10 });
+      event.quote = chance.sentence({ words: 10 });
       event.notablePerson = notablePerson;
 
       return event;
