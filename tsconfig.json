@@ -2,7 +2,9 @@
   "extends": "./node_modules/@hollowverse/common/tsconfig.json",
   "compilerOptions": {
     "allowJs": false,
-    "checkJs": false
+    "checkJs": false,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
   },
   "exclude": [
     "*/**/dist",
