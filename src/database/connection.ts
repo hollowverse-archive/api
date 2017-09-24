@@ -6,7 +6,6 @@ import { Event } from './entities/event';
 export const connection = createConnection({
   database: 'hollowverse',
   type: 'sqlite',
-  synchronize: true,
   entities: [NotablePerson, Event],
-  autoSchemaSync: true,
+  synchronize: true,
 });
