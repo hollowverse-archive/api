@@ -3,7 +3,7 @@ import { Event } from './event';
 
 @Entity()
 export class NotablePerson {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryGeneratedColumn('increment') id: number;
 
   @Column({ unique: true, nullable: false })
   slug: string;
@@ -11,6 +11,9 @@ export class NotablePerson {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @OneToMany(_ => Event, event => event.notablePersonId)
+  @OneToMany(_ => Event, event => event.notablePerson, {
+    cascadeInsert: true,
+    cascadeUpdate: true,
+  })
   events: Event[];
 }

@@ -3,7 +3,7 @@ import { NotablePerson } from './notablePerson';
 
 @Entity()
 export class Event {
-  @PrimaryGeneratedColumn() id: number;
+  @PrimaryGeneratedColumn('increment') id: number;
 
   @Column({ nullable: false })
   text: string;
@@ -20,6 +20,8 @@ export class Event {
   @Column({ type: 'date', nullable: false })
   happenedOn: Date;
 
-  @ManyToOne(_ => NotablePerson, np => np.events)
-  notablePersonId: NotablePerson;
+  @ManyToOne(_ => NotablePerson, np => np.events, {
+    nullable: false,
+  })
+  notablePerson: NotablePerson;
 }

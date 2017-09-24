@@ -8,7 +8,7 @@ export const resolvers = {
   DateOnly: GraphQLDate,
 
   RootQuery: {
-    async notablePerson(_: any, { slug }: { slug: string }) {
+    async notablePerson(_: undefined, { slug }: { slug: string }) {
       const db = await connection;
       const npRepository = db.getRepository(NotablePerson);
 
