@@ -5,7 +5,8 @@
   "description": "Release Manager provides cookie-based traffic splitting for hollowverse.com",
   "repository": "https://github.com/hollowverse/api.git",
   "scripts": {
-    "test": "run-p validate-file-names lint-js lint-ts",
+    "test": "run-p validate-schema validate-file-names lint-js lint-ts",
+    "validate-schema": "graphql-validator -s './src/schema.graphql' './src/examples/*.graphql'",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'server/src/*.ts{,x}'",
     "dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project .'",
@@ -23,6 +24,7 @@
       "git add"
     ],
     "**/*.{graphql,gql}": [
+      "validate-schema",
       "prettier --write --single-quote --trailing-comma all",
       "git add"
     ],
@@ -35,6 +37,8 @@
     "lint-staged"
   ],
   "dependencies": {
+    "@creditkarma/graphql-loader": "^0.6.6",
+    "@creditkarma/graphql-validator": "^0.5.0",
     "@hollowverse/common": "https://github.com/hollowverse/common",
     "@types/body-parser": "^1.16.5",
     "apollo-server-express": "^1.1.2",
