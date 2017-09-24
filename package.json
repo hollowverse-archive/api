@@ -10,7 +10,7 @@
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}'",
     "dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project ./src'",
-    "database/dev": "nodemon --watch ./src/database --ext ts --exec 'ts-node src/database/connection.ts --project ./src'",
+    "database/mock": "nodemon --watch ./src/database --ext ts --exec 'ts-node src/database/mock.ts --project ./src'",
     "build": "tsc --project ./src",
     "clean": "rm -rf ./dist",
     "start": "node dist/releaseManager.js",

@@ -5,7 +5,10 @@ import { Event } from './entities/event';
 
 export const connection = createConnection({
   database: 'hollowverse',
-  type: 'sqlite',
+  host: 'localhost',
+  username: 'root',
+  password: '123456',
+  port: 3306,
+  type: 'mysql',
   entities: [NotablePerson, Event],
-  synchronize: true,
 });
