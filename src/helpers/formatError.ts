@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql';
 import { ValidationError } from 'class-validator';
 
-function isValidationError(error: any): error is ValidationError {
+function isValidationError(error: object): error is ValidationError {
   return (
     typeof (error as ValidationError).property === 'string' &&
     (error as ValidationError).constraints !== undefined &&
@@ -9,7 +9,7 @@ function isValidationError(error: any): error is ValidationError {
   );
 }
 
-function pickSafeProps(error: any) {
+function pickSafeProps(error: Error | ValidationError | any) {
   if (isValidationError(error)) {
     const { property, constraints } = error;
 
