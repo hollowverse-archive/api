@@ -1,5 +1,9 @@
 import * as got from 'got';
 
+class InvalidAccessTokenError extends Error {
+  name = 'InvalidAccessTokenError';
+}
+
 export async function sendRequest(url: string, options: got.GotJSONOptions) {
   try {
     return await got(url, options);
@@ -8,7 +12,7 @@ export async function sendRequest(url: string, options: got.GotJSONOptions) {
     if (e.name === 'HTTPError') {
       const { statusCode } = e;
       if (statusCode >= 400 && statusCode < 500) {
-        throw new Error('Invalid access token');
+        throw new InvalidAccessTokenError();
       }
     }
     throw error;
