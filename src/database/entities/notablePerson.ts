@@ -6,11 +6,13 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
+import { IsUrl } from 'class-validator';
+import { BaseEntity } from './base';
 import { Event } from './event';
 import { Label } from './label';
 
 @Entity()
-export class NotablePerson {
+export class NotablePerson extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ unique: true, nullable: false })
@@ -19,6 +21,11 @@ export class NotablePerson {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
+  @IsUrl({
+    require_protocol: true,
+    require_valid_protocol: true,
+    protocols: ['https'],
+  })
   @Column({ type: 'text', nullable: false })
   photoUrl: string;
 

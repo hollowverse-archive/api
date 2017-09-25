@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
 
 @Entity()
-export class Label {
+export class Label extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ type: 'varchar', unique: true, nullable: false })

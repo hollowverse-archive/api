@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { BaseEntity } from './base';
 import { Event } from './event';
 import { User } from './user';
 
 @Entity()
-export class Comment {
+export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ type: 'text', nullable: false })
@@ -19,6 +20,9 @@ export class Comment {
 
   @ManyToOne(_ => User, user => user.comments, {
     nullable: false,
+    cascadeInsert: true,
+    cascadeUpdate: true,
+    cascadeRemove: true,
   })
   owner: User;
 }

@@ -5,12 +5,14 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
+import { IsUrl } from 'class-validator';
+import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
 import { User } from './user';
 import { Comment } from './comment';
 
 @Entity()
-export class Event {
+export class Event extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ type: 'text', nullable: false })
@@ -19,6 +21,11 @@ export class Event {
   @Column({ nullable: false })
   isQuoteByNotablePerson: boolean;
 
+  @IsUrl({
+    require_protocol: true,
+    require_valid_protocol: true,
+    protocols: ['https', 'http'],
+  })
   @Column({ type: 'text', nullable: false })
   sourceUrl: string;
 
