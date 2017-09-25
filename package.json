@@ -44,9 +44,6 @@
   ],
   "dependencies": {
     "@hollowverse/common": "https://github.com/hollowverse/common",
-    "@types/body-parser": "^1.16.5",
-    "@types/got": "^7.1.4",
-    "@types/validator": "^6.2.3",
     "apollo-server-express": "^1.1.2",
     "body-parser": "^1.18.2",
     "class-validator": "^0.7.2",
@@ -62,8 +59,11 @@
     "validator": "^8.2.0"
   },
   "devDependencies": {
+    "@types/body-parser": "^1.16.5",
+    "@types/got": "^7.1.4",
     "@creditkarma/graphql-loader": "^0.6.6",
     "@creditkarma/graphql-validator": "^0.5.0",
+    "@types/validator": "^6.2.3",
     "@types/chance": "^0.7.35",
     "@types/express": "^4.0.36",
     "@types/lodash": "^4.14.74",
