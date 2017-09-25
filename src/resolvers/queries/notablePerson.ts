@@ -29,8 +29,13 @@ export default {
       const repo = db.getRepository(Event);
 
       return repo.find({
-        where: { notablePersonId: np.id },
-        relations: ['notablePerson'],
+        where: {
+          notablePersonId: np.id,
+        },
+        take: 10,
+        order: {
+          postedAt: 'DESC',
+        },
       });
     },
   },
