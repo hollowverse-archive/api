@@ -8,7 +8,7 @@ type Label {
   createdAt: String!
 }
 
-type UserComment {
+type EventComment {
   ownerId: ID!
   photoUrl: String
   text: String!
@@ -24,7 +24,7 @@ type Event {
   postedAt: DateTime!
   # The date the event happened (string formatted as YYYY-MM-DD)
   happenedOn: DateOnly!
-  comments: [UserComment!]
+  comments: [EventComment!]
 }
 
 type NotablePerson {
