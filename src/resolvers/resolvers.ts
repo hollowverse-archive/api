@@ -1,4 +1,3 @@
-import * as got from 'got';
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
@@ -9,6 +8,7 @@ import {
   ViewerRootQueryArgs,
   RootMutation,
 } from '../typings/schema';
+import { sendRequest } from '../helpers/request';
 
 export const resolvers = {
   DateTime: GraphQLDateTime,
@@ -18,7 +18,7 @@ export const resolvers = {
   RootQuery: {
     async viewer(_: undefined, { fbAccessToken }: ViewerRootQueryArgs) {
       // Get Facebook profile ID using the access token
-      const response = await got('https://graph.facebook.com/me', {
+      const response = await sendRequest('https://graph.facebook.com/me', {
         query: {
           access_token: fbAccessToken,
           fields: 'id',
@@ -67,31 +67,28 @@ export const resolvers = {
         };
       };
 
-      const profile: Profile = (await got('https://graph.facebook.com/me', {
+      const response = await sendRequest('https://graph.facebook.com/me', {
         query: {
           access_token: fbAccessToken,
           fields: ['id', 'name', 'email', 'picture'].join(','),
         },
         json: true,
-      })).body;
+      });
+
+      const profile: Profile = response.body;
 
       const db = await connection;
       const user = new User();
 
       user.fbId = profile.id;
-      user.name = profile.name;
-      user.email = profile.email;
+      // user.name = profile.name;
+      // user.email = profile.email;
 
       user.signedUpAt = new Date();
 
       const users = db.getRepository(User);
 
-      return users.persist(user).catch(error => {
-        if (error.code === 'ER_DUP_ENTRY') {
-          throw new TypeError('User already exists');
-        }
-        throw error;
-      });
+      return users.persist(user);
     },
   },
 };
