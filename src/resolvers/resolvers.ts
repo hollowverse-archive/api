@@ -81,8 +81,8 @@ export const resolvers = {
       const user = new User();
 
       user.fbId = profile.id;
-      // user.name = profile.name;
-      // user.email = profile.email;
+      user.name = profile.name;
+      user.email = profile.email;
 
       user.signedUpAt = new Date();
 
