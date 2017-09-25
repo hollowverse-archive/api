@@ -23,7 +23,7 @@ export class User extends BaseEntity {
     require_valid_protocol: true,
     protocols: ['https', 'http'],
   })
-  @Column({ type: 'text', nullable: false })
+  @Column({ type: 'text', nullable: true })
   photoUrl: string;
 
   @OneToMany(_ => Event, event => event.owner, {
@@ -40,4 +40,7 @@ export class User extends BaseEntity {
 
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
+
+  @Column({ type: 'text', nullable: false })
+  fbId: string;
 }

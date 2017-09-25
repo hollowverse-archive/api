@@ -40,11 +40,13 @@
   "dependencies": {
     "@hollowverse/common": "https://github.com/hollowverse/common",
     "@types/body-parser": "^1.16.5",
+    "@types/got": "^7.1.4",
     "@types/validator": "^6.2.3",
     "apollo-server-express": "^1.1.2",
     "body-parser": "^1.18.2",
     "class-validator": "^0.7.2",
     "express": "^4.15.2",
+    "got": "^7.1.0",
     "graphql-iso-date": "^3.3.0",
     "graphql-tools": "^1.2.3",
     "mysql": "^2.14.1",

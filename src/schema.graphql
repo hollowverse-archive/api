@@ -31,14 +31,29 @@ type NotablePerson {
   slug: String!
   name: String!
   photoUrl: String!
-  events: [Event]!
-  labels: [Label]!
+  events: [Event!]!
+  labels: [Label!]!
+}
+
+type User {
+  id: ID!
+  name: String!
 }
 
 type RootQuery {
+  viewer(token: String): User
   notablePerson(slug: String!): NotablePerson
+}
+
+input CreateUserInput {
+  fbAccessToken: String!
+}
+
+type RootMutation {
+  createUser(user: CreateUserInput!): User
 }
 
 schema {
   query: RootQuery
+  mutation: RootMutation
 }

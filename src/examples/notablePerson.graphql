@@ -1,4 +1,4 @@
-query {
+query GetNotablePerson {
   notablePerson(slug: "Tom_Hanks") {
     slug
     name
