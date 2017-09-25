@@ -3,23 +3,18 @@ import { NotablePerson } from '../../database/entities/notablePerson';
 import { Event } from '../../database/entities/event';
 import { NotablePersonRootQueryArgs } from '../../typings/schema';
 
-async function notablePerson(
-  _: undefined,
-  { slug }: NotablePersonRootQueryArgs,
-) {
-  const db = await connection;
-  const npRepository = db.getRepository(NotablePerson);
-
-  return npRepository.findOne({
-    where: {
-      slug,
-    },
-  });
-}
-
 export default {
   RootQuery: {
-    notablePerson,
+    async notablePerson(_: undefined, { slug }: NotablePersonRootQueryArgs) {
+      const db = await connection;
+      const npRepository = db.getRepository(NotablePerson);
+
+      return npRepository.findOne({
+        where: {
+          slug,
+        },
+      });
+    },
   },
 
   NotablePerson: {
