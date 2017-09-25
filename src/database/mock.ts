@@ -16,6 +16,7 @@ connection.then(async db => {
     user.photoUrl = chance.url({ protocol: 'https' });
     user.signedUpAt = chance.date();
     user.name = chance.name();
+    user.fbId = chance.android_id();
 
     return user;
   });

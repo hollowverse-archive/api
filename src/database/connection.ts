@@ -12,7 +12,7 @@ export const connection = createConnection({
   host: 'localhost',
   username: 'root',
   password: '123456',
-  dropSchema: true,
+  dropSchema: false,
   synchronize: true,
   port: 3306,
   entities: [NotablePerson, Event, Label, Comment, User],
