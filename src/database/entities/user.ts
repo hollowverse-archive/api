@@ -42,6 +42,6 @@ export class User extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
 
-  @Column({ type: 'text', nullable: false })
+  @Column({ type: 'text', nullable: false, unique: true })
   fbId: string;
 }
