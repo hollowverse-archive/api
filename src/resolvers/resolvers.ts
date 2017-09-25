@@ -45,7 +45,7 @@ export const resolvers = {
   },
 
   RootMutation: {
-    async createUser(_: undefined, { fbAccessToken }: any) {
+    async createUser(_: undefined, { data: { fbAccessToken } }: any) {
       type Profile = {
         id: string;
         name: string;

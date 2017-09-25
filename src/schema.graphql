@@ -41,7 +41,7 @@ type User {
 }
 
 type RootQuery {
-  viewer(token: String): User
+  viewer(fbAccessToken: String!): User
   notablePerson(slug: String!): NotablePerson
 }
 
@@ -50,7 +50,7 @@ input CreateUserInput {
 }
 
 type RootMutation {
-  createUser(user: CreateUserInput!): User
+  createUser(data: CreateUserInput!): User
 }
 
 schema {

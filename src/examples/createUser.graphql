@@ -1,5 +1,5 @@
 mutation CreateUser {
-  createUser(user: { fbAccessToken: "fb_access_token" }) {
+  createUser(data: { fbAccessToken: "fb_access_token" }) {
     name
     id
   }
