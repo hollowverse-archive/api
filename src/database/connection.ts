@@ -12,26 +12,32 @@ import * as path from 'path';
 const DB_SECRET_FILE_PATH = path.resolve(
   process.cwd(),
   'secrets',
-  process.env.NODE_ENV === 'production' ? 'db.production.json' : 'db.json',
+  'db.production.json',
 );
 
-const { host, port, database, username, password }: DatabaseConfig = JSON.parse(
-  String(fs.readFileSync(DB_SECRET_FILE_PATH)),
-);
+function readJSON<T>(file: string): T {
+  return JSON.parse(String(fs.readFileSync(file)));
+}
 
 const config: ConnectionOptions = {
   type: 'mysql',
 
-  // Do not any of these set to `true`,
-  // otherwise the database will be destroyed
-  synchronize: false,
-  dropSchema: false,
+  ...process.env.NODE_ENV === 'production'
+    ? {
+        // Do not any of these set to `true`,
+        // otherwise the database will be destroyed
+        synchronize: false,
+        dropSchema: false,
 
-  host,
-  port,
-  database,
-  username,
-  password,
+        ...readJSON<DatabaseConfig>(DB_SECRET_FILE_PATH),
+      }
+    : {
+        database: 'hollowverse',
+        host: 'localhost',
+        port: 3306,
+        username: 'root',
+        password: '123456',
+      },
 };
 
 export const connection = createConnection({
