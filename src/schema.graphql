@@ -10,6 +10,7 @@ type Label {
 
 type UserComment {
   ownerId: ID!
+  photoUrl: String
   text: String!
 }
 

@@ -41,14 +41,12 @@ export const resolvers = {
       const db = await connection;
       const npRepository = db.getRepository(NotablePerson);
 
-      return (
-        (await npRepository.findOne({
-          where: {
-            slug,
-          },
-          relations: ['events'],
-        })) || null
-      );
+      return npRepository.findOne({
+        where: {
+          slug,
+        },
+        relations: ['events'],
+      });
     },
   },
 
@@ -62,18 +60,20 @@ export const resolvers = {
         name: string;
         email: string;
         picture: {
-          is_silhouette: boolean;
-          url: string;
+          data: {
+            is_silhouette: boolean;
+            url: string;
+          };
         };
       };
 
       const profile: Profile = (await got('https://graph.facebook.com/me', {
         query: {
           access_token: fbAccessToken,
-          fields: ['id', 'name', 'email', 'picture'],
+          fields: ['id', 'name', 'email', 'picture'].join(','),
         },
         json: true,
-      })) as any;
+      })).body;
 
       const db = await connection;
       const user = new User();
@@ -84,7 +84,14 @@ export const resolvers = {
 
       user.signedUpAt = new Date();
 
-      return db.getRepository(User).persist(user);
+      const users = db.getRepository(User);
+
+      return users.persist(user).catch(error => {
+        if (error.code === 'ER_DUP_ENTRY') {
+          throw new TypeError('User already exists');
+        }
+        throw error;
+      });
     },
   },
 };
