@@ -24,12 +24,12 @@ const config: ConnectionOptions = {
 
   ...process.env.NODE_ENV === 'production'
     ? {
+        ...readJSON<DatabaseConfig>(DB_SECRET_FILE_PATH),
+
         // Do not any of these set to `true`,
         // otherwise the database will be destroyed
         synchronize: false,
         dropSchema: false,
-
-        ...readJSON<DatabaseConfig>(DB_SECRET_FILE_PATH),
       }
     : {
         database: 'hollowverse',
