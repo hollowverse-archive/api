@@ -54,3 +54,6 @@ build.zip
 .elasticbeanstalk/*
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
+
+# Auto-generated types based on the GraphQL schema definition
+src/typings/schema.ts

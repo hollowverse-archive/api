@@ -3,6 +3,11 @@ import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
+import {
+  CreateUserRootMutationArgs,
+  NotablePersonRootQueryArgs,
+  ViewerRootQueryArgs,
+} from '../typings/schema';
 
 export const resolvers = {
   DateTime: GraphQLDateTime,
@@ -10,7 +15,7 @@ export const resolvers = {
   DateOnly: GraphQLDate,
 
   RootQuery: {
-    async viewer(_: undefined, { fbAccessToken }: { fbAccessToken: string }) {
+    async viewer(_: undefined, { fbAccessToken }: ViewerRootQueryArgs) {
       // Get Facebook profile ID using the access token
       const response = await got('https://graph.facebook.com/me', {
         query: {
@@ -31,7 +36,7 @@ export const resolvers = {
 
       return undefined;
     },
-    async notablePerson(_: undefined, { slug }: { slug: string }) {
+    async notablePerson(_: undefined, { slug }: NotablePersonRootQueryArgs) {
       const db = await connection;
       const npRepository = db.getRepository(NotablePerson);
 
@@ -45,7 +50,10 @@ export const resolvers = {
   },
 
   RootMutation: {
-    async createUser(_: undefined, { data: { fbAccessToken } }: any) {
+    async createUser(
+      _: undefined,
+      { data: { fbAccessToken } }: CreateUserRootMutationArgs,
+    ) {
       type Profile = {
         id: string;
         name: string;
