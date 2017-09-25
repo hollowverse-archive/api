@@ -1,8 +1,9 @@
 import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/notablePerson';
+import { Event } from '../../database/entities/event';
 import { NotablePersonRootQueryArgs } from '../../typings/schema';
 
-export async function notablePerson(
+async function notablePerson(
   _: undefined,
   { slug }: NotablePersonRootQueryArgs,
 ) {
@@ -13,6 +14,24 @@ export async function notablePerson(
     where: {
       slug,
     },
-    relations: ['events'],
   });
 }
+
+export default {
+  RootQuery: {
+    notablePerson,
+  },
+
+  NotablePerson: {
+    async events(np: NotablePerson) {
+      const db = await connection;
+
+      const repo = db.getRepository(Event);
+
+      return repo.find({
+        where: { notablePersonId: np.id },
+        relations: ['notablePerson'],
+      });
+    },
+  },
+};
