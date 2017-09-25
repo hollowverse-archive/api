@@ -9,7 +9,7 @@
     "test": "run-p validate-schema validate-file-names lint-js lint-ts",
     "validate-schema": "graphql-validator -s './src/schema.graphql' './src/examples/*.graphql'",
     "lint-js": "eslint '**/*.js{,x}'",
-    "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}'",
+    "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts'",
     "generate-schema-types": "graphql-to-typescript src/schema.graphql src/typings/schema.ts",
     "dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project ./src'",
     "database/mock": "nodemon --watch ./src/database --ext ts --exec 'ts-node src/database/mock.ts --project ./src'",
@@ -24,6 +24,7 @@
   "lint-staged": {
     "**/*.{j,t}s{x,}": [
       "prettier --write --single-quote --trailing-comma all",
+      "tslint",
       "git add"
     ],
     "**/*.{graphql,gql}": [
