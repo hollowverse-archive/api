@@ -1,4 +1,4 @@
-import got from 'got';
+import * as got from 'got';
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
@@ -7,6 +7,7 @@ import {
   CreateUserRootMutationArgs,
   NotablePersonRootQueryArgs,
   ViewerRootQueryArgs,
+  RootMutation,
 } from '../typings/schema';
 
 export const resolvers = {
@@ -40,12 +41,14 @@ export const resolvers = {
       const db = await connection;
       const npRepository = db.getRepository(NotablePerson);
 
-      return npRepository.findOne({
-        where: {
-          slug,
-        },
-        relations: ['events'],
-      });
+      return (
+        (await npRepository.findOne({
+          where: {
+            slug,
+          },
+          relations: ['events'],
+        })) || null
+      );
     },
   },
 
@@ -53,7 +56,7 @@ export const resolvers = {
     async createUser(
       _: undefined,
       { data: { fbAccessToken } }: CreateUserRootMutationArgs,
-    ) {
+    ): Promise<RootMutation['createUser']> {
       type Profile = {
         id: string;
         name: string;
@@ -81,7 +84,7 @@ export const resolvers = {
 
       user.signedUpAt = new Date();
 
-      db.entityManager.persist(user);
+      return db.getRepository(User).persist(user);
     },
   },
 };

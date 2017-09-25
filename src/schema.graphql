@@ -9,7 +9,7 @@ type Label {
 }
 
 type UserComment {
-  userId: ID!
+  ownerId: ID!
   text: String!
 }
 
@@ -23,7 +23,7 @@ type Event {
   postedAt: DateTime!
   # The date the event happened (string formatted as YYYY-MM-DD)
   happenedOn: DateOnly!
-  comment: UserComment!
+  comments: [UserComment!]
 }
 
 type NotablePerson {
