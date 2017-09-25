@@ -42,7 +42,7 @@ connection.then(async db => {
 
   await db.entityManager.persist(people);
 
-  const events = times(10, () => {
+  const events = times(1000, () => {
     const event = new Event();
     event.happenedOn = chance.date();
     event.postedAt = new Date();

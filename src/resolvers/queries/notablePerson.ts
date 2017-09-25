@@ -27,7 +27,7 @@ export default {
         where: {
           notablePersonId: np.id,
         },
-        take: 10,
+        take: 2,
         order: {
           postedAt: 'DESC',
         },
