@@ -2,6 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
 import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
 
+/**
+ * A notable person's label
+ * @example Liberal, Democrat
+ */
 @Entity()
 export class Label extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;

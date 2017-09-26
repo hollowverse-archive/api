@@ -5,6 +5,12 @@ const facebookAppConfig = readJson<FacebookAppConfig>(
   'secrets/facebookApp.json',
 );
 
+/**
+ * A custom `Error` thrown when attempting to authenticate with Facebook.
+ * 
+ * The `name` property is shown in the query result to help diagnose issues with
+ * the query.
+ */
 class InvalidAccessTokenError extends Error {
   name = 'InvalidAccessTokenError';
 }

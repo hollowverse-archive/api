@@ -4,6 +4,9 @@ import { BaseEntity } from './base';
 import { Event } from './event';
 import { Comment } from './comment';
 
+/**
+ * A Hollowverse user
+ */
 @Entity()
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;

@@ -11,6 +11,9 @@ import { BaseEntity } from './base';
 import { Event } from './event';
 import { Label } from './label';
 
+/**
+ * A public figure or an influential person
+ */
 @Entity()
 export class NotablePerson extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;

@@ -3,6 +3,9 @@ import { BaseEntity } from './base';
 import { Event } from './event';
 import { User } from './user';
 
+/**
+ * A comment on a notable person's event
+ */
 @Entity()
 export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;

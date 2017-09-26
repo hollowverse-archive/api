@@ -11,6 +11,9 @@ import { NotablePerson } from './notablePerson';
 import { User } from './user';
 import { Comment } from './comment';
 
+/**
+ * An event about a notable person
+ */
 @Entity()
 export class Event extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
