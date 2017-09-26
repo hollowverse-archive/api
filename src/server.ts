@@ -3,10 +3,13 @@ import * as bodyParser from 'body-parser';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
+import { redirectToHttps } from './redirectToHttps';
 
-const app = express();
+const api = express();
 
-app.use(
+api.use(redirectToHttps);
+
+api.use(
   '/graphql',
   bodyParser.json(),
   graphqlExpress({
@@ -15,11 +18,11 @@ app.use(
   }),
 );
 
-app.use(
+api.use(
   '/graphiql',
   graphiqlExpress({
     endpointURL: '/graphql',
   }),
 );
 
-app.listen(process.env.PORT || 8080);
+api.listen(process.env.PORT || 8080);
