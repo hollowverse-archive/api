@@ -1,4 +1,4 @@
 declare type FacebookAppConfig = {
-  id: number;
+  id: string;
   accessToken: string;
 };
