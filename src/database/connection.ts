@@ -25,7 +25,7 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
     ? {
         ...await readJson<DatabaseConfig>('secrets/db.production.json'),
 
-        // Do not any of these set to `true`,
+        // Do not set any of these to `true`,
         // otherwise the database will be destroyed
         synchronize: false,
         dropSchema: false,
