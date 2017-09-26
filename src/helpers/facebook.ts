@@ -1,6 +1,4 @@
 import * as got from 'got';
-
-import { sendAuthenticatedRequest } from './request';
 import { readJson } from './readJson';
 
 const facebookApp = readJson<FacebookAppConfig>('secrets/facebookApp.json');
@@ -22,16 +20,13 @@ class InvalidAccessTokenError extends Error {
  */
 async function verifyFacebookAccessToken(token: string) {
   const app = await facebookApp;
-  const response = await sendAuthenticatedRequest(
-    'https://graph.facebook.com/debug_token',
-    {
-      query: {
-        access_token: app.accessToken,
-        input_token: token,
-      },
-      json: true,
+  const response = await got('https://graph.facebook.com/debug_token', {
+    query: {
+      access_token: app.accessToken,
+      input_token: token,
     },
-  );
+    json: true,
+  });
 
   if (response.body.data) {
     const { app_id, is_valid } = response.body.data;
