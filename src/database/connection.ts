@@ -37,8 +37,8 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
         database: RDS_DB_NAME || 'hollowverse',
         host: RDS_HOSTNAME || 'localhost',
         port: Number(RDS_PORT) || 3306,
-        username: RDS_PASSWORD || '123456',
-        password: RDS_USERNAME || 'root',
+        username: RDS_PASSWORD || 'root',
+        password: RDS_USERNAME || '123456',
       },
 });
 
