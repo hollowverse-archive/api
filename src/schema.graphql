@@ -36,13 +36,28 @@ type NotablePerson {
   labels: [Label!]!
 }
 
-type User {
+interface UserInterface {
   id: ID!
   name: String!
+  photoUrl: String
+}
+
+type User implements UserInterface {
+  id: ID!
+  name: String!
+  photoUrl: String
+}
+
+type Viewer implements UserInterface {
+  id: ID!
+  name: String!
+  email: String!
+  signedUpAt: DateTime!
+  photoUrl: String
 }
 
 type RootQuery {
-  viewer(fbAccessToken: String!): User
+  viewer(fbAccessToken: String!): Viewer
   notablePerson(slug: String!): NotablePerson
 }
 
