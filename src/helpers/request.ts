@@ -4,7 +4,10 @@ class InvalidAccessTokenError extends Error {
   name = 'InvalidAccessTokenError';
 }
 
-export async function sendRequest(url: string, options: got.GotJSONOptions) {
+export async function sendAuthenticatedRequest(
+  url: string,
+  options: got.GotJSONOptions,
+) {
   try {
     return await got(url, options);
   } catch (error) {

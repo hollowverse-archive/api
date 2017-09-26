@@ -1,7 +1,8 @@
 import { connection } from '../../database/connection';
 import { User } from '../../database/entities/user';
 import { CreateUserRootMutationArgs, RootMutation } from '../../typings/schema';
-import { sendRequest } from '../../helpers/request';
+import { sendAuthenticatedRequest } from '../../helpers/request';
+import { verifyFacebookAccessToken } from '../../helpers/facebook';
 
 export async function createUser(
   _: undefined,
@@ -19,13 +20,18 @@ export async function createUser(
     };
   };
 
-  const response = await sendRequest('https://graph.facebook.com/me', {
-    query: {
-      access_token: fbAccessToken,
-      fields: ['id', 'name', 'email', 'picture'].join(','),
+  await verifyFacebookAccessToken(fbAccessToken);
+
+  const response = await sendAuthenticatedRequest(
+    'https://graph.facebook.com/me',
+    {
+      query: {
+        access_token: fbAccessToken,
+        fields: ['id', 'name', 'email', 'picture'].join(','),
+      },
+      json: true,
     },
-    json: true,
-  });
+  );
 
   const profile: Profile = response.body;
 
