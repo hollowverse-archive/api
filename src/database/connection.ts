@@ -7,10 +7,24 @@ import { Comment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readJson';
 
+const {
+  // These variables are for the development database
+  // provided by AWS Elastic Beanstalk
+  RDS_DB_NAME,
+  RDS_HOSTNAME,
+  RDS_PORT,
+  RDS_USERNAME,
+  RDS_PASSWORD,
+
+  // To use the production database, this must be set explicitly to 'true'
+  // in EB environment settings. Otherwise, the testing database is used.
+  USE_PRODUCTION_DATABASE,
+} = process.env;
+
 const getConfig = async (): Promise<ConnectionOptions> => ({
   type: 'mysql',
 
-  ...process.env.NODE_ENV === 'production'
+  ...process.env.NODE_ENV === 'production' && USE_PRODUCTION_DATABASE === 'true'
     ? {
         ...await readJson<DatabaseConfig>('secrets/db.production.json'),
 
@@ -20,11 +34,11 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
         dropSchema: false,
       }
     : {
-        database: 'hollowverse',
-        host: 'localhost',
-        port: 3306,
-        username: 'root',
-        password: '123456',
+        database: RDS_DB_NAME || 'hollowverse',
+        host: RDS_HOSTNAME || 'localhost',
+        port: Number(RDS_PORT) || 3306,
+        username: RDS_PASSWORD || '123456',
+        password: RDS_USERNAME || 'root',
       },
 });
 
