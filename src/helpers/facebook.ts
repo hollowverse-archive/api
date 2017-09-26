@@ -1,7 +1,9 @@
 import * as got from 'got';
 import { readJson } from './readJson';
 
-const facebookApp = readJson<FacebookAppConfig>('secrets/facebookApp.json');
+const facebookAppConfig = readJson<FacebookAppConfig>(
+  'secrets/facebookApp.json',
+);
 
 class InvalidAccessTokenError extends Error {
   name = 'InvalidAccessTokenError';
@@ -19,7 +21,7 @@ class InvalidAccessTokenError extends Error {
  * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
  */
 async function verifyFacebookAccessToken(token: string) {
-  const app = await facebookApp;
+  const app = await facebookAppConfig;
   const response = await got('https://graph.facebook.com/debug_token', {
     query: {
       access_token: app.accessToken,
