@@ -1,3 +1,5 @@
+import * as got from 'got';
+
 import { sendAuthenticatedRequest } from './request';
 import { readJson } from './readJson';
 
@@ -18,7 +20,7 @@ class InvalidAccessTokenError extends Error {
  * 
  * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
  */
-export async function verifyFacebookAccessToken(token: string) {
+async function verifyFacebookAccessToken(token: string) {
   const app = await facebookApp;
   const response = await sendAuthenticatedRequest(
     'https://graph.facebook.com/debug_token',
@@ -39,4 +41,23 @@ export async function verifyFacebookAccessToken(token: string) {
   }
 
   throw new InvalidAccessTokenError();
+}
+
+export async function sendFacebookAuthenticatedRequest(
+  accessToken: string,
+  url: string,
+  options: got.GotJSONOptions,
+) {
+  await verifyFacebookAccessToken(accessToken);
+
+  return got(url, {
+    ...options,
+    query:
+      typeof options.query !== 'string'
+        ? {
+            access_token: accessToken,
+            ...options.query,
+          }
+        : options.query,
+  });
 }

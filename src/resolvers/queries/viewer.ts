@@ -1,21 +1,18 @@
 import { connection } from '../../database/connection';
 import { User } from '../../database/entities/user';
 import { ViewerRootQueryArgs } from '../../typings/schema';
-import { sendAuthenticatedRequest } from '../../helpers/request';
-import { verifyFacebookAccessToken } from '../../helpers/facebook';
+import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 
 export async function viewer(
   _: undefined,
   { fbAccessToken }: ViewerRootQueryArgs,
 ) {
-  await verifyFacebookAccessToken(fbAccessToken);
-
   // Get Facebook profile ID using the access token
-  const response = await sendAuthenticatedRequest(
+  const response = await sendFacebookAuthenticatedRequest(
+    fbAccessToken,
     'https://graph.facebook.com/me',
     {
       query: {
-        access_token: fbAccessToken,
         fields: 'id',
       },
       json: true,
