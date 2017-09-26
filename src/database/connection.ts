@@ -6,6 +6,7 @@ import { Label } from './entities/label';
 import { Comment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readJson';
+import { isUsingProductionDatabase } from './env';
 
 const {
   // These variables are for the development database
@@ -15,16 +16,12 @@ const {
   RDS_PORT,
   RDS_USERNAME,
   RDS_PASSWORD,
-
-  // To use the production database, this must be set explicitly to 'true'
-  // in EB environment settings. Otherwise, the testing database is used.
-  USE_PRODUCTION_DATABASE,
 } = process.env;
 
 const getConfig = async (): Promise<ConnectionOptions> => ({
   type: 'mysql',
 
-  ...process.env.NODE_ENV === 'production' && USE_PRODUCTION_DATABASE === 'true'
+  ...isUsingProductionDatabase
     ? {
         ...await readJson<DatabaseConfig>('secrets/db.production.json'),
 

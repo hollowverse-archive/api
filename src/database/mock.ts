@@ -6,8 +6,9 @@ import { Comment } from './entities/comment';
 import { Label } from './entities/label';
 import * as Chance from 'chance';
 import { times, kebabCase } from 'lodash';
+import { isUsingProductionDatabase } from './env';
 
-if (process.env.NODE_ENV !== 'production') {
+if (isUsingProductionDatabase === false) {
   const chance = new Chance();
   connection.then(async db => {
     const users = times(10, () => {
