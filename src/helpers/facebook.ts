@@ -38,6 +38,15 @@ async function verifyFacebookAccessToken(token: string) {
   throw new InvalidAccessTokenError();
 }
 
+/**
+ * Send an authenticated request to Facebook API with an access token.
+ * The access token is verified before the request is attempted.
+ * If the access token is not valid, or if it was not issued for Hollowverse app
+ * an `InvalidAccessTokenError` is thrown.
+ * 
+ * Note: if `options.query` is a string, the access token is not added automatically
+ * to the request.
+ */
 export async function sendFacebookAuthenticatedRequest(
   accessToken: string,
   url: string,
