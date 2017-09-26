@@ -27,6 +27,10 @@ class InvalidAccessTokenError extends Error {
  * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
  */
 async function verifyFacebookAccessToken(token: string) {
+  if (!token) {
+    throw new InvalidAccessTokenError();
+  }
+
   const app = await facebookAppConfig;
   const response = await got('https://graph.facebook.com/debug_token', {
     query: {
