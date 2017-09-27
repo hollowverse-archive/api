@@ -9,7 +9,7 @@ import { times, kebabCase } from 'lodash';
 import { isUsingProductionDatabase } from './env';
 
 if (isUsingProductionDatabase === false) {
-  const chance = new Chance();
+  const chance = new Chance(process.env.SEED || 1);
   connection
     .then(async db => {
       const users = times(10, () => {
