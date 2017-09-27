@@ -1,13 +1,17 @@
+# Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
 
+# Date and time, serialized as an ISO date string
 scalar DateTime
 
+#A notable person's label, e.g. Liberal, Democrat
 type Label {
   id: ID!
   text: String!
   createdAt: String!
 }
 
+# A comment on a notable person's event
 type EventComment {
   ownerId: ID!
   photoUrl: String
@@ -20,13 +24,14 @@ type Event {
   quote: String!
   isQuoteByNotablePerson: Boolean!
   sourceUrl: String!
-  # The date and time the event was added to the database (ISO date string)
+  # The date and time the event was added to the database
   postedAt: DateTime!
-  # The date the event happened (string formatted as YYYY-MM-DD)
+  # The date the event happened
   happenedOn: DateOnly!
   comments: [EventComment!]
 }
 
+# A public figure or an influential person
 type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
@@ -48,6 +53,7 @@ type User implements UserInterface {
   photoUrl: String
 }
 
+# The authenticated user performing the request
 type Viewer implements UserInterface {
   id: ID!
   name: String!
@@ -66,6 +72,7 @@ input CreateUserInput {
 }
 
 type RootMutation {
+  # Sign up
   createUser(data: CreateUserInput!): User
 }
 
