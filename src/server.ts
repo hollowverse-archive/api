@@ -4,10 +4,19 @@ import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
 import { redirectToHttps } from './redirectToHttps';
+import { health, setIsHealthy } from './health';
+
+import { connection } from './database/connection';
+
+connection.catch(_ => {
+  setIsHealthy(false);
+});
 
 const api = express();
 
 api.use(redirectToHttps);
+
+api.use('/health', health);
 
 api.use(
   '/graphql',
