@@ -36,6 +36,7 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
         port: Number(RDS_PORT) || 3306,
         username: RDS_PASSWORD || 'root',
         password: RDS_USERNAME || '123456',
+        synchronize: true,
       },
 });
 
