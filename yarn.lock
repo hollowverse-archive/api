@@ -862,6 +862,12 @@ circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
 
+class-sanitizer@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/class-sanitizer/-/class-sanitizer-0.0.5.tgz#1a0b357730328e0123cb6fea1cb2530aa3854c58"
+  dependencies:
+    validator "^5.1.0"
+
 class-validator@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/class-validator/-/class-validator-0.7.2.tgz#35ed86f0590bbb60161a8c8ef9c813cb38572ffe"
@@ -5152,6 +5158,10 @@ validate-npm-package-license@^3.0.1:
   dependencies:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
+
+validator@^5.1.0:
+  version "5.7.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-5.7.0.tgz#7a87a58146b695ac486071141c0c49d67da05e5c"
 
 validator@^7.0.0:
   version "7.2.0"

@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
 
@@ -10,6 +11,7 @@ import { NotablePerson } from './notablePerson';
 export class Label extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
+  @Trim()
   @Column({ type: 'varchar', unique: true, nullable: false })
   text: string;
 

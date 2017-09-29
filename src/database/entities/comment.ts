@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { Event } from './event';
 import { User } from './user';
@@ -11,6 +12,7 @@ export class Comment extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Column({ type: 'text', nullable: false })
+  @Trim()
   text: string;
 
   @Column({ type: 'datetime', nullable: false })

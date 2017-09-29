@@ -1,5 +1,6 @@
 import { BeforeInsert, BeforeUpdate } from 'typeorm';
 import { validateOrReject } from 'class-validator';
+import { sanitizeAsync } from 'class-sanitizer';
 
 /**
  * Base entity for the database layer.
@@ -10,11 +11,15 @@ import { validateOrReject } from 'class-validator';
 export class BaseEntity {
   @BeforeInsert()
   async validate() {
-    return validateOrReject(this);
+    await validateOrReject(this);
+
+    return sanitizeAsync(this);
   }
 
   @BeforeUpdate()
   async validateUpdate() {
-    return validateOrReject(this, { skipMissingProperties: true });
+    await validateOrReject(this, { skipMissingProperties: true });
+
+    return sanitizeAsync(this);
   }
 }

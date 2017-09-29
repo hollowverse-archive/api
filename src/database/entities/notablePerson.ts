@@ -7,6 +7,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { IsUrl } from 'class-validator';
+import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { Event } from './event';
 import { Label } from './label';
@@ -18,9 +19,11 @@ import { Label } from './label';
 export class NotablePerson extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
+  @Trim()
   @Column({ unique: true, nullable: false })
   slug: string;
 
+  @Trim()
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
@@ -29,6 +32,7 @@ export class NotablePerson extends BaseEntity {
     require_valid_protocol: true,
     protocols: ['https'],
   })
+  @Trim()
   @Column({ type: 'text', nullable: false })
   photoUrl: string;
 
