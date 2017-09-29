@@ -5,7 +5,7 @@ import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 
 export async function createUser(
   _: undefined,
-  { data: { fbAccessToken } }: CreateUserRootMutationArgs,
+  { data: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
 ): Promise<RootMutation['createUser']> {
   type Profile = {
     id: string;
@@ -36,8 +36,8 @@ export async function createUser(
   const user = new User();
 
   user.fbId = profile.id;
-  user.name = profile.name;
-  user.email = profile.email;
+  user.name = name || profile.name;
+  user.email = email || profile.email;
 
   user.signedUpAt = new Date();
 
