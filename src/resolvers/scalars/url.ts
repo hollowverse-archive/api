@@ -21,8 +21,9 @@ const parseLiteral = (ast: ASTNode) => {
 };
 
 export const Url = new GraphQLScalarType({
-  description: 'A valid URL',
   name: 'URL',
+  description:
+    'A full URL with the protocol. Accepted protocols are http and https only.',
 
   parseLiteral,
 

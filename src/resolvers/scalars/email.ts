@@ -14,8 +14,8 @@ const parseLiteral = (ast: ASTNode) => {
 };
 
 export const Email = new GraphQLScalarType({
-  description: 'A valid email address',
   name: 'Email',
+  description: 'A valid email address',
 
   parseLiteral,
 

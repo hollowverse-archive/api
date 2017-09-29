@@ -9,6 +9,13 @@ class AlreadyRegisteredError extends Error {
   name = 'ALREADY_REGISTERED';
 }
 
+/**
+ * Create a new user passing using a valid Facebook access token
+ * issued for the Hollowverse application.
+ * 
+ * The name and email of the new user will be obtained from Facebook if
+ * not specified in the mutation input.
+ */
 export async function createUser(
   _: undefined,
   { data: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,

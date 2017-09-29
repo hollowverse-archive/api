@@ -4,8 +4,10 @@ scalar DateOnly
 # Date and time, serialized as an ISO date string
 scalar DateTime
 
+# A valid email address
 scalar Email
 
+# A full URL with the protocol. Accepted protocols are http and https only.
 scalar Url
 
 #A notable person's label, e.g. Liberal, Democrat
@@ -58,6 +60,11 @@ type User implements UserInterface {
 }
 
 # The authenticated user performing the request
+#
+# The authentication token must be passed
+# in the HTTP `Authorization` header. The token type must be `Bearer` and the
+# token value is a valid Facebook access token issued for the Hollowverse
+# application.
 type Viewer implements UserInterface {
   id: ID!
   name: String!
@@ -67,18 +74,24 @@ type Viewer implements UserInterface {
 }
 
 type RootQuery {
+  # The authenticated user performing the request
   viewer: Viewer
   notablePerson(slug: String!): NotablePerson
 }
 
 input CreateUserInput {
   fbAccessToken: String!
+  # Optional email address to override the one obtained from Facebook
   email: Email
+  # Optional name to override the one obtained from Facebook
   name: String
 }
 
 type RootMutation {
-  # Sign up
+  # Create a new user passing using a valid Facebook access token
+  # issued for the Hollowverse application.
+  # The name and email of the new user will be obtained from Facebook if
+  # not specified in the mutation input.
   createUser(data: CreateUserInput!): Viewer
 }
 
