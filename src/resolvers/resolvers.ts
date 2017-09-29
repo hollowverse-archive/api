@@ -6,16 +6,19 @@ import { merge } from 'lodash';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';
 
+/**
+ * Resolvers for custom scalar types.
+ * They define how to parse, validate and serialize these types.
+ */
+const scalarTypes = {
+  DateTime: GraphQLDateTime,
+  DateOnly: GraphQLDate,
+  Email,
+  Url,
+};
+
 export const resolvers = merge(
   {
-    DateTime: GraphQLDateTime,
-
-    DateOnly: GraphQLDate,
-
-    Email,
-
-    Url,
-
     RootQuery: {
       viewer,
     },
@@ -24,5 +27,6 @@ export const resolvers = merge(
       createUser,
     },
   },
+  scalarTypes,
   notablePersonResolvers,
 );
