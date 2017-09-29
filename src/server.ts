@@ -5,6 +5,8 @@ import { schema } from './schema';
 import { formatError } from './helpers/formatError';
 import { redirectToHttps } from './redirectToHttps';
 import { health, setIsHealthy } from './health';
+import { SchemaContext } from './typings/schemaContext';
+import { findUserByFacebookAccessToken } from './helpers/auth';
 
 import { connection } from './database/connection';
 
@@ -21,16 +23,41 @@ api.use('/health', health);
 api.use(
   '/graphql',
   bodyParser.json(),
-  graphqlExpress({
-    schema,
-    formatError,
+  graphqlExpress(async req => {
+    const context: SchemaContext = {};
+    if (req) {
+      const authorization = req.header('Authorization');
+      if (authorization) {
+        const [type, token] = authorization.split(' ');
+        if (type === 'Bearer' && token.length > 0) {
+          context.viewer = await findUserByFacebookAccessToken(token);
+        }
+      }
+    }
+
+    return {
+      schema,
+      formatError,
+      context,
+    };
   }),
 );
+
+const debugHeaders = [
+  `'Authorization': 'Bearer ${process.env.FB_ACCESS_TOKEN}'`,
+];
 
 api.use(
   '/graphiql',
   graphiqlExpress({
     endpointURL: '/graphql',
+    ...process.env.NODE_ENV === 'production'
+      ? {
+          // Nothing
+        }
+      : {
+          passHeader: debugHeaders.join('\n'),
+        },
   }),
 );
 

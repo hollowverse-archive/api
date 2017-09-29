@@ -67,14 +67,14 @@ type Viewer implements UserInterface {
 }
 
 type RootQuery {
-  viewer(fbAccessToken: String!): Viewer
+  viewer: Viewer
   notablePerson(slug: String!): NotablePerson
 }
 
 input CreateUserInput {
   fbAccessToken: String!
   email: Email
-  website: Url
+  name: String
 }
 
 type RootMutation {

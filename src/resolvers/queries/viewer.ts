@@ -1,9 +1,5 @@
-import { ViewerRootQueryArgs } from '../../typings/schema';
-import { findUserByFacebookAccessToken } from '../../helpers/auth';
+import { SchemaContext } from '../../typings/schemaContext';
 
-export async function viewer(
-  _: undefined,
-  { fbAccessToken }: ViewerRootQueryArgs,
-) {
-  return findUserByFacebookAccessToken(fbAccessToken);
+export async function viewer(_: undefined, __: any, context: SchemaContext) {
+  return context.viewer;
 }
