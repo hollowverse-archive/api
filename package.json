@@ -54,7 +54,8 @@
     "mysql": "^2.14.1",
     "npm-run-all": "^4.0.2",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.1.0-alpha.47"
+    "typeorm": "^0.1.0-alpha.47",
+    "validator": "^9.0.0"
   },
   "devDependencies": {
     "@creditkarma/graphql-loader": "^0.6.6",
@@ -68,7 +69,7 @@
     "@types/node": "^8.0.8",
     "@types/shelljs": "^0.7.4",
     "@types/uuid": "^3.4.2",
-    "@types/validator": "^6.2.3",
+    "@types/validator": "^6.3.0",
     "babel-eslint": "^8.0.1",
     "chance": "^1.0.11",
     "eslint": "^4.5.0",

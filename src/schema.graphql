@@ -4,17 +4,21 @@ scalar DateOnly
 # Date and time, serialized as an ISO date string
 scalar DateTime
 
+scalar Email
+
+scalar Url
+
 #A notable person's label, e.g. Liberal, Democrat
 type Label {
   id: ID!
   text: String!
-  createdAt: String!
+  createdAt: DateTime!
 }
 
 # A comment on a notable person's event
 type EventComment {
   ownerId: ID!
-  photoUrl: String
+  photoUrl: Url
   text: String!
 }
 
@@ -36,7 +40,7 @@ type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
   name: String!
-  photoUrl: String!
+  photoUrl: Url!
   events: [Event!]!
   labels: [Label!]!
 }
@@ -44,22 +48,22 @@ type NotablePerson {
 interface UserInterface {
   id: ID!
   name: String!
-  photoUrl: String
+  photoUrl: Url
 }
 
 type User implements UserInterface {
   id: ID!
   name: String!
-  photoUrl: String
+  photoUrl: Url
 }
 
 # The authenticated user performing the request
 type Viewer implements UserInterface {
   id: ID!
   name: String!
-  email: String!
+  email: Email!
   signedUpAt: DateTime!
-  photoUrl: String
+  photoUrl: Url
 }
 
 type RootQuery {
@@ -69,11 +73,13 @@ type RootQuery {
 
 input CreateUserInput {
   fbAccessToken: String!
+  email: Email
+  website: Url
 }
 
 type RootMutation {
   # Sign up
-  createUser(data: CreateUserInput!): User
+  createUser(data: CreateUserInput!): Viewer
 }
 
 schema {
