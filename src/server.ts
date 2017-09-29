@@ -29,7 +29,11 @@ api.use(
       const authorization = req.header('Authorization');
       if (authorization) {
         const [type, token] = authorization.split(' ');
-        if (type === 'Bearer' && token.length > 0) {
+        if (
+          type === 'Bearer' &&
+          typeof token === 'string' &&
+          token.length > 0
+        ) {
           context.viewer = await findUserByFacebookAccessToken(token);
         }
       }
@@ -52,9 +56,7 @@ api.use(
   graphiqlExpress({
     endpointURL: '/graphql',
     ...process.env.NODE_ENV === 'production'
-      ? {
-          // Nothing
-        }
+      ? undefined
       : {
           passHeader: debugHeaders.join('\n'),
         },

@@ -1,20 +1,6 @@
 import { GraphQLError } from 'graphql';
 import { ValidationError } from 'class-validator';
-
-/**
- * Returns `true` if the passed object conforms to the `ValidationError`
- * class exported by the `class-validator` package.
- * 
- * Note: `err instanceof ValidationError` does not actually work across
- * CommonJS modules.
- */
-function isValidationError(error: object): error is ValidationError {
-  return (
-    typeof (error as ValidationError).property === 'string' &&
-    (error as ValidationError).constraints !== undefined &&
-    Array.isArray((error as ValidationError).children)
-  );
-}
+import { ApiError } from './apiError';
 
 /**
  * Picks properties of error objects that are assumed to not contain
@@ -23,10 +9,12 @@ function isValidationError(error: object): error is ValidationError {
  * This is used for error results in API queries
  */
 function pickSafeProps(error: Error | ValidationError | any) {
-  if (isValidationError(error)) {
+  if (error instanceof ValidationError) {
     const { property, constraints } = error;
 
     return { property, constraints };
+  } else if (error instanceof ApiError) {
+    return error;
   } else {
     const { name, code } = error;
 

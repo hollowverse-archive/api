@@ -1,19 +1,10 @@
 import * as got from 'got';
 import { readJson } from './readJson';
+import { ApiError } from './apiError';
 
 const facebookAppConfig = readJson<FacebookAppConfig>(
   'secrets/facebookApp.json',
 );
-
-/**
- * A custom `Error` thrown when attempting to authenticate with Facebook.
- * 
- * The `name` property is shown in the query result to help diagnose issues with
- * the query.
- */
-class InvalidAccessTokenError extends Error {
-  name = 'InvalidAccessTokenError';
-}
 
 /**
  * Verifies that a received Facebook access token is issued for the Hollowverse
@@ -28,7 +19,7 @@ class InvalidAccessTokenError extends Error {
  */
 async function verifyFacebookAccessToken(token: string) {
   if (!token) {
-    throw new InvalidAccessTokenError();
+    throw new ApiError('InvalidAccessTokenError');
   }
 
   const app = await facebookAppConfig;
@@ -47,7 +38,7 @@ async function verifyFacebookAccessToken(token: string) {
     }
   }
 
-  throw new InvalidAccessTokenError();
+  throw new ApiError('InvalidAccessTokenError');
 }
 
 /**

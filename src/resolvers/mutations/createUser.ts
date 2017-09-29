@@ -3,11 +3,7 @@ import { User } from '../../database/entities/user';
 import { CreateUserRootMutationArgs, RootMutation } from '../../typings/schema';
 import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { SchemaContext } from '../../typings/schemaContext';
-
-/** Thrown when attempting to sign up while already logged in */
-class AlreadyRegisteredError extends Error {
-  name = 'ALREADY_REGISTERED';
-}
+import { ApiError } from '../../helpers/apiError';
 
 /**
  * Create a new user passing using a valid Facebook access token
@@ -22,7 +18,7 @@ export async function createUser(
   context: SchemaContext,
 ): Promise<RootMutation['createUser']> {
   if (context.viewer) {
-    throw new AlreadyRegisteredError();
+    throw new ApiError('MustNotBeAuthorizedError');
   }
 
   type Profile = {
