@@ -16,7 +16,7 @@ const defaultOptions: ApiErrorOptions = {
 };
 
 /**
- * Custom API error class, requires pre-defined
+ * Custom API error class, requires a pre-defined
  * error type and handles removing potentially sensitive properties.
  */
 export class ApiError extends Error {
