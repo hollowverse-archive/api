@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { IsEmail, IsUrl, ValidateIf } from 'class-validator';
-import { NormalizeEmail, Trim } from 'class-sanitizer';
+import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { Event } from './event';
 import { Comment } from './comment';
@@ -12,14 +12,13 @@ import { Comment } from './comment';
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
+  @ValidateIf((_, v) => typeof v === 'string')
   @IsEmail({
     allow_display_name: false,
     require_tld: true,
   })
-  @Trim()
-  @NormalizeEmail(true)
-  @Column({ unique: true, nullable: false })
-  email: string;
+  @Column({ type: 'varchar', unique: true, nullable: true })
+  email: string | null;
 
   @Trim()
   @Column({ type: 'varchar', nullable: false })

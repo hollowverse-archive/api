@@ -28,7 +28,6 @@ export async function createUser(
   type Profile = {
     id: string;
     name: string;
-    email: string;
     picture: {
       data: {
         is_silhouette: boolean;
@@ -42,7 +41,7 @@ export async function createUser(
     'https://graph.facebook.com/me',
     {
       query: {
-        fields: ['id', 'name', 'email', 'picture'].join(','),
+        fields: ['id', 'name', 'picture'].join(','),
       },
       json: true,
     },
@@ -55,7 +54,7 @@ export async function createUser(
 
   user.fbId = profile.id;
   user.name = name || profile.name;
-  user.email = email || profile.email;
+  user.email = email;
 
   user.signedUpAt = new Date();
 

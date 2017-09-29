@@ -68,9 +68,9 @@ type User implements UserInterface {
 type Viewer implements UserInterface {
   id: ID!
   name: String!
-  email: Email!
-  signedUpAt: DateTime!
   photoUrl: Url
+  email: Email
+  signedUpAt: DateTime!
 }
 
 type RootQuery {
