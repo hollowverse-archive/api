@@ -14,7 +14,7 @@
     "generate-schema-types/dev": "nodemon --watch src/schema.graphql --exec 'run-p generate-schema-types'",
     "server/dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project ./src'",
     "dev": "run-p '*/dev'",
-    "database/mock": "nodemon --watch ./src/database --ext ts --exec 'ts-node src/database/mock.ts --project ./src'",
+    "database/mock": "ts-node src/database/mock.ts --project ./src",
     "build": "tsc --project ./src",
     "clean": "rm -rf ./dist",
     "start": "node dist/server.js",
