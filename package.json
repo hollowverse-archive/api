@@ -44,6 +44,7 @@
   "dependencies": {
     "@hollowverse/common": "https://github.com/hollowverse/common",
     "apollo-server-express": "^1.1.2",
+    "aws-sdk": "^2.125.0",
     "body-parser": "^1.18.2",
     "class-sanitizer": "^0.0.5",
     "class-validator": "^0.7.2",
