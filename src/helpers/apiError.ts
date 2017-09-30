@@ -3,6 +3,8 @@ import { ApiErrorType } from '../typings/schema';
 const messagesByErrorType: Record<ApiErrorType, string> = {
   MustNotBeAuthorizedError:
     'This operation requires that the request is not authenticated',
+  MustBeAuthorizedError:
+    'This operations requires that the request is authenticated',
   InvalidAccessTokenError:
     'The passed access token is either empty, expired or invalid',
 };
