@@ -1,6 +1,8 @@
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { createUser } from './mutations/createUser';
+import { createNotablePerson } from './mutations/createNotablePerson';
 import { viewer } from './queries/viewer';
+import { requireAuthentication } from '../helpers/requireAuthentication';
 import notablePersonResolvers from './queries/notablePerson';
 import { merge } from 'lodash';
 import { Email } from './scalars/email';
@@ -25,6 +27,7 @@ export const resolvers = merge(
 
     RootMutation: {
       createUser,
+      createNotablePerson: requireAuthentication(createNotablePerson),
     },
   },
   scalarTypes,
