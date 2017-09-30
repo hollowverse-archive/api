@@ -18,14 +18,14 @@ type Label {
 }
 
 # A comment on a notable person's event
-type EventComment {
+type NotablePersonEventComment {
   ownerId: ID!
   photoUrl: Url
   text: String!
 }
 
 # An event about a notable person, must have a source link
-type Event {
+type NotablePersonEvent {
   id: ID!
   quote: String!
   isQuoteByNotablePerson: Boolean!
@@ -34,7 +34,7 @@ type Event {
   postedAt: DateTime!
   # The date the event happened
   happenedOn: DateOnly!
-  comments: [EventComment!]
+  comments: [NotablePersonEventComment!]
 }
 
 # A public figure or an influential person
@@ -43,7 +43,7 @@ type NotablePerson {
   slug: String!
   name: String!
   photoUrl: Url!
-  events: [Event!]!
+  events: [NotablePersonEvent!]!
   labels: [Label!]!
 }
 
