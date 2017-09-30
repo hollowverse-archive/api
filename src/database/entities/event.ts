@@ -10,13 +10,13 @@ import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
 import { User } from './user';
-import { Comment } from './comment';
+import { NotablePersonEventComment } from './comment';
 
 /**
  * An event about a notable person
  */
 @Entity()
-export class Event extends BaseEntity {
+export class NotablePersonEvent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()
@@ -51,9 +51,9 @@ export class Event extends BaseEntity {
   })
   owner: User;
 
-  @OneToMany(_ => Comment, comment => comment.event, {
+  @OneToMany(_ => NotablePersonEventComment, comment => comment.event, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  comments: Comment[];
+  comments: NotablePersonEventComment[];
 }

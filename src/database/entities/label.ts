@@ -8,7 +8,7 @@ import { NotablePerson } from './notablePerson';
  * @example Liberal, Democrat
  */
 @Entity()
-export class Label extends BaseEntity {
+export class NotablePersonLabel extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()

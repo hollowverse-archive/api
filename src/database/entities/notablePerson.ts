@@ -9,8 +9,8 @@ import {
 import { IsUrl } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
-import { Event } from './event';
-import { Label } from './label';
+import { NotablePersonEvent } from './event';
+import { NotablePersonLabel } from './label';
 
 /**
  * A public figure or an influential person
@@ -36,16 +36,16 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'text', nullable: false })
   photoUrl: string;
 
-  @OneToMany(_ => Event, event => event.notablePerson, {
+  @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  events: Event[];
+  events: NotablePersonEvent[];
 
-  @ManyToMany(_ => Label, label => label.notablePerson, {
+  @ManyToMany(_ => NotablePersonLabel, label => label.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
   @JoinTable()
-  labels: Label[];
+  labels: NotablePersonLabel[];
 }

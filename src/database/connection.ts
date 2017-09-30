@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { NotablePerson } from './entities/notablePerson';
-import { Event } from './entities/event';
-import { Label } from './entities/label';
-import { Comment } from './entities/comment';
+import { NotablePersonEvent } from './entities/event';
+import { NotablePersonLabel } from './entities/label';
+import { NotablePersonEventComment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readJson';
 import { isUsingProductionDatabase } from './env';
@@ -43,6 +43,12 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
 export const connection = getConfig().then(async config =>
   createConnection({
     ...config,
-    entities: [NotablePerson, Event, Label, Comment, User],
+    entities: [
+      NotablePerson,
+      NotablePersonEvent,
+      NotablePersonLabel,
+      NotablePersonEventComment,
+      User,
+    ],
   }),
 );

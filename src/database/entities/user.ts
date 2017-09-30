@@ -2,8 +2,8 @@ import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { IsEmail, IsUrl, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
-import { Event } from './event';
-import { Comment } from './comment';
+import { NotablePersonEvent } from './event';
+import { NotablePersonEventComment } from './comment';
 
 /**
  * A Hollowverse user
@@ -33,17 +33,17 @@ export class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   photoUrl: string | null;
 
-  @OneToMany(_ => Event, event => event.owner, {
+  @OneToMany(_ => NotablePersonEvent, event => event.owner, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  events: Event[];
+  events: NotablePersonEvent[];
 
-  @OneToMany(_ => Comment, comment => comment.owner, {
+  @OneToMany(_ => NotablePersonEventComment, comment => comment.owner, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
-  comments: Comment[];
+  comments: NotablePersonEventComment[];
 
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
