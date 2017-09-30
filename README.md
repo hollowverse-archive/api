@@ -1,5 +1,6 @@
 Hollowverse API
 =====================
+[![Build Status](https://travis-ci.org/hollowverse/api.svg?branch=master)](https://travis-ci.org/hollowverse/api)
 
 GraphQL API for Hollowverse, available at https://api.hollowverse.com/graphql.
 
