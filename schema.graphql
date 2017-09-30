@@ -102,6 +102,7 @@ type RootMutation {
   # The name and email of the new user will be obtained from Facebook if
   # not specified in the mutation input.
   createUser(input: CreateUserInput!): Viewer
+  # Create a new entry for a notable person
   createNotablePerson(
     input: CreateNotablePersonInput!
   ): CreateNotablePersonPayload

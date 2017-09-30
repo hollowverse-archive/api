@@ -31,7 +31,7 @@ export class User extends BaseEntity {
     protocols: ['https', 'http'],
   })
   @Column({ type: 'text', nullable: true })
-  photoUrl: string | null;
+  photoId: string | null;
 
   @OneToMany(_ => NotablePersonEvent, event => event.owner, {
     cascadeInsert: true,

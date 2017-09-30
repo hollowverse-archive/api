@@ -6,7 +6,6 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { IsUrl } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
@@ -27,14 +26,8 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @IsUrl({
-    require_protocol: true,
-    require_valid_protocol: true,
-    protocols: ['https'],
-  })
-  @Trim()
-  @Column({ type: 'text', nullable: false })
-  photoUrl: string;
+  @Column({ type: 'varchar', nullable: false })
+  photoId: string;
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,

@@ -15,7 +15,7 @@ if (isUsingProductionDatabase === false) {
       const users = times(10, () => {
         const user = new User();
         user.email = chance.email();
-        user.photoUrl = chance.url({ protocol: 'https' });
+        user.photoId = chance.url({ protocol: 'https' });
         user.signedUpAt = chance.date();
         user.name = chance.name();
         user.fbId = chance.android_id();
@@ -29,7 +29,7 @@ if (isUsingProductionDatabase === false) {
         const notablePerson = new NotablePerson();
         notablePerson.name = chance.name();
         notablePerson.slug = kebabCase(notablePerson.name);
-        notablePerson.photoUrl = chance.url({ protocol: 'https' });
+        notablePerson.photoId = chance.apple_token();
         notablePerson.labels = times(2, () => {
           const label = new NotablePersonLabel();
           label.notablePerson = notablePerson;
