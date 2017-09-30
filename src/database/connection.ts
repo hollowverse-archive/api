@@ -40,7 +40,7 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
       },
 });
 
-export const connection = getConfig().then(config =>
+export const connection = getConfig().then(async config =>
   createConnection({
     ...config,
     entities: [NotablePerson, Event, Label, Comment, User],
