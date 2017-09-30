@@ -26,7 +26,6 @@
   "lint-staged": {
     "**/*.{j,t}s{x,}": [
       "prettier --write --single-quote --trailing-comma all",
-      "tslint --project tsconfig.json",
       "git add"
     ],
     "**/*.{graphql,gql}": [

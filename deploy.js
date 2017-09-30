@@ -8,7 +8,8 @@ const writeJsonFile = require('@hollowverse/common/helpers/writeJsonFile');
 const createZipFile = require('@hollowverse/common/helpers/createZipFile');
 
 const {
-  ENC_PASS_AWS,
+  ENC_PASS_DB,
+  ENC_PASS_FB,
   IS_PULL_REQUEST,
   PROJECT,
   BRANCH,
@@ -19,8 +20,12 @@ const isPullRequest = IS_PULL_REQUEST !== 'false';
 
 const secrets = [
   {
-    password: ENC_PASS_AWS,
-    decryptedFilename: 'aws.json',
+    password: ENC_PASS_DB,
+    decryptedFilename: 'db.json',
+  },
+  {
+    password: ENC_PASS_FB,
+    decryptedFilename: 'facebookApp.json',
   },
 ];
 
