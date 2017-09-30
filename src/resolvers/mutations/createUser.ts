@@ -14,7 +14,7 @@ import { ApiError } from '../../helpers/apiError';
  */
 export async function createUser(
   _: undefined,
-  { data: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
+  { input: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
   context: SchemaContext,
 ): Promise<RootMutation['createUser']> {
   if (context.viewer) {
