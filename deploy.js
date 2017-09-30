@@ -21,7 +21,7 @@ const isPullRequest = IS_PULL_REQUEST !== 'false';
 const secrets = [
   {
     password: ENC_PASS_DB,
-    decryptedFilename: 'db.json',
+    decryptedFilename: 'db.production.json',
   },
   {
     password: ENC_PASS_FB,
