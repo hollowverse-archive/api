@@ -3,7 +3,6 @@
     "./node_modules/@hollowverse/common/tslint.json"
   ],
   "rules": {
-    "no-submodule-imports": [false],
-    "promise-function-async": [false]
+    "no-submodule-imports": [false]
   }
 }
