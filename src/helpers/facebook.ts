@@ -23,6 +23,7 @@ async function verifyFacebookAccessToken(token: string) {
   }
 
   const app = await facebookAppConfig;
+  // tslint:disable-next-line await-promise
   const response = await got('https://graph.facebook.com/debug_token', {
     query: {
       access_token: app.accessToken,
