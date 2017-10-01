@@ -18,7 +18,7 @@ export class NotablePersonEventComment extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   postedAt: Date;
 
-  @ManyToOne(_ => NotablePersonEvent, event => event.owner, {
+  @ManyToOne(_ => NotablePersonEvent, event => event.comments, {
     nullable: false,
   })
   event: NotablePersonEvent;

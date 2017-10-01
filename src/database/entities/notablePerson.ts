@@ -26,7 +26,8 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @Column({ type: 'varchar', nullable: false })
+  /** The filename of the photo as stored in S3 */
+  @Column({ type: 'varchar', nullable: false, unique: true })
   photoId: string;
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {

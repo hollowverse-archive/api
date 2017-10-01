@@ -77,6 +77,6 @@ if (isUsingProductionDatabase === false) {
 } else {
   console.warn(
     'Mock data was not inserted because the app is configured to use ' +
-      'the production database ',
+      'the production database',
   );
 }

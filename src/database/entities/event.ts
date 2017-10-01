@@ -38,8 +38,8 @@ export class NotablePersonEvent extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   postedAt: Date;
 
-  @Column({ type: 'date', nullable: false })
-  happenedOn: Date;
+  @Column({ type: 'date', nullable: true })
+  happenedOn: Date | null;
 
   @ManyToOne(_ => NotablePerson, np => np.events, {
     nullable: false,
