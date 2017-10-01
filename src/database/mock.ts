@@ -1,5 +1,5 @@
 // tslint:disable no-console
-
+import * as uuid from 'uuid/v4';
 import { connection } from './connection';
 import { NotablePerson } from './entities/notablePerson';
 import { User } from './entities/user';
@@ -16,6 +16,7 @@ if (isUsingProductionDatabase === false) {
     .then(async db => {
       const users = times(10, () => {
         const user = new User();
+        user.id = uuid();
         user.email = chance.email();
         user.photoId = chance.url({ protocol: 'https' });
         user.signedUpAt = chance.date();
@@ -27,9 +28,10 @@ if (isUsingProductionDatabase === false) {
 
       await db.entityManager.save(users);
 
-      const people = await Promise.all(
+      const notablePeople = await Promise.all(
         times(100, async () => {
           const notablePerson = new NotablePerson();
+          notablePerson.id = uuid();
           notablePerson.name = chance.name();
           notablePerson.slug = kebabCase(notablePerson.name);
           notablePerson.photoId = chance.apple_token();
@@ -47,16 +49,17 @@ if (isUsingProductionDatabase === false) {
         }),
       );
 
-      await db.entityManager.save(people);
+      await db.entityManager.save(notablePeople);
 
       const events = times(1000, () => {
         const event = new NotablePersonEvent();
+        event.id = uuid();
         event.happenedOn = chance.date();
         event.postedAt = new Date();
         event.isQuoteByNotablePerson = chance.bool();
         event.sourceUrl = chance.url({ protocol: 'https' });
         event.quote = chance.sentence({ words: 10 });
-        event.notablePerson = chance.pickone(people);
+        event.notablePerson = chance.pickone(notablePeople);
         event.owner = chance.pickone(users);
 
         return event;
@@ -66,6 +69,7 @@ if (isUsingProductionDatabase === false) {
 
       const comments = times(10, () => {
         const comment = new NotablePersonEventComment();
+        comment.id = uuid();
         comment.postedAt = new Date();
         comment.owner = chance.pickone(users);
         comment.event = chance.pickone(events);
