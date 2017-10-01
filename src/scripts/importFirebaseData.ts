@@ -58,13 +58,13 @@ connection
         Object.entries(
           json.notablePersons,
         ).map(async ([id, { name, labels, events }]) => {
-          const np = new NotablePerson();
-          np.id = uuid();
-          np.name = name;
-          np.slug = findKey(json.slugToID, v => v === id)!;
-          np.photoId = np.slug;
+          const notablePerson = new NotablePerson();
+          notablePerson.id = uuid();
+          notablePerson.name = name;
+          notablePerson.slug = findKey(json.slugToID, v => v === id)!;
+          notablePerson.photoId = notablePerson.slug;
 
-          np.labels = await entityManager.save(
+          notablePerson.labels = await entityManager.save(
             labels.map(text => {
               const label = new NotablePersonLabel();
               label.id = uuid();
@@ -75,7 +75,7 @@ connection
             }),
           );
 
-          await entityManager.save(np);
+          await entityManager.save(notablePerson);
 
           await entityManager.save(
             events.map(ev => {
@@ -87,7 +87,7 @@ connection
               event.happenedOn = ev.happenedOn ? new Date(ev.happenedOn) : null;
               event.owner = user!;
               event.postedAt = new Date(ev.postedAt);
-              event.notablePerson = np;
+              event.notablePerson = notablePerson;
 
               const comment = new NotablePersonEventComment();
               comment.id = uuid();
@@ -102,7 +102,7 @@ connection
             }),
           );
 
-          return np;
+          return notablePerson;
         }),
       );
     }),

@@ -20,14 +20,14 @@ export default {
   },
 
   NotablePerson: {
-    async events(np: NotablePerson) {
+    async events(notablePerson: NotablePerson) {
       const db = await connection;
 
       const repo = db.getRepository(NotablePersonEvent);
 
       return repo.find({
         where: {
-          notablePersonId: np.id,
+          notablePersonId: notablePerson.id,
         },
         order: {
           postedAt: 'DESC',

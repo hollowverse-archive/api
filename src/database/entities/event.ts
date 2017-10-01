@@ -42,7 +42,7 @@ export class NotablePersonEvent extends BaseEntity {
   @Column({ type: 'date', nullable: true })
   happenedOn: Date | null;
 
-  @ManyToOne(_ => NotablePerson, np => np.events, {
+  @ManyToOne(_ => NotablePerson, notablePerson => notablePerson.events, {
     nullable: false,
   })
   notablePerson: NotablePerson;
