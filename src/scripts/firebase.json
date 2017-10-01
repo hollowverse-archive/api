@@ -1,0 +1,92 @@
+{
+  "notablePersons" : {
+    "np_123456" : {
+      "events" : [ {
+        "id" : 1,
+        "isQuoteByNotablePerson": true,
+        "postedAt" : 1499925928225,
+        "happenedOn": 1242939600000,
+        "quote" : "\"The major religion I was exposed to in the first 10 years of my life was Catholicism. My stepmother became a Mormon. My aunt, whom I lived with for a long time, was a Nazarene, which is kind of ultra-super Methodist, and in high school, all my friends were Jews. For years I went to Wednesday-night Bible studies with my church group. So I had this peripatetic overview of various faiths, and the one thing I got from that was the intellectual pursuit involved. There was a lot of great stuff to think about.\"",
+        "sourceName" : "Johnsanidopoulos",
+        "sourceUrl" : "http://www.johnsanidopoulos.com/2009/05/orthodoxy-of-tom-hanks.html",
+        "userComment" : "His religious beliefs are about as diverse as the characters he has played. Hanks’ childhood was a hodgepodge of divorce and step-parents, each with their own views. Hanks has identified with everything from Mormonism to his most recent and enduring faith–Greek Orthodox.",
+        "userId" : "unknown"
+      }, {
+        "id" : 2,
+        "postedAt" : 1499925928225,
+        "quote" : "While his starring role in the book-to-screen Da Vinci Code films may have raised some eyebrows, Tom Hanks firmly believes in God. His complex religious history includes family experiences with Catholicism, Mormonism, and the Church of the Nazarene. His wife, actress Rita Wilson, is Greek Orthodox. While Hanks is not specific about the details of his faith, he attends church regularly and focuses on the \"mystery of it all.\"",
+        "sourceName" : "Beliefnet",
+        "sourceUrl" : "http://www.beliefnet.com/celebrity-faith-database/h/tom-hanks.aspx",
+        "userComment" : "Hanks' second and current wife, Rita Wilson, was raised a member of the Greek Orthodox Church and Hanks has taken on her religion. Hanks is said to be a deeply religious man and goes to church regularly.",
+        "userId" : "unknown"
+      }, {
+        "id" : 3,
+        "isQuoteByNotablePerson": true,
+        "postedAt" : 1499925928225,
+        "happenedOn": 1242939600000,
+        "quote" : "\"I must say that when I go to church, and I do go to church, I ponder the mystery. I meditate on the, 'why?' of 'Why people are as they are,' and 'Why bad things happen to good people,' and 'Why good things happen to bad people.' ... The mystery is what I think is, almost, the grand unifying theory of all mankind.\"",
+        "sourceName" : "Johnsanidopoulos",
+        "sourceUrl" : "http://www.johnsanidopoulos.com/2009/05/orthodoxy-of-tom-hanks.html",
+        "userComment" : "Hanks has said that his greatest motivation for being a church-goer is to come in contact with the great unanswered questions mankind has always asked, questions that, for the most part, only religion attempts to answer.",
+        "userId" : "unknown"
+      }, {
+        "id" : 4,
+        "isQuoteByNotablePerson": true,
+        "postedAt" : 1499925928225,
+        "happenedOn": 1236722400000,
+        "quote" : "\"Last week, I labeled members of the Mormon church who supported California’s Proposition 8 as “un-American.” I believe Proposition 8 is counter to the promise of our Constitution; it is codified discrimination.  But everyone has a right to vote their conscience – nothing could be more American. To say members of the Church of Jesus Christ of Latter Day Saints who contributed to Proposition 8 are “un-American” creates more division when the time calls for respectful disagreement.  No one should use “un- American” lightly or in haste.  I did. I should not have.\"",
+        "sourceName" : "Mormon Matters",
+        "sourceUrl" : "http://www.mormonmatters.org/2009/03/11/does-tom-hanks-hate-mormons/",
+        "userComment" : "He slandered his old church–The Church of Jesus Christ of Latter Day Saints (Mormons) when they donated money to advance proposition 8 in California, effectively banning gay marriage. However, he quickly rescinded his statement.",
+        "userId" : "unknown"
+      }, {
+        "id" : 5,
+        "postedAt" : 1499925928225,
+        "quote" : "Tracking the money: Final Numbers",
+        "sourceName" : "Los Angeles Times",
+        "sourceUrl" : "http://www.latimes.com/local/la-moneymap-htmlstory.html",
+        "userComment" : "He contributed his star power to raising over $44 million to defeat proposition 8–which passed anyway.",
+        "userId" : "unknown"
+      }, {
+        "id" : 6,
+        "postedAt" : 1499925928225,
+        "quote" : "Tom Hanks endorses Barack Obama to be the next President of the United States of America.",
+        "sourceName" : "Myspace",
+        "sourceUrl" : "http://www.myspace.com/video/vid/33546997",
+        "userComment" : "Hanks backed Obama in 2008, posting a video on his Myspace page, explaining his position.",
+        "userId" : "unknown"
+      }, {
+        "id" : 7,
+        "isQuoteByNotablePerson": true,
+        "postedAt" : 1499925928225,
+        "happenedOn": 1308776400000,
+        "quote" : "\"If you would have told me a few years ago that ‘don’t ask, don’t tell’ would be repealed and about a billion jobs at General Motors and Chrysler would have been saved because the president was smart enough and strong enough and bold enough to do so, I would have said, ‘Wow. That’s a good president, I think I'll vote for him again.\"",
+        "sourceName" : "Politico",
+        "sourceUrl" : "http://www.politico.com/blogs/click/0611/Tom_Hanks_Im_voting_for_Obama_again.html",
+        "userComment" : "In 2012, Hanks forcefully said he would back Obama once again and, despite widespread opinion to the opposite effect, said Obama had exceeded his expectations.",
+        "userId" : "unknown"
+      } ],
+      "labels" : [ "Greek Orthodox", "Deomcrat", "Liberal" ],
+      "name" : "Tom Hanks",
+      "photoUrl" : "https://firebasestorage.googleapis.com/v0/b/hollowverse-c9cad.appspot.com/o/np_123456_150.png?alt=media&token=082c5d81-faba-4c1a-868b-570b538b6a9a"
+    }
+  },
+  "slugToID" : {
+    "Tom_Hanks" : "np_123456"
+  },
+  "users" : {
+    "2qz4YC0TZKN4cGZn4nk0vqOIste2" : {
+      "displayName" : "Nikita Litvin"
+    },
+    "IP4hZV6QLuSImwD785i85bZoXFy2" : {
+      "displayName" : "Lev Esenish"
+    },
+    "IiRHP4hZV6QwD7851RxzdWmLuSIm" : {
+      "displayName" : "Kale Chips",
+      "userAvatar" : "http://lorempixel.com/20/20/"
+    },
+    "ZgYkviRHpRWmQg3uWFf9bM8LuXm1" : {
+      "displayName" : "M.K. Safi"
+    }
+  }
+}
