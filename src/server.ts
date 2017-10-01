@@ -40,7 +40,7 @@ api.use(
     }
 
     return {
-      schema,
+      schema: await schema,
       formatError,
       context,
     };

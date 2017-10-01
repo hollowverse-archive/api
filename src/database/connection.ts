@@ -5,7 +5,7 @@ import { NotablePersonEvent } from './entities/event';
 import { NotablePersonLabel } from './entities/label';
 import { NotablePersonEventComment } from './entities/comment';
 import { User } from './entities/user';
-import { readJson } from '../helpers/readJson';
+import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase } from './env';
 
 const {

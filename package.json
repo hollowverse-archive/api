@@ -8,6 +8,7 @@
     "pretest": "run-p generate-schema-types",
     "test": "run-p validate-schema validate-file-names lint-js lint-ts",
     "validate-schema": "graphql-validator -s './schema.graphql' './src/examples/*.graphql'",
+    "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' --project tsconfig.json",
     "generate-schema-types": "graphql-to-typescript schema.graphql src/typings/schema.ts",

@@ -1,5 +1,5 @@
 import * as got from 'got';
-import { readJson } from './readJson';
+import { readJson } from './readFile';
 import { ApiError } from './apiError';
 
 const facebookAppConfig = readJson<FacebookAppConfig>(

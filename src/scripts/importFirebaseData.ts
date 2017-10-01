@@ -6,7 +6,7 @@ import { User } from '../database/entities/user';
 import { NotablePersonEvent } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/label';
-import { readJson } from '../helpers/readJson';
+import { readJson } from '../helpers/readFile';
 import { findKey } from 'lodash';
 import * as uuid from 'uuid/v4';
 
