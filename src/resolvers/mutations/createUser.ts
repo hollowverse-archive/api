@@ -6,7 +6,7 @@ import { SchemaContext } from '../../typings/schemaContext';
 import { ApiError } from '../../helpers/apiError';
 
 /**
- * Create a new user passing using a valid Facebook access token
+ * Create a new user using a valid Facebook access token
  * issued for the Hollowverse application.
  * 
  * The name of the new user will be obtained from Facebook if
