@@ -1,8 +1,8 @@
 import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/notablePerson';
 import { NotablePersonEvent } from '../../database/entities/event';
+import { NotablePersonEventComment } from '../../database/entities/comment';
 import { NotablePersonRootQueryArgs } from '../../typings/schema';
-import { URL } from 'url';
 
 export default {
   RootQuery: {
@@ -20,13 +20,6 @@ export default {
   },
 
   NotablePerson: {
-    photoUrl(np: NotablePerson) {
-      return new URL(
-        np.photoId,
-        'https://files.hollowverse.com/notable-people',
-      );
-    },
-
     async events(np: NotablePerson) {
       const db = await connection;
 
@@ -36,10 +29,24 @@ export default {
         where: {
           notablePersonId: np.id,
         },
-        take: 2,
         order: {
           postedAt: 'DESC',
         },
+      });
+    },
+  },
+
+  NotablePersonEvent: {
+    async comments(event: NotablePersonEvent) {
+      const db = await connection;
+
+      const repo = db.getRepository(NotablePersonEventComment);
+
+      return repo.find({
+        where: {
+          eventId: event.id,
+        },
+        relations: ['owner'],
       });
     },
   },

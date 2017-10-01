@@ -1,9 +1,17 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  AfterLoad,
+  PrimaryGeneratedColumn,
+  OneToMany,
+} from 'typeorm';
 import { IsEmail, IsUrl, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonEventComment } from './comment';
+
+import { URL } from 'url';
 
 /**
  * A Hollowverse user
@@ -33,6 +41,8 @@ export class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   photoId: string | null;
 
+  photoUrl: string;
+
   @OneToMany(_ => NotablePersonEvent, event => event.owner, {
     cascadeInsert: true,
     cascadeUpdate: true,
@@ -50,4 +60,12 @@ export class User extends BaseEntity {
 
   @Column({ type: 'varchar', nullable: false, unique: true })
   fbId: string;
+
+  @AfterLoad()
+  setPhotoUrl() {
+    this.photoUrl = new URL(
+      `users/${this.id}`,
+      'https://files.hollowverse.com',
+    ).toString();
+  }
 }

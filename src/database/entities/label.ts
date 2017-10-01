@@ -1,7 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToMany } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
-import { NotablePerson } from './notablePerson';
 
 /**
  * A notable person's label
@@ -17,10 +16,4 @@ export class NotablePersonLabel extends BaseEntity {
 
   @Column({ type: 'datetime', nullable: false })
   createdAt: Date;
-
-  @ManyToMany(_ => NotablePerson, np => np.labels, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
-  })
-  notablePerson: NotablePerson;
 }

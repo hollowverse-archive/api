@@ -19,8 +19,7 @@ type Label {
 
 # A comment on a notable person's event
 type NotablePersonEventComment {
-  ownerId: ID!
-  photoUrl: Url
+  owner: User!
   text: String!
 }
 
@@ -33,7 +32,7 @@ type NotablePersonEvent {
   # The date and time the event was added to the database
   postedAt: DateTime!
   # The date the event happened
-  happenedOn: DateOnly!
+  happenedOn: DateOnly
   comments: [NotablePersonEventComment!]
 }
 
