@@ -11,15 +11,15 @@ import { sanitizeAsync } from 'class-sanitizer';
 export class BaseEntity {
   @BeforeInsert()
   async validate() {
-    await validateOrReject(this);
+    await sanitizeAsync(this);
 
-    return sanitizeAsync(this);
+    return validateOrReject(this);
   }
 
   @BeforeUpdate()
   async validateUpdate() {
-    await validateOrReject(this, { skipMissingProperties: true });
+    await sanitizeAsync(this);
 
-    return sanitizeAsync(this);
+    return validateOrReject(this, { skipMissingProperties: true });
   }
 }
