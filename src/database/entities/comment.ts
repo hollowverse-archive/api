@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
@@ -13,6 +14,7 @@ export class NotablePersonEventComment extends BaseEntity {
 
   @Column({ type: 'text', nullable: false })
   @Trim()
+  @IsNotEmpty()
   text: string;
 
   @Column({ type: 'datetime', nullable: false })

@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { IsNotEmpty } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 
@@ -11,6 +12,7 @@ export class NotablePersonLabel extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()
+  @IsNotEmpty()
   @Column({ type: 'varchar', unique: true, nullable: false })
   text: string;
 

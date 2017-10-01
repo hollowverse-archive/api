@@ -8,6 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Trim } from 'class-sanitizer';
+import { IsNotEmpty } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonLabel } from './label';
@@ -21,15 +22,19 @@ export class NotablePerson extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()
+  @IsNotEmpty()
   @Column({ unique: true, nullable: false })
   slug: string;
 
   @Trim()
+  @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
   /** The filename of the photo as stored in S3 */
   @Column({ type: 'varchar', nullable: false, unique: true })
+  @IsNotEmpty()
+  @Trim()
   photoId: string;
 
   /** Photo URL computed from `photoId`, not an actual column. */

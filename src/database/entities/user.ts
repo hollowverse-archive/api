@@ -29,6 +29,7 @@ export class User extends BaseEntity {
   email: string | null;
 
   @Trim()
+  @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false })
   name: string;
 

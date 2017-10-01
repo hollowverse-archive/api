@@ -5,7 +5,7 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { IsUrl } from 'class-validator';
+import { IsUrl, IsNotEmpty } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePerson } from './notablePerson';
@@ -20,6 +20,7 @@ export class NotablePersonEvent extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()
+  @IsNotEmpty()
   @Column({ type: 'text', nullable: false })
   quote: string;
 
