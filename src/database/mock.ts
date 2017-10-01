@@ -1,3 +1,5 @@
+// tslint:disable no-console
+
 import { connection } from './connection';
 import { NotablePerson } from './entities/notablePerson';
 import { User } from './entities/user';
