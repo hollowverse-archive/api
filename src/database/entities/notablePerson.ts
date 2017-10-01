@@ -32,6 +32,7 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'varchar', nullable: false, unique: true })
   photoId: string;
 
+  /** Photo URL computed from `photoId`, not an actual column. */
   photoUrl: string;
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {

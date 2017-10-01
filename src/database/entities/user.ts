@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { IsEmail, IsUrl, ValidateIf } from 'class-validator';
+import { IsEmail, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
@@ -32,15 +32,10 @@ export class User extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   name: string;
 
-  @ValidateIf((_, v) => typeof v === 'string')
-  @IsUrl({
-    require_protocol: true,
-    require_valid_protocol: true,
-    protocols: ['https', 'http'],
-  })
   @Column({ type: 'text', nullable: true })
   photoId: string | null;
 
+  /** Photo URL computed from `photoId`, not an actual column. */
   photoUrl: string;
 
   @OneToMany(_ => NotablePersonEvent, event => event.owner, {
