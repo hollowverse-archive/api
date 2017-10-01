@@ -3,7 +3,7 @@ import { ApiError } from './apiError';
 import { GraphQLFieldResolver, GraphQLResolveInfo } from 'graphql/type';
 
 /**
- * A higher-order function that wraps a GraphQL resolver and checks
+ * Creates a higher-order GraphQL resolver that wraps a GraphQL resolver and checks
  * if the request is authenticated before calling the wrapped resolver.
  * 
  * If the request is not authenticated, an instance of `MustBeAuthorizedError` is thrown.
