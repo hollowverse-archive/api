@@ -37,7 +37,7 @@ const getConfig = async (): Promise<ConnectionOptions> => ({
         username: RDS_USERNAME || 'root',
         password: RDS_PASSWORD || '123456',
         synchronize: true,
-        dropSchema: false,
+        dropSchema: true,
       },
 });
 
