@@ -13,7 +13,7 @@ import { isUsingProductionDatabase } from './env';
 if (isUsingProductionDatabase === false) {
   const chance = new Chance(process.env.SEED || 1);
   connection
-    .then(db =>
+    .then(async db =>
       db.transaction(async entityManager => {
         const users = times(10, () => {
           const user = new User();

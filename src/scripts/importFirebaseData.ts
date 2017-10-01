@@ -37,7 +37,7 @@ type FirebaseExport = {
 };
 
 connection
-  .then(db =>
+  .then(async db =>
     db.transaction(async entityManager => {
       const users = db.getRepository(User);
       let user = await users.findOne({ email: 'editor@hollowverse.com' });
