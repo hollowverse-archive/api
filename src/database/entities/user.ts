@@ -5,7 +5,7 @@ import {
   PrimaryGeneratedColumn,
   OneToMany,
 } from 'typeorm';
-import { IsEmail, ValidateIf } from 'class-validator';
+import { IsEmail, IsNotEmpty, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
@@ -53,6 +53,7 @@ export class User extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
 
+  @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false, unique: true })
   fbId: string;
 

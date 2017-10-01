@@ -6,13 +6,6 @@ import {
 } from '../../typings/schema';
 import { SchemaContext } from '../../typings/schemaContext';
 
-/**
- * Create a new user passing using a valid Facebook access token
- * issued for the Hollowverse application.
- * 
- * The name and email of the new user will be obtained from Facebook if
- * not specified in the mutation input.
- */
 export async function createNotablePerson(
   _: undefined,
   { input: { name, slug } }: CreateNotablePersonRootMutationArgs,
@@ -26,7 +19,7 @@ export async function createNotablePerson(
 
   const notablePeople = db.getRepository(NotablePerson);
 
-  await notablePeople.persist(notablePerson);
+  await notablePeople.save(notablePerson);
 
   return { name };
 }

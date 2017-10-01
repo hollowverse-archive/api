@@ -14,6 +14,7 @@ function pickSafeProps(error: Error | ValidationError | any) {
 
     return { property, constraints };
   } else if (error instanceof ApiError) {
+    // `ApiError` knows how to remove unsafe props. Just return it as-is.
     return error;
   } else {
     const { name, code } = error;

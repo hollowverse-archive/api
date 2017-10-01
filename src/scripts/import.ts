@@ -44,11 +44,11 @@ connection
     if (!user) {
       user = new User();
       user.id = uuid();
-      user.fbId = '';
+      user.fbId = '116989929051706';
       user.email = 'editor@hollowverse.com';
       user.name = 'Hollowverse Editor';
       user.signedUpAt = new Date();
-      await users.persist(user);
+      await users.save(user);
     }
 
     const json = await readJson<FirebaseExport>('firebaseExport.json');
