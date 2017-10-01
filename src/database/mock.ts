@@ -23,26 +23,29 @@ if (isUsingProductionDatabase === false) {
         return user;
       });
 
-      await db.entityManager.persist(users);
+      await db.entityManager.save(users);
 
-      const people = times(100, () => {
-        const notablePerson = new NotablePerson();
-        notablePerson.name = chance.name();
-        notablePerson.slug = kebabCase(notablePerson.name);
-        notablePerson.photoId = chance.apple_token();
-        notablePerson.labels = times(2, () => {
-          const label = new NotablePersonLabel();
-          label.notablePerson = notablePerson;
-          label.createdAt = chance.date();
-          label.text = chance.word({ syllables: 5 });
+      const people = await Promise.all(
+        times(100, async () => {
+          const notablePerson = new NotablePerson();
+          notablePerson.name = chance.name();
+          notablePerson.slug = kebabCase(notablePerson.name);
+          notablePerson.photoId = chance.apple_token();
+          notablePerson.labels = await db.entityManager.save(
+            times(2, () => {
+              const label = new NotablePersonLabel();
+              label.createdAt = chance.date();
+              label.text = chance.word({ syllables: 5 });
 
-          return label;
-        });
+              return label;
+            }),
+          );
 
-        return notablePerson;
-      });
+          return notablePerson;
+        }),
+      );
 
-      await db.entityManager.persist(people);
+      await db.entityManager.save(people);
 
       const events = times(1000, () => {
         const event = new NotablePersonEvent();
@@ -57,7 +60,7 @@ if (isUsingProductionDatabase === false) {
         return event;
       });
 
-      await db.entityManager.persist(events);
+      await db.entityManager.save(events);
 
       const comments = times(10, () => {
         const comment = new NotablePersonEventComment();
@@ -69,14 +72,20 @@ if (isUsingProductionDatabase === false) {
         return comment;
       });
 
-      await db.entityManager.persist(comments);
+      await db.entityManager.save(comments);
+    })
+    .then(() => {
+      console.info('Mock data inserted successfully');
+      process.exit(0);
     })
     .catch(e => {
       console.error('Error inserting mock data:', e.message);
+      process.exit(1);
     });
 } else {
   console.warn(
     'Mock data was not inserted because the app is configured to use ' +
       'the production database',
   );
+  process.exit(1);
 }
