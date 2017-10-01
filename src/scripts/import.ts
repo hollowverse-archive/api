@@ -34,11 +34,6 @@ type FirebaseExport = {
   slugToID: {
     [slug: string]: string;
   };
-  users: {
-    [id: string]: {
-      displayName: string;
-    };
-  };
 };
 
 connection
