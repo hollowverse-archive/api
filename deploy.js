@@ -44,6 +44,7 @@ async function main() {
       createZipFile(
         'build.zip',
         [
+          'schema.graphql',
           'dist/**/*',
           'secrets/**/*',
           'yarn.lock',
