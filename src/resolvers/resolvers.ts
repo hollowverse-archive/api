@@ -3,7 +3,7 @@ import { createUser } from './mutations/createUser';
 import { createNotablePerson } from './mutations/createNotablePerson';
 import { viewer } from './queries/viewer';
 import { requireAuthentication } from '../helpers/requireAuthentication';
-import notablePersonResolvers from './queries/notablePerson';
+import { notablePersonResolvers } from './queries/notablePerson';
 import { merge } from 'lodash';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';

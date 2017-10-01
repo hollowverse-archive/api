@@ -4,7 +4,7 @@ import { NotablePersonEvent } from '../../database/entities/event';
 import { NotablePersonEventComment } from '../../database/entities/comment';
 import { NotablePersonRootQueryArgs } from '../../typings/schema';
 
-export default {
+export const notablePersonResolvers = {
   RootQuery: {
     async notablePerson(_: undefined, { slug }: NotablePersonRootQueryArgs) {
       const db = await connection;
