@@ -5,7 +5,6 @@ import { NotablePersonEvent } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/label';
 import { readJson } from '../helpers/readJson';
-import * as path from 'path';
 import { findKey } from 'lodash';
 import * as uuid from 'uuid/v4';
 
@@ -55,9 +54,7 @@ connection
       await users.persist(user);
     }
 
-    const json = await readJson<FirebaseExport>(
-      path.resolve(__dirname, 'firebase.json'),
-    );
+    const json = await readJson<FirebaseExport>('firebaseExport.json');
 
     return Promise.all(
       Object.entries(
