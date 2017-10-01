@@ -26,7 +26,4 @@ COPY ./dist ./dist/
 COPY ./schema.graphql ./
 COPY ./firebaseExport.json ./
 
-# Workaround for an issue with conflicting versions of the graphql package
-RUN yarn add graphql
-
 CMD yarn start
