@@ -48,8 +48,10 @@ api.use(
 );
 
 const debugHeaders = [
-  `'Authorization': 'Bearer ${process.env.FB_ACCESS_TOKEN}'`,
-];
+  process.env.FB_ACCESS_TOKEN
+    ? `'Authorization': 'Bearer ${process.env.FB_ACCESS_TOKEN}'`
+    : null,
+].filter(Boolean);
 
 api.use(
   '/graphiql',
