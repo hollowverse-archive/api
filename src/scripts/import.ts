@@ -1,3 +1,5 @@
+// tslint:disable no-console no-non-null-assertion
+
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
@@ -72,6 +74,7 @@ connection
             label.id = uuid();
             label.text = text;
             label.createdAt = new Date();
+
             return label;
           }),
         );
