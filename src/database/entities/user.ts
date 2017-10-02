@@ -7,6 +7,7 @@ import {
 } from 'typeorm';
 import { IsEmail, IsNotEmpty, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
+import { normalizeEmail, isEmail } from 'validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonEventComment } from './comment';
@@ -64,5 +65,13 @@ export class User extends BaseEntity {
       `users/${this.id}`,
       'https://files.hollowverse.com',
     ).toString();
+  }
+
+  validate() {
+    if (typeof this.email === 'string' && isEmail(this.email)) {
+      this.email = normalizeEmail(this.email) || null;
+    }
+
+    return super.validate();
   }
 }

@@ -75,7 +75,7 @@ if (isUsingProductionDatabase === false) {
           comment.postedAt = new Date();
           comment.owner = chance.pickone(users);
           comment.event = chance.pickone(events);
-          comment.text = '    ';
+          comment.text = chance.sentence({ words: 7 });
 
           return comment;
         });
