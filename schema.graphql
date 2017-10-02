@@ -10,7 +10,7 @@ scalar Email
 # A full URL with the protocol. Accepted protocols are http and https only.
 scalar Url
 
-#A notable person's label, e.g. Liberal, Democrat
+# A notable person's label, e.g. Liberal, Democrat
 type Label {
   id: ID!
   text: String!
