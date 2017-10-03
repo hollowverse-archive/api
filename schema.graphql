@@ -115,8 +115,7 @@ schema {
 enum ApiErrorType {
   # Thrown when an operation requires that the request is authorized
   MustBeAuthorizedError
-  # Thrown when an operation requires that the request is not authenticated
-  MustNotBeAuthorizedError
+  OperationNotAllowedError
   # Thrown when an access token is empty, invalid or expired
   InvalidAccessTokenError
 }

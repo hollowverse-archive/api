@@ -18,7 +18,10 @@ export async function createUser(
   context: SchemaContext,
 ): Promise<RootMutation['createUser']> {
   if (context.viewer) {
-    throw new ApiError('MustNotBeAuthorizedError');
+    throw new ApiError(
+      'OperationNotAllowedError',
+      'Cannot create a new user because the request is already authenticated',
+    );
   }
 
   type Profile = {

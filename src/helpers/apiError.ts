@@ -1,8 +1,7 @@
 import { ApiErrorType } from '../typings/schema';
 
 const messagesByErrorType: Record<ApiErrorType, string> = {
-  MustNotBeAuthorizedError:
-    'This operation requires that the request is not authenticated',
+  OperationNotAllowedError: 'This operation is not allowed',
   MustBeAuthorizedError:
     'This operation requires that the request is authenticated',
   InvalidAccessTokenError:
