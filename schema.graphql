@@ -1,0 +1,121 @@
+# Date without time, serialized as a YYYY-MM-DD string
+scalar DateOnly
+
+# Date and time, serialized as an ISO date string
+scalar DateTime
+
+# A valid email address
+scalar Email
+
+# A full URL with the protocol. Accepted protocols are http and https only.
+scalar Url
+
+# A notable person's label, e.g. Liberal, Democrat
+type Label {
+  id: ID!
+  text: String!
+  createdAt: DateTime!
+}
+
+# A comment on a notable person's event
+type NotablePersonEventComment {
+  owner: User!
+  text: String!
+}
+
+# An event about a notable person, must have a source link
+type NotablePersonEvent {
+  id: ID!
+  quote: String!
+  isQuoteByNotablePerson: Boolean!
+  sourceUrl: String!
+  # The date and time the event was added to the database
+  postedAt: DateTime!
+  # The date the event happened
+  happenedOn: DateOnly
+  comments: [NotablePersonEventComment!]
+}
+
+# A public figure or an influential person
+type NotablePerson {
+  # The part of the URL to that notable person's page, e.g. Tom_Hanks
+  slug: String!
+  name: String!
+  photoUrl: Url!
+  events: [NotablePersonEvent!]!
+  labels: [Label!]!
+}
+
+interface UserInterface {
+  id: ID!
+  name: String!
+  photoUrl: Url
+}
+
+type User implements UserInterface {
+  id: ID!
+  name: String!
+  photoUrl: Url
+}
+
+# The authenticated user performing the request
+#
+# The authentication token must be passed
+# in the HTTP `Authorization` header. The token type must be `Bearer` and the
+# token value is a valid Facebook access token issued for the Hollowverse
+# application.
+type Viewer implements UserInterface {
+  id: ID!
+  name: String!
+  photoUrl: Url
+  email: Email
+  signedUpAt: DateTime!
+}
+
+type RootQuery {
+  # The authenticated user performing the request
+  viewer: Viewer
+  notablePerson(slug: String!): NotablePerson
+}
+
+input CreateUserInput {
+  fbAccessToken: String!
+  # Optional email address to override the one obtained from Facebook
+  email: Email
+  # Optional name to override the one obtained from Facebook
+  name: String
+}
+
+input CreateNotablePersonInput {
+  slug: String!
+  name: String!
+}
+
+type CreateNotablePersonPayload {
+  name: String!
+}
+
+type RootMutation {
+  # Create a new user passing using a valid Facebook access token
+  # issued for the Hollowverse application.
+  # The name and email of the new user will be obtained from Facebook if
+  # not specified in the mutation input.
+  createUser(input: CreateUserInput!): Viewer
+  # Create a new entry for a notable person
+  createNotablePerson(
+    input: CreateNotablePersonInput!
+  ): CreateNotablePersonPayload
+}
+
+schema {
+  query: RootQuery
+  mutation: RootMutation
+}
+
+enum ApiErrorType {
+  # Thrown when an operation requires that the request is authorized
+  MustBeAuthorizedError
+  OperationNotAllowedError
+  # Thrown when an access token is empty, invalid or expired
+  InvalidAccessTokenError
+}

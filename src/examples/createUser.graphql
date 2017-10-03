@@ -1,0 +1,6 @@
+mutation CreateUser {
+  createUser(input: { fbAccessToken: "fb_access_token" }) {
+    name
+    id
+  }
+}

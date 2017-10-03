@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "allowJs": false,
+    "checkJs": false,
+    "outDir": "../dist",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
