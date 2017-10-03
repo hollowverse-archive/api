@@ -67,7 +67,7 @@ export class User extends BaseEntity {
     ).toString();
   }
 
-  validate() {
+  async validate() {
     if (typeof this.email === 'string' && isEmail(this.email)) {
       this.email = normalizeEmail(this.email) || null;
     }
