@@ -69,7 +69,7 @@ export class User extends BaseEntity {
 
   async validate() {
     if (typeof this.email === 'string' && isEmail(this.email)) {
-      this.email = normalizeEmail(this.email) || null;
+      this.email = normalizeEmail(this.email, { lowercase: true }) || null;
     }
 
     return super.validate();
