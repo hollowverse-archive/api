@@ -1,5 +1,6 @@
 import * as express from 'express';
 import * as bodyParser from 'body-parser';
+import * as cors from 'cors';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
@@ -7,14 +8,20 @@ import { redirectToHttps } from './redirectToHttps';
 import { health, setIsHealthy } from './health';
 import { SchemaContext } from './typings/schemaContext';
 import { findUserByFacebookAccessToken } from './helpers/auth';
-
 import { connection } from './database/connection';
+import { isProd } from './env';
 
 connection.catch(_ => {
   setIsHealthy(false);
 });
 
 const api = express();
+
+api.use(
+  cors({
+    origin: isProd ? ['hollowverse.com', '*.hollowverse.com'] : '*',
+  }),
+);
 
 api.use(redirectToHttps);
 
