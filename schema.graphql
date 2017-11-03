@@ -44,6 +44,7 @@ type NotablePerson {
   photoUrl: Url!
   events: [NotablePersonEvent!]!
   labels: [Label!]!
+  summary: String
 }
 
 interface UserInterface {
