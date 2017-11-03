@@ -17,7 +17,6 @@
     "dev": "run-p '*/dev'",
     "database/mock": "ts-node src/database/mock.ts --project ./src",
     "build": "tsc --project ./src",
-    "debug": "tsc --project ./src --watch",
     "clean": "rm -rf ./dist",
     "start": "node dist/server.js",
     "validate-file-names": "validate-file-names",
