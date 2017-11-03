@@ -19,6 +19,7 @@ type Label {
 
 # A comment on a notable person's event
 type NotablePersonEventComment {
+  id: String!
   owner: User!
   text: String!
 }
