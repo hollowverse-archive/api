@@ -4,10 +4,14 @@ services:
   database:
     image: mysql
     restart: on-failure
+    volumes:
+      - type: volume
+        source: database
+        target: /var/lib/mysql
     ports:
-      - 3306:3306
+      - "3306:3306"
     expose:
-      - 3306
+      - "3306"
     environment:
       - MYSQL_DATABASE=hollowverse
       - MYSQL_ROOT_PASSWORD=123456
@@ -23,8 +27,8 @@ services:
     links:
       - database
     ports:
-      - 8080:8080
-      - 9229:9229
+      - "${API_PORT:-8080}:8080"
+      - "${DEBUG_PORT:-9229}:9229"
     volumes:
       - type: bind
         source: .
@@ -40,4 +44,6 @@ services:
 
 volumes:
   nm:
+  database:
+
 
