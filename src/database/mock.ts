@@ -8,7 +8,7 @@ import { NotablePersonEventComment } from './entities/comment';
 import { NotablePersonLabel } from './entities/label';
 import * as Chance from 'chance';
 import { times, kebabCase } from 'lodash';
-import { isUsingProductionDatabase } from './env';
+import { isUsingProductionDatabase } from '../env';
 
 if (isUsingProductionDatabase === false) {
   const chance = new Chance(process.env.SEED || 1);

@@ -1,4 +1,4 @@
-./.git/*
-./.vscode/*
-**/node_modules/*
+./.git/**/*
+./.vscode/**/*
+**/node_modules/**/*
 secrets/**/*.enc
