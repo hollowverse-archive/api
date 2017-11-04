@@ -6,7 +6,7 @@ import { NotablePersonLabel } from './entities/label';
 import { NotablePersonEventComment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readFile';
-import { isUsingProductionDatabase } from '../env';
+import { isUsingProductionDatabase } from './env';
 
 const {
   // These variables are for the development database
