@@ -96,9 +96,9 @@ type CreateNotablePersonPayload {
 }
 
 type RootMutation {
-  # Create a new user passing using a valid Facebook access token
+  # Create a new user using a valid Facebook access token
   # issued for the Hollowverse application.
-  # The name and email of the new user will be obtained from Facebook if
+  # The name of the new user will be obtained from Facebook if
   # not specified in the mutation input.
   createUser(input: CreateUserInput!): Viewer
   # Create a new entry for a notable person

@@ -1,4 +1,4 @@
-import { GraphQLScalarType } from 'graphql';
+import { GraphQLScalarType } from 'graphql/type';
 import { ASTNode, Kind } from 'graphql/language';
 import { GraphQLError } from 'graphql/error';
 
