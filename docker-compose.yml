@@ -1,0 +1,43 @@
+version: "3.3"
+
+services:
+  database:
+    image: mysql
+    restart: on-failure
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    environment:
+      - MYSQL_DATABASE=hollowverse
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_ROOT_HOST=%
+
+  api:
+    restart: always
+    depends_on:
+      - database
+    build:
+      dockerfile: Dockerfile-dev
+      context: .
+    links:
+      - database
+    ports:
+      - 8080:8080
+      - 9229:9229
+    volumes:
+      - type: bind
+        source: .
+        target: /code
+      
+      - type: volume
+        source: nm
+        target: /code/node_modules
+    environment:
+      - RDS_HOSTNAME=database
+      - RDS_USERNAME=root
+      - RDS_PASSWORD=123456
+
+volumes:
+  nm:
+
