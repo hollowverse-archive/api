@@ -13,7 +13,7 @@
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' --project tsconfig.json",
     "generate-schema-types": "graphql-to-typescript schema.graphql src/typings/schema.ts",
     "generate-schema-types/dev": "nodemon --watch schema.graphql --exec 'run-p generate-schema-types'",
-    "server/dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'ts-node src/server.ts --project ./src'",
+    "server/dev": "PORT=8080 nodemon --watch ./src --ext ts,graphql,tsx,json --exec 'node --inspect -r 'ts-node/register' src/server.ts'",
     "dev": "run-p '*/dev'",
     "database/mock": "ts-node src/database/mock.ts --project ./src",
     "build": "tsc --project ./src",
