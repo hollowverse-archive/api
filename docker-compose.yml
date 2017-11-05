@@ -28,7 +28,7 @@ services:
       - database
     ports:
       - "${API_PORT:-8080}:8080"
-      - "${DEBUG_PORT:-9229}:9229"
+      - "${API_DEBUG_PORT:-9229}:9229"
     volumes:
       - type: bind
         source: .
