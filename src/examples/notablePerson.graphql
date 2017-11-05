@@ -2,6 +2,8 @@ query GetNotablePerson {
   notablePerson(slug: "Tom_Hanks") {
     slug
     name
+    summary
+    photoUrl
     events {
       id
       quote
@@ -9,6 +11,14 @@ query GetNotablePerson {
       isQuoteByNotablePerson
       postedAt
       happenedOn
+      comments {
+        owner {
+          id
+          name
+          photoUrl
+        }
+        text
+      }
     }
   }
 }
