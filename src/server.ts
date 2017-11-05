@@ -19,7 +19,9 @@ const api = express();
 
 api.use(
   cors({
-    origin: isProd ? ['https://hollowverse.com', /\.hollowverse\.com$/] : '*',
+    origin: isProd
+      ? ['https://hollowverse.com', /\.hollowverse\.com$/] as any[]
+      : '*',
   }),
 );
 
