@@ -26,6 +26,15 @@ export class NotablePerson extends BaseEntity {
   @Column({ unique: true, nullable: false })
   slug: string;
 
+  /**
+   * The path part of the URL for that notable person on the old Hollowverse
+   * website, without the leading slash.
+   * `null` if this notable person was not imported from the old website.
+   * @example: For http://hollowverse.com/tom-hanks, this would be `tom-hanks`.
+   */
+  @Column({ type: 'varchar', unique: true, nullable: true })
+  oldSlug: string | null;
+
   @Trim()
   @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false })
@@ -43,6 +52,18 @@ export class NotablePerson extends BaseEntity {
 
   /** Photo URL computed from `photoId`, not an actual column. */
   photoUrl: string;
+
+  /**
+   * This is used to load Facebook comments on the client.
+   * 
+   * This should be treated as an opaque value because the protocol and path parts
+   * of this URL might be different depending on whether the notable person
+   * was imported from the old Hollowverse website or not. The trailing slash may
+   * also be included or removed.
+   * 
+   * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
+   */
+  commentsUrl: string;
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,
@@ -63,5 +84,22 @@ export class NotablePerson extends BaseEntity {
       `notable-people/${this.slug}`,
       'https://files.hollowverse.com',
     ).toString();
+  }
+
+  @AfterLoad()
+  setCommentsUrl() {
+    let url: URL;
+
+    if (this.oldSlug !== null) {
+      url = new URL(
+        `${this.oldSlug}/`,
+        // tslint:disable-next-line:no-http-string
+        'http://hollowverse.com',
+      );
+    } else {
+      url = new URL(`${this.slug}`, 'https://hollowverse.com');
+    }
+
+    this.commentsUrl = url.toString();
   }
 }

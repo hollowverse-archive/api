@@ -46,6 +46,15 @@ type NotablePerson {
   events: [NotablePersonEvent!]!
   labels: [Label!]!
   summary: String
+  # This is used to load Facebook comments on the client.
+  #
+  # This should be treated as an opaque value because the protocol and path parts
+  # of this URL might be different depending on whether the notable person
+  # was imported from the old Hollowverse website or not. The trailing slash may
+  # also be included or removed.
+  #
+  # Example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
+  commentsUrl: String!
 }
 
 interface UserInterface {

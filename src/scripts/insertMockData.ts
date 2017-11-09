@@ -37,6 +37,7 @@ if (isUsingProductionDatabase === false) {
             notablePerson.summary = chance.sentence();
             notablePerson.slug = kebabCase(notablePerson.name);
             notablePerson.photoId = chance.apple_token();
+            notablePerson.commentsUrl = chance.url();
             notablePerson.labels = await entityManager.save(
               times(2, () => {
                 const label = new NotablePersonLabel();
