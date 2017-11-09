@@ -7,6 +7,8 @@ import { notablePersonResolvers } from './queries/notablePerson';
 import { merge } from 'lodash';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';
+import { userResolvers } from './types/user';
+import { viewerResolvers } from './types/viewer';
 
 /**
  * Resolvers for custom scalar types.
@@ -30,6 +32,8 @@ export const resolvers = merge(
       createNotablePerson: requireAuthentication(createNotablePerson),
     },
   },
+  userResolvers,
+  viewerResolvers,
   scalarTypes,
   notablePersonResolvers,
 );
