@@ -69,3 +69,18 @@ export async function sendFacebookAuthenticatedRequest(
         : options.query,
   });
 }
+
+export async function getPhotoUrlByFbId(
+  fbId: string,
+  type: 'small' | 'normal' | 'large' = 'normal',
+) {
+  const response = await got(`https://graph.facebook.com/${fbId}/picture`, {
+    json: true,
+    query: {
+      type: type,
+      redirect: false,
+    },
+  });
+
+  return response.body.data.url;
+}

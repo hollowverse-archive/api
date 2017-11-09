@@ -10,6 +10,8 @@ import { SchemaContext } from './typings/schemaContext';
 import { findUserByFacebookAccessToken } from './helpers/auth';
 import { connection } from './database/connection';
 import { isProd } from './env';
+import * as DataLoader from 'dataloader';
+import { getPhotoUrlByFbId } from './helpers/facebook';
 
 connection.catch(_ => {
   setIsHealthy(false);
@@ -33,7 +35,13 @@ api.use(
   '/graphql',
   bodyParser.json(),
   graphqlExpress(async req => {
-    const context: SchemaContext = {};
+    const context: SchemaContext = {
+      userPhotoUrlLoader: new DataLoader<string, string>(fbIds => {
+        return Promise.all(
+          fbIds.map(fbId => getPhotoUrlByFbId(fbId, 'normal')),
+        );
+      }),
+    };
     if (req) {
       const authorization = req.header('Authorization');
       if (authorization) {
