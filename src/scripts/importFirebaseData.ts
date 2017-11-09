@@ -17,6 +17,7 @@ type FirebaseExport = {
       summary: string | null;
       labels: string[];
       photoUrl: string;
+      oldSlug: string;
       events: [
         {
           id: number;
@@ -58,13 +59,14 @@ connection
       return Promise.all(
         Object.entries(
           json.notablePersons,
-        ).map(async ([id, { name, labels, events, summary }]) => {
+        ).map(async ([id, { name, labels, events, summary, oldSlug }]) => {
           const notablePerson = new NotablePerson();
           notablePerson.id = uuid();
           notablePerson.name = name;
           notablePerson.slug = findKey(json.slugToID, v => v === id)!;
           notablePerson.photoId = notablePerson.slug;
           notablePerson.summary = summary;
+          notablePerson.oldSlug = oldSlug;
 
           notablePerson.labels = await entityManager.save(
             labels.map(text => {

@@ -69,7 +69,8 @@
       "labels" : [ "Greek Orthodox", "Democrat", "Liberal" ],
       "name" : "Tom Hanks",
       "photoUrl" : "https://firebasestorage.googleapis.com/v0/b/hollowverse-c9cad.appspot.com/o/np_123456_150.png?alt=media&token=082c5d81-faba-4c1a-868b-570b538b6a9a",
-      "summary": "Hanks has run the gamut of Christian denominations from Mormonism to Catholicism but seems to have settled on Greek Orthodox.\nHanks is a hardcore Democrat and liberal, throwing his weight behind gay marriage, alternative energy, environmentalism, and Obama."
+      "summary": "Hanks has run the gamut of Christian denominations from Mormonism to Catholicism but seems to have settled on Greek Orthodox.\nHanks is a hardcore Democrat and liberal, throwing his weight behind gay marriage, alternative energy, environmentalism, and Obama.",
+      "oldSlug": "tom-hanks"
     }
   },
   "slugToID" : {
