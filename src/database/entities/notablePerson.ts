@@ -30,7 +30,7 @@ export class NotablePerson extends BaseEntity {
    * The path part of the URL for that notable person on the old Hollowverse
    * website, without the leading slash.
    * `null` if this notable person was not imported from the old website.
-   * @example: For, http://hollowverse.com/tom-hanks, this would be `tom-hanks`.
+   * @example: For http://hollowverse.com/tom-hanks, this would be `tom-hanks`.
    */
   @Column({ type: 'varchar', unique: true, nullable: true })
   oldSlug: string | null;
@@ -58,7 +58,7 @@ export class NotablePerson extends BaseEntity {
    * 
    * This should be treated as an opaque value because the protocol and path parts
    * of this URL might be different depending on whether the notable person
-   * was imported from the old Hollowverse website or not. The leading slash may
+   * was imported from the old Hollowverse website or not. The trailing slash may
    * also be included or removed.
    * 
    * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
