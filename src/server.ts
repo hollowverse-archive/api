@@ -36,9 +36,9 @@ api.use(
   bodyParser.json(),
   graphqlExpress(async req => {
     const context: SchemaContext = {
-      userPhotoUrlLoader: new DataLoader<string, string>(fbIds => {
+      userPhotoUrlLoader: new DataLoader<string, string>(async fbIds => {
         return Promise.all(
-          fbIds.map(fbId => getPhotoUrlByFbId(fbId, 'normal')),
+          fbIds.map(async fbId => getPhotoUrlByFbId(fbId, 'normal')),
         );
       }),
     };
