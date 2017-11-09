@@ -1,11 +1,11 @@
 // tslint:disable no-console
 import * as uuid from 'uuid/v4';
-import { connection } from './connection';
-import { NotablePerson } from './entities/notablePerson';
-import { User } from './entities/user';
-import { NotablePersonEvent } from './entities/event';
-import { NotablePersonEventComment } from './entities/comment';
-import { NotablePersonLabel } from './entities/label';
+import { connection } from '../database/connection';
+import { NotablePerson } from '../database/entities/notablePerson';
+import { User } from '../database/entities/user';
+import { NotablePersonEvent } from '../database/entities/event';
+import { NotablePersonEventComment } from '../database/entities/comment';
+import { NotablePersonLabel } from '../database/entities/label';
 import * as Chance from 'chance';
 import { times, kebabCase } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
