@@ -16,7 +16,7 @@ export async function createUser(
   _: undefined,
   { input: { fbAccessToken, email, name } }: CreateUserRootMutationArgs,
   context: SchemaContext,
-): Promise<RootMutation['createUser']> {
+): Promise<Partial<RootMutation['createUser']>> {
   if (context.viewer) {
     throw new ApiError(
       'OperationNotAllowedError',
