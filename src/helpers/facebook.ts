@@ -82,5 +82,5 @@ export async function getPhotoUrlByFbId(
     },
   });
 
-  return response.body.data.url;
+  return response.body.data.url as string;
 }
