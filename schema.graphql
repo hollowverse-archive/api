@@ -35,6 +35,9 @@ type NotablePersonEvent {
   # The date the event happened
   happenedOn: DateOnly
   comments: [NotablePersonEventComment!]
+    @deprecated(
+      reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
+    )
 }
 
 # A public figure or an influential person
