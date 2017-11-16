@@ -1,6 +1,4 @@
-import * as pem from 'pem';
 import * as express from 'express';
-import * as spdy from 'spdy';
 import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
@@ -113,21 +111,4 @@ api.use(
   }),
 );
 
-pem.createCertificate({ days: 100000, selfSigned: true }, (err, keys) => {
-  if (err) {
-    throw err;
-  }
-
-  const options = {
-    key: keys.serviceKey,
-    cert: keys.certificate,
-  };
-
-  spdy
-    .createServer(options, api as any)
-    .listen(process.env.PORT || 8080, (error: Error | null) => {
-      if (error) {
-        process.exit(1);
-      }
-    });
-});
+api.listen(process.env.PORT || 8080);
