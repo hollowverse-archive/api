@@ -44,8 +44,6 @@
   ],
   "dependencies": {
     "@hollowverse/common": "https://github.com/hollowverse/common",
-    "@types/pem": "^1.9.3",
-    "@types/spdy": "^3.4.4",
     "apollo-server-express": "^1.1.2",
     "body-parser": "^1.18.2",
     "class-sanitizer": "^0.0.5",
@@ -61,9 +59,7 @@
     "moment": "^2.19.2",
     "mysql": "^2.14.1",
     "npm-run-all": "^4.0.2",
-    "pem": "^1.12.3",
     "reflect-metadata": "^0.1.10",
-    "spdy": "^3.4.7",
     "typeorm": "^0.1.0-alpha.47",
     "validator": "^9.0.0"
   },
