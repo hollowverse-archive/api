@@ -58,7 +58,7 @@ api.use(
   }),
 );
 
-api.use('/health', health);
+api.use('/', health);
 
 api.use(
   '/graphql',
