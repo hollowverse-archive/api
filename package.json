@@ -26,12 +26,12 @@
   "homepage": "https://github.com/hollowverse/api#readme",
   "lint-staged": {
     "**/*.{j,t}s{x,}": [
-      "prettier --write --single-quote --trailing-comma all",
+      "prettier --write",
       "git add"
     ],
     "**/*.{graphql,gql}": [
       "validate-schema",
-      "prettier --write --single-quote --trailing-comma all",
+      "prettier --write",
       "git add"
     ],
     "**/*.js{x,}": [
