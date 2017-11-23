@@ -32,6 +32,7 @@ export const notablePersonResolvers = {
         order: {
           postedAt: 'DESC',
         },
+        relations: ['labels'],
       });
     },
   },

@@ -52,7 +52,7 @@ type NotablePersonEvent {
   # An entity is a place, organization a political event... etc.
   entityName: String
   entityUrl: String
-  labels: [NotablePersonEventLabel!]
+  labels: [NotablePersonEventLabel!]!
   comments: [NotablePersonEventComment!]
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."

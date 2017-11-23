@@ -5,7 +5,7 @@ import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
 import { NotablePersonEvent } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
-import { NotablePersonLabel } from '../database/entities/label';
+import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
 import { readJson } from '../helpers/readFile';
 import { findKey } from 'lodash';
 import * as uuid from 'uuid/v4';
@@ -85,6 +85,8 @@ connection
             events.map(ev => {
               const event = new NotablePersonEvent();
               event.id = uuid();
+              event.type = 'quote';
+              event.labels = [];
               event.sourceUrl = ev.sourceUrl;
               event.isQuoteByNotablePerson = ev.isQuoteByNotablePerson || false;
               event.quote = ev.quote;
