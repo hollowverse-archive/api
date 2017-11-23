@@ -11,7 +11,7 @@ import { Trim } from 'class-sanitizer';
 import { IsNotEmpty } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
-import { NotablePersonLabel } from './label';
+import { NotablePersonLabel } from './notablePersonLabel';
 import { URL } from 'url';
 
 /**

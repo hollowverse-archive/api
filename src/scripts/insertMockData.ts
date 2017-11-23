@@ -3,11 +3,12 @@ import * as uuid from 'uuid/v4';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
-import { NotablePersonEvent } from '../database/entities/event';
+import { NotablePersonEvent, EventType } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
-import { NotablePersonLabel } from '../database/entities/label';
+import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
+import { EventLabel } from '../database/entities/eventLabel';
 import * as Chance from 'chance';
-import { times, kebabCase } from 'lodash';
+import { times } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
 
 if (isUsingProductionDatabase === false) {
@@ -35,7 +36,7 @@ if (isUsingProductionDatabase === false) {
             notablePerson.id = uuid();
             notablePerson.name = chance.name();
             notablePerson.summary = chance.sentence();
-            notablePerson.slug = kebabCase(notablePerson.name);
+            notablePerson.slug = notablePerson.name.replace(/\s/g, '_');
             notablePerson.photoId = chance.apple_token();
             notablePerson.commentsUrl = chance.url();
             notablePerson.labels = await entityManager.save(
@@ -55,16 +56,42 @@ if (isUsingProductionDatabase === false) {
 
         await entityManager.save(notablePeople);
 
+        const eventLabels = await entityManager.save(
+          times(15, () => {
+            const label = new EventLabel();
+            label.id = uuid();
+            label.createdAt = chance.date();
+            label.text = chance.word({ syllables: 5 });
+
+            return label;
+          }),
+        );
+
         const events = times(1000, () => {
           const event = new NotablePersonEvent();
           event.id = uuid();
           event.happenedOn = chance.date();
           event.postedAt = new Date();
-          event.isQuoteByNotablePerson = chance.bool();
+          event.type = chance.pickone<EventType>([
+            'donation',
+            'quote',
+            'appearance',
+          ]);
+          const quote = chance.sentence({ words: 10 });
+          event.quote =
+            event.type === 'quote' ? quote : chance.pickone([quote, null]);
+          event.isQuoteByNotablePerson = event.quote ? chance.bool() : null;
           event.sourceUrl = chance.url({ protocol: 'https' });
-          event.quote = chance.sentence({ words: 10 });
+          event.entityName = chance.pickone([
+            null,
+            chance.sentence({ words: chance.integer({ min: 1, max: 1 }) }),
+          ]);
+          event.entityUrl = event.entityName
+            ? chance.pickone([null, chance.url({ protocol: 'http' })])
+            : null;
           event.notablePerson = chance.pickone(notablePeople);
           event.owner = chance.pickone(users);
+          event.labels = chance.pickset(eventLabels);
 
           return event;
         });
@@ -90,7 +117,7 @@ if (isUsingProductionDatabase === false) {
       process.exit(0);
     })
     .catch(e => {
-      console.error('Error inserting mock data:', e.message || e);
+      console.error('Error inserting mock data:', e);
       process.exit(1);
     });
 } else {

@@ -4762,9 +4762,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeorm@^0.1.0-alpha.47:
-  version "0.1.0-alpha.47"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.0-alpha.47.tgz#992a3f3cca66585a86174106cd0ef5189a4b981a"
+typeorm@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.6.tgz#77c385b4ef0a267a145da62989a369f741beb23d"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.0.1"
