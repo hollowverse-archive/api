@@ -7,7 +7,7 @@ import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
 import { EventLabel } from '../database/entities/eventLabel';
 import * as faker from 'faker';
-import { times, take } from 'lodash';
+import { times, take, uniqBy } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
 
 if (isUsingProductionDatabase === false) {
@@ -32,14 +32,17 @@ if (isUsingProductionDatabase === false) {
         await entityManager.save(users);
 
         const notablePersonLabels = await entityManager.save(
-          times(2, () => {
-            const label = new NotablePersonLabel();
-            label.id = faker.random.uuid();
-            label.createdAt = faker.date.past();
-            label.text = faker.lorem.word();
+          uniqBy(
+            times(100, () => {
+              const label = new NotablePersonLabel();
+              label.id = faker.random.uuid();
+              label.createdAt = faker.date.past();
+              label.text = faker.lorem.word();
 
-            return label;
-          }),
+              return label;
+            }),
+            label => label.text,
+          ),
         );
 
         const notablePeople = await Promise.all(
@@ -65,14 +68,17 @@ if (isUsingProductionDatabase === false) {
         await entityManager.save(notablePeople);
 
         const eventLabels = await entityManager.save(
-          times(15, () => {
-            const label = new EventLabel();
-            label.id = faker.random.uuid();
-            label.createdAt = faker.date.past();
-            label.text = faker.lorem.word();
+          uniqBy(
+            times(100, () => {
+              const label = new EventLabel();
+              label.id = faker.random.uuid();
+              label.createdAt = faker.date.past();
+              label.text = faker.lorem.word();
 
-            return label;
-          }),
+              return label;
+            }),
+            label => label.text,
+          ),
         );
 
         const events = times(1000, () => {
