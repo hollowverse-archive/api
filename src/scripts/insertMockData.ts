@@ -100,13 +100,17 @@ if (isUsingProductionDatabase === false) {
             ? faker.random.boolean()
             : null;
           event.sourceUrl = faker.internet.url();
-          event.entityName = faker.helpers.randomize([
-            null,
-            faker.company.companyName(),
-          ]);
+
+          const entityName = faker.company.companyName();
+          event.entityName =
+            event.type !== 'quote'
+              ? entityName
+              : faker.helpers.randomize([null, entityName]);
+
           event.entityUrl = event.entityName
             ? faker.helpers.randomize([null, faker.internet.url()])
             : null;
+
           event.notablePerson = faker.helpers.randomize(notablePeople);
           event.owner = faker.helpers.randomize(users);
           event.labels = take(
