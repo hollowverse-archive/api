@@ -1,3 +1,16 @@
+# Relay Node interface
+interface Node {
+  id: ID!
+}
+
+# Relay-specific
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
 # Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
 
@@ -25,7 +38,7 @@ type NotablePersonEventComment {
 }
 
 # A event's label, e.g. democracy, philosophy
-type NotablePersonEventLabel {
+type EventLabel {
   id: ID!
   text: String!
   createdAt: DateTime!
@@ -35,6 +48,16 @@ enum NotablePersonEventType {
   quote
   donation
   appearance
+}
+
+type EventLabelEdge {
+  cursor: String!
+  node: EventLabel
+}
+
+type EventLabelConnection {
+  edges: [EventLabelEdge]
+  pageInfo: PageInfo!
 }
 
 # An event about a notable person, must have a source link
@@ -52,11 +75,15 @@ type NotablePersonEvent {
   # An entity is a place, organization a political event... etc.
   entityName: String
   entityUrl: String
-  labels: [NotablePersonEventLabel!]!
+  labels: [EventLabel!]!
   comments: [NotablePersonEventComment!]
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
+}
+
+input EventsQuery {
+  type: NotablePersonEventType
 }
 
 # A public figure or an influential person
@@ -65,7 +92,7 @@ type NotablePerson {
   slug: String!
   name: String!
   photoUrl: Url!
-  events: [NotablePersonEvent!]!
+  events(query: EventsQuery): [NotablePersonEvent!]!
   labels: [Label!]!
   summary: String
   # This is used to load Facebook comments on the client.
@@ -109,6 +136,8 @@ type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
   notablePerson(slug: String!): NotablePerson
+  # Relay-specific
+  node(id: ID!): Node
 }
 
 input CreateUserInput {
