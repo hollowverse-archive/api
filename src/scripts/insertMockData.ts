@@ -1,5 +1,4 @@
 // tslint:disable no-console
-import * as uuid from 'uuid/v4';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
@@ -7,47 +6,56 @@ import { NotablePersonEvent, EventType } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
 import { EventLabel } from '../database/entities/eventLabel';
-import * as Chance from 'chance';
-import { times } from 'lodash';
+import * as faker from 'faker';
+import { times, take } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
 
 if (isUsingProductionDatabase === false) {
-  const chance = new Chance(process.env.SEED || 1);
+  faker.seed(Number(process.env.SEED) || 1);
   connection
+    // tslint:disable-next-line:max-func-body-length
     .then(async db =>
+      // tslint:disable-next-line:max-func-body-length
       db.transaction(async entityManager => {
         const users = times(10, () => {
           const user = new User();
-          user.id = uuid();
-          user.email = chance.email();
-          user.photoId = chance.url({ protocol: 'https' });
-          user.signedUpAt = chance.date();
-          user.name = chance.name();
-          user.fbId = chance.android_id();
+          user.id = faker.random.uuid();
+          user.email = faker.internet.email();
+          user.photoId = faker.internet.url();
+          user.signedUpAt = faker.date.past();
+          user.name = faker.fake('{{name.firstName}} {{name.lastName}}');
+          user.fbId = faker.random.uuid();
 
           return user;
         });
 
         await entityManager.save(users);
 
+        const notablePersonLabels = await entityManager.save(
+          times(2, () => {
+            const label = new NotablePersonLabel();
+            label.id = faker.random.uuid();
+            label.createdAt = faker.date.past();
+            label.text = faker.lorem.word();
+
+            return label;
+          }),
+        );
+
         const notablePeople = await Promise.all(
           times(100, async () => {
             const notablePerson = new NotablePerson();
-            notablePerson.id = uuid();
-            notablePerson.name = chance.name();
-            notablePerson.summary = chance.sentence();
+            notablePerson.id = faker.random.uuid();
+            notablePerson.name = faker.fake(
+              '{{name.firstName}} {{name.lastName}}',
+            );
+            notablePerson.summary = faker.lorem.paragraphs(2);
             notablePerson.slug = notablePerson.name.replace(/\s/g, '_');
-            notablePerson.photoId = chance.apple_token();
-            notablePerson.commentsUrl = chance.url();
-            notablePerson.labels = await entityManager.save(
-              times(2, () => {
-                const label = new NotablePersonLabel();
-                label.id = uuid();
-                label.createdAt = chance.date();
-                label.text = chance.word({ syllables: 5 });
-
-                return label;
-              }),
+            notablePerson.photoId = faker.random.uuid();
+            notablePerson.commentsUrl = faker.internet.url();
+            notablePerson.labels = take(
+              faker.helpers.shuffle(notablePersonLabels),
+              Math.min(4, faker.random.number(notablePersonLabels.length)),
             );
 
             return notablePerson;
@@ -59,9 +67,9 @@ if (isUsingProductionDatabase === false) {
         const eventLabels = await entityManager.save(
           times(15, () => {
             const label = new EventLabel();
-            label.id = uuid();
-            label.createdAt = chance.date();
-            label.text = chance.word({ syllables: 5 });
+            label.id = faker.random.uuid();
+            label.createdAt = faker.date.past();
+            label.text = faker.lorem.word();
 
             return label;
           }),
@@ -69,29 +77,36 @@ if (isUsingProductionDatabase === false) {
 
         const events = times(1000, () => {
           const event = new NotablePersonEvent();
-          event.id = uuid();
-          event.happenedOn = chance.date();
+          event.id = faker.random.uuid();
+          event.happenedOn = faker.date.past();
           event.postedAt = new Date();
-          event.type = chance.pickone<EventType>([
+          event.type = faker.helpers.randomize<EventType>([
             'donation',
             'quote',
             'appearance',
           ]);
-          const quote = chance.sentence({ words: 10 });
+          const quote = faker.lorem.sentence();
           event.quote =
-            event.type === 'quote' ? quote : chance.pickone([quote, null]);
-          event.isQuoteByNotablePerson = event.quote ? chance.bool() : null;
-          event.sourceUrl = chance.url({ protocol: 'https' });
-          event.entityName = chance.pickone([
+            event.type === 'quote'
+              ? quote
+              : faker.helpers.randomize([quote, null]);
+          event.isQuoteByNotablePerson = event.quote
+            ? faker.random.boolean()
+            : null;
+          event.sourceUrl = faker.internet.url();
+          event.entityName = faker.helpers.randomize([
             null,
-            chance.sentence({ words: chance.integer({ min: 1, max: 1 }) }),
+            faker.company.companyName(),
           ]);
           event.entityUrl = event.entityName
-            ? chance.pickone([null, chance.url({ protocol: 'http' })])
+            ? faker.helpers.randomize([null, faker.internet.url()])
             : null;
-          event.notablePerson = chance.pickone(notablePeople);
-          event.owner = chance.pickone(users);
-          event.labels = chance.pickset(eventLabels);
+          event.notablePerson = faker.helpers.randomize(notablePeople);
+          event.owner = faker.helpers.randomize(users);
+          event.labels = take(
+            faker.helpers.shuffle(eventLabels),
+            Math.min(4, faker.random.number(eventLabels.length)),
+          );
 
           return event;
         });
@@ -100,11 +115,11 @@ if (isUsingProductionDatabase === false) {
 
         const comments = times(10, () => {
           const comment = new NotablePersonEventComment();
-          comment.id = uuid();
-          comment.postedAt = new Date();
-          comment.owner = chance.pickone(users);
-          comment.event = chance.pickone(events);
-          comment.text = chance.sentence({ words: 7 });
+          comment.id = faker.random.uuid();
+          comment.postedAt = faker.date.recent();
+          comment.owner = faker.helpers.randomize(users);
+          comment.event = faker.helpers.randomize(events);
+          comment.text = faker.lorem.sentences();
 
           return comment;
         });
