@@ -8,7 +8,7 @@ import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
 import { EventLabel } from '../database/entities/eventLabel';
 import { readJson } from '../helpers/readFile';
-import { findKey } from 'lodash';
+import { findKey, partition } from 'lodash';
 import * as uuid from 'uuid/v4';
 
 type FirebaseExport = {
@@ -105,22 +105,24 @@ connection
                   event.postedAt = new Date(ev.postedAt);
                   event.notablePerson = notablePerson;
 
-                  event.labels = [
-                    ...ev.labels.map(text => savedEventLabels.get(text)),
-                    ...(await entityManager.save(
-                      ev.labels
-                        .filter(text => !savedEventLabels.has(text))
-                        .map(text => {
-                          const label = new EventLabel();
-                          label.id = uuid();
-                          label.createdAt = new Date();
-                          label.text = text;
-                          savedEventLabels.set(text, label);
+                  const [saved, unsaved] = partition(ev.labels, text =>
+                    savedEventLabels.has(text),
+                  );
 
-                          return label;
-                        }),
+                  event.labels = [
+                    ...saved.map(text => savedEventLabels.get(text)!),
+                    ...(await entityManager.save(
+                      unsaved.map(text => {
+                        const label = new EventLabel();
+                        label.id = uuid();
+                        label.createdAt = new Date();
+                        label.text = text;
+                        savedEventLabels.set(text, label);
+
+                        return label;
+                      }),
                     )),
-                  ].filter(Boolean) as EventLabel[];
+                  ];
 
                   const comment = new NotablePersonEventComment();
                   comment.id = uuid();
