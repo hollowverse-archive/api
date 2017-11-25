@@ -44,10 +44,9 @@ type NotablePersonEvent {
   quote: String
   isQuoteByNotablePerson: Boolean
   sourceUrl: String!
-  # The date and time the event was added to the database
-
   # The date the event happened
   happenedOn: DateOnly
+  # The date and time the event was added to the database
   postedAt: DateTime!
   # An entity is a place, organization a political event... etc.
   entityName: String
@@ -59,7 +58,7 @@ type NotablePersonEvent {
     )
 }
 
-input EventsQuery {
+input EventsQueryInput {
   type: NotablePersonEventType
 }
 
@@ -69,7 +68,7 @@ type NotablePerson {
   slug: String!
   name: String!
   photoUrl: Url!
-  events(query: EventsQuery): [NotablePersonEvent!]!
+  events(query: EventsQueryInput): [NotablePersonEvent!]!
   labels: [Label!]!
   summary: String
   # This is used to load Facebook comments on the client.
