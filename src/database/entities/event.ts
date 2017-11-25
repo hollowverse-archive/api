@@ -58,14 +58,15 @@ export class NotablePersonEvent extends BaseEntity {
   @IsUrl(urlValidationOptions)
   @Trim()
   @Column({ type: 'text', nullable: false })
-  sourceUrl: string | null;
+  sourceUrl: string;
 
+  /** the official website of the organization, campaign, political event... etc., if any */
   @Column({ type: 'text', nullable: true })
-  entityUrl: string | null;
+  organizationWebsiteUrl: string | null;
 
-  /** An entity is a place, organization a political event... etc. */
+  /** an organization, a campaign, a political event... etc. */
   @Column({ type: 'text', nullable: true })
-  entityName: string | null;
+  organizationName: string | null;
 
   @Column({ type: 'datetime', nullable: false })
   postedAt: Date;
@@ -97,17 +98,19 @@ export class NotablePersonEvent extends BaseEntity {
   labels: EventLabel[];
 
   async validate() {
-    if (typeof this.entityUrl === 'string') {
-      if (!isUrl(this.entityUrl, urlValidationOptions)) {
-        throw new TypeError('entityUrl must be a valid URL or null');
+    if (typeof this.organizationWebsiteUrl === 'string') {
+      if (!isUrl(this.organizationWebsiteUrl, urlValidationOptions)) {
+        throw new TypeError(
+          'organizationWebsiteUrl must be a valid URL or null',
+        );
       }
 
-      if (typeof this.entityName !== 'string') {
+      if (typeof this.organizationName !== 'string') {
         throw new TypeError(
-          '`entityName` must be a string if `entityUrl` is specified',
+          '`organizationName` must be a string if `organizationWebsiteUrl` is specified',
         );
       } else {
-        this.entityName = this.entityName.trim();
+        this.organizationName = this.organizationName.trim();
       }
     }
 

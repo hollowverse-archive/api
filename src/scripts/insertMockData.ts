@@ -102,12 +102,12 @@ if (isUsingProductionDatabase === false) {
           event.sourceUrl = faker.internet.url();
 
           const entityName = faker.company.companyName();
-          event.entityName =
+          event.organizationName =
             event.type !== 'quote'
               ? entityName
               : faker.helpers.randomize([null, entityName]);
 
-          event.entityUrl = event.entityName
+          event.organizationWebsiteUrl = event.organizationName
             ? faker.helpers.randomize([null, faker.internet.url()])
             : null;
 

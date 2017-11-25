@@ -48,9 +48,10 @@ type NotablePersonEvent {
   happenedOn: DateOnly
   # The date and time the event was added to the database
   postedAt: DateTime!
-  # An entity is a place, organization a political event... etc.
-  entityName: String
-  entityUrl: String
+  # an organization, a campaign, a political event... etc. */
+  organizationName: String
+  # the official website of the organization, campaign, political event... etc., if any
+  organizationWebsiteurl: String
   labels: [EventLabel!]!
   comments: [NotablePersonEventComment!]
     @deprecated(
