@@ -119,10 +119,6 @@
     "@types/express" "*"
     "@types/node" "*"
 
-"@types/chance@^0.7.35":
-  version "0.7.35"
-  resolved "https://registry.yarnpkg.com/@types/chance/-/chance-0.7.35.tgz#e76f3441b7763476c58eb7dc32f62da3d8ea547e"
-
 "@types/cors@^2.8.3":
   version "2.8.3"
   resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.3.tgz#eaf6e476da0d36bee6b061a24d57e343ddce86d6"
@@ -149,6 +145,10 @@
   dependencies:
     "@types/express-serve-static-core" "*"
     "@types/serve-static" "*"
+
+"@types/faker@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@types/faker/-/faker-4.1.2.tgz#f8ab50c9f9af68c160dd71b63f83e24b712d0df5"
 
 "@types/glob@*":
   version "5.0.32"
@@ -745,10 +745,6 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0:
     ansi-styles "^3.1.0"
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
-
-chance@^1.0.11:
-  version "1.0.11"
-  resolved "https://registry.yarnpkg.com/chance/-/chance-1.0.11.tgz#48e82f7583df356053e0ad122d4654c5066c570d"
 
 change-case@^3.0.0:
   version "3.0.1"
@@ -1637,6 +1633,10 @@ extglob@^0.3.1:
 extsprintf@1.3.0, extsprintf@^1.2.0:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/extsprintf/-/extsprintf-1.3.0.tgz#96918440e3041a7a414f8c52e3c574eb3c3e1e05"
+
+faker@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/faker/-/faker-4.1.0.tgz#1e45bbbecc6774b3c195fad2835109c6d748cc3f"
 
 fast-deep-equal@^1.0.0:
   version "1.0.0"
@@ -4762,9 +4762,9 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeorm@^0.1.0-alpha.47:
-  version "0.1.0-alpha.47"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.0-alpha.47.tgz#992a3f3cca66585a86174106cd0ef5189a4b981a"
+typeorm@^0.1.6:
+  version "0.1.6"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.6.tgz#77c385b4ef0a267a145da62989a369f741beb23d"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.0.1"

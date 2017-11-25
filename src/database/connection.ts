@@ -2,7 +2,8 @@ import 'reflect-metadata';
 import { createConnection, ConnectionOptions } from 'typeorm';
 import { NotablePerson } from './entities/notablePerson';
 import { NotablePersonEvent } from './entities/event';
-import { NotablePersonLabel } from './entities/label';
+import { NotablePersonLabel } from './entities/notablePersonLabel';
+import { EventLabel } from './entities/eventLabel';
 import { NotablePersonEventComment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readFile';
@@ -49,6 +50,7 @@ export const connection = getConfig().then(async config =>
       NotablePersonEvent,
       NotablePersonLabel,
       NotablePersonEventComment,
+      EventLabel,
       User,
     ],
   }),

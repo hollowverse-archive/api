@@ -5,9 +5,10 @@ import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
 import { NotablePersonEvent } from '../database/entities/event';
 import { NotablePersonEventComment } from '../database/entities/comment';
-import { NotablePersonLabel } from '../database/entities/label';
+import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
+import { EventLabel } from '../database/entities/eventLabel';
 import { readJson } from '../helpers/readFile';
-import { findKey } from 'lodash';
+import { findKey, partition } from 'lodash';
 import * as uuid from 'uuid/v4';
 
 type FirebaseExport = {
@@ -24,6 +25,7 @@ type FirebaseExport = {
           isQuoteByNotablePerson?: true;
           quote: string;
           postedAt: number;
+          labels: string[];
           happenedOn?: number;
           sourceName: string;
           sourceUrl: string;
@@ -81,29 +83,59 @@ connection
 
           await entityManager.save(notablePerson);
 
+          const savedEventLabels = new Map<string, EventLabel>();
+
           await entityManager.save(
-            events.map(ev => {
-              const event = new NotablePersonEvent();
-              event.id = uuid();
-              event.sourceUrl = ev.sourceUrl;
-              event.isQuoteByNotablePerson = ev.isQuoteByNotablePerson || false;
-              event.quote = ev.quote;
-              event.happenedOn = ev.happenedOn ? new Date(ev.happenedOn) : null;
-              event.owner = user!;
-              event.postedAt = new Date(ev.postedAt);
-              event.notablePerson = notablePerson;
+            await Promise.all(
+              events
+                .filter(event => event.isQuoteByNotablePerson === true)
+                .map(async ev => {
+                  const event = new NotablePersonEvent();
+                  event.id = uuid();
+                  event.type = 'quote';
+                  event.labels = [];
+                  event.sourceUrl = ev.sourceUrl;
+                  event.isQuoteByNotablePerson =
+                    ev.isQuoteByNotablePerson || false;
+                  event.quote = ev.quote;
+                  event.happenedOn = ev.happenedOn
+                    ? new Date(ev.happenedOn)
+                    : null;
+                  event.owner = user!;
+                  event.postedAt = new Date(ev.postedAt);
+                  event.notablePerson = notablePerson;
 
-              const comment = new NotablePersonEventComment();
-              comment.id = uuid();
-              comment.event = event;
-              comment.text = ev.userComment;
-              comment.owner = user!;
-              comment.postedAt = new Date(ev.postedAt);
+                  const [saved, unsaved] = partition(ev.labels, text =>
+                    savedEventLabels.has(text),
+                  );
 
-              event.comments = [comment];
+                  event.labels = [
+                    ...saved.map(text => savedEventLabels.get(text)!),
+                    ...(await entityManager.save(
+                      unsaved.map(text => {
+                        const label = new EventLabel();
+                        label.id = uuid();
+                        label.createdAt = new Date();
+                        label.text = text;
+                        savedEventLabels.set(text, label);
 
-              return event;
-            }),
+                        return label;
+                      }),
+                    )),
+                  ];
+
+                  const comment = new NotablePersonEventComment();
+                  comment.id = uuid();
+                  comment.event = event;
+                  comment.text = ev.userComment;
+                  comment.owner = user!;
+                  comment.postedAt = new Date(ev.postedAt);
+
+                  event.comments = [comment];
+
+                  return event;
+                }),
+            ),
           );
 
           return notablePerson;

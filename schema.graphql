@@ -19,25 +19,48 @@ type Label {
 
 # A comment on a notable person's event
 type NotablePersonEventComment {
-  id: String!
+  id: ID!
   owner: User!
   text: String!
+}
+
+# A event's label, e.g. democracy, philosophy
+type EventLabel {
+  id: ID!
+  text: String!
+  createdAt: DateTime!
+}
+
+enum NotablePersonEventType {
+  quote
+  donation
+  appearance
 }
 
 # An event about a notable person, must have a source link
 type NotablePersonEvent {
   id: ID!
-  quote: String!
-  isQuoteByNotablePerson: Boolean!
+  type: NotablePersonEventType!
+  quote: String
+  isQuoteByNotablePerson: Boolean
   sourceUrl: String!
-  # The date and time the event was added to the database
-  postedAt: DateTime!
   # The date the event happened
   happenedOn: DateOnly
+  # The date and time the event was added to the database
+  postedAt: DateTime!
+  # an organization, a campaign, a political event... etc. */
+  organizationName: String
+  # the official website of the organization, campaign, political event... etc., if any
+  organizationWebsiteurl: String
+  labels: [EventLabel!]!
   comments: [NotablePersonEventComment!]
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
+}
+
+input EventsQueryInput {
+  type: NotablePersonEventType
 }
 
 # A public figure or an influential person
@@ -46,7 +69,7 @@ type NotablePerson {
   slug: String!
   name: String!
   photoUrl: Url!
-  events: [NotablePersonEvent!]!
+  events(query: EventsQueryInput): [NotablePersonEvent!]!
   labels: [Label!]!
   summary: String
   # This is used to load Facebook comments on the client.

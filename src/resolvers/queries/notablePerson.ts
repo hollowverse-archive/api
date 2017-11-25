@@ -2,7 +2,10 @@ import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/notablePerson';
 import { NotablePersonEvent } from '../../database/entities/event';
 import { NotablePersonEventComment } from '../../database/entities/comment';
-import { NotablePersonRootQueryArgs } from '../../typings/schema';
+import {
+  NotablePersonRootQueryArgs,
+  EventsNotablePersonArgs,
+} from '../../typings/schema';
 
 export const notablePersonResolvers = {
   RootQuery: {
@@ -20,18 +23,20 @@ export const notablePersonResolvers = {
   },
 
   NotablePerson: {
-    async events(notablePerson: NotablePerson) {
+    async events(notablePerson: NotablePerson, args: EventsNotablePersonArgs) {
       const db = await connection;
 
       const repo = db.getRepository(NotablePersonEvent);
 
       return repo.find({
         where: {
+          ...args.query,
           notablePersonId: notablePerson.id,
         },
         order: {
           postedAt: 'DESC',
         },
+        relations: ['labels'],
       });
     },
   },
