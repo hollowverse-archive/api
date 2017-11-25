@@ -82,30 +82,35 @@ connection
           await entityManager.save(notablePerson);
 
           await entityManager.save(
-            events.map(ev => {
-              const event = new NotablePersonEvent();
-              event.id = uuid();
-              event.type = 'quote';
-              event.labels = [];
-              event.sourceUrl = ev.sourceUrl;
-              event.isQuoteByNotablePerson = ev.isQuoteByNotablePerson || false;
-              event.quote = ev.quote;
-              event.happenedOn = ev.happenedOn ? new Date(ev.happenedOn) : null;
-              event.owner = user!;
-              event.postedAt = new Date(ev.postedAt);
-              event.notablePerson = notablePerson;
+            events
+              .filter(event => event.isQuoteByNotablePerson === true)
+              .map(ev => {
+                const event = new NotablePersonEvent();
+                event.id = uuid();
+                event.type = 'quote';
+                event.labels = [];
+                event.sourceUrl = ev.sourceUrl;
+                event.isQuoteByNotablePerson =
+                  ev.isQuoteByNotablePerson || false;
+                event.quote = ev.quote;
+                event.happenedOn = ev.happenedOn
+                  ? new Date(ev.happenedOn)
+                  : null;
+                event.owner = user!;
+                event.postedAt = new Date(ev.postedAt);
+                event.notablePerson = notablePerson;
 
-              const comment = new NotablePersonEventComment();
-              comment.id = uuid();
-              comment.event = event;
-              comment.text = ev.userComment;
-              comment.owner = user!;
-              comment.postedAt = new Date(ev.postedAt);
+                const comment = new NotablePersonEventComment();
+                comment.id = uuid();
+                comment.event = event;
+                comment.text = ev.userComment;
+                comment.owner = user!;
+                comment.postedAt = new Date(ev.postedAt);
 
-              event.comments = [comment];
+                event.comments = [comment];
 
-              return event;
-            }),
+                return event;
+              }),
           );
 
           return notablePerson;
