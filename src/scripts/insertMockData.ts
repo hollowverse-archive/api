@@ -1,4 +1,4 @@
-// tslint:disable no-console
+// tslint:disable no-console max-func-body-length
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
 import { User } from '../database/entities/user';
@@ -13,9 +13,7 @@ import { isUsingProductionDatabase } from '../env';
 if (isUsingProductionDatabase === false) {
   faker.seed(Number(process.env.SEED) || 1);
   connection
-    // tslint:disable-next-line:max-func-body-length
     .then(async db =>
-      // tslint:disable-next-line:max-func-body-length
       db.transaction(async entityManager => {
         const users = times(10, () => {
           const user = new User();
