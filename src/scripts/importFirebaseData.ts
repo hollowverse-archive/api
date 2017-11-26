@@ -1,4 +1,4 @@
-// tslint:disable no-console no-non-null-assertion
+// tslint:disable no-console no-non-null-assertion max-func-body-length
 
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/notablePerson';
@@ -8,7 +8,7 @@ import { NotablePersonEventComment } from '../database/entities/comment';
 import { NotablePersonLabel } from '../database/entities/notablePersonLabel';
 import { EventLabel } from '../database/entities/eventLabel';
 import { readJson } from '../helpers/readFile';
-import { findKey, partition } from 'lodash';
+import { findKey, intersectionWith } from 'lodash';
 import * as uuid from 'uuid/v4';
 
 type FirebaseExport = {
@@ -58,6 +58,26 @@ connection
 
       const json = await readJson<FirebaseExport>('firebaseExport.json');
 
+      const eventLabels = new Set<string>();
+      Object.values(json.notablePersons).forEach(np => {
+        np.events.forEach(e => {
+          e.labels.forEach(text => {
+            eventLabels.add(text);
+          });
+        });
+      });
+
+      const savedEventLabels = await entityManager.save(
+        Array.from(eventLabels.values()).map(text => {
+          const label = new EventLabel();
+          label.id = uuid();
+          label.createdAt = new Date();
+          label.text = text;
+
+          return label;
+        }),
+      );
+
       return Promise.all(
         Object.entries(
           json.notablePersons,
@@ -83,8 +103,6 @@ connection
 
           await entityManager.save(notablePerson);
 
-          const savedEventLabels = new Map<string, EventLabel>();
-
           await entityManager.save(
             await Promise.all(
               events
@@ -105,24 +123,11 @@ connection
                   event.postedAt = new Date(ev.postedAt);
                   event.notablePerson = notablePerson;
 
-                  const [saved, unsaved] = partition(ev.labels, text =>
-                    savedEventLabels.has(text),
+                  event.labels = intersectionWith(
+                    savedEventLabels,
+                    ev.labels,
+                    (a: EventLabel, text: string) => a.text === text,
                   );
-
-                  event.labels = [
-                    ...saved.map(text => savedEventLabels.get(text)!),
-                    ...(await entityManager.save(
-                      unsaved.map(text => {
-                        const label = new EventLabel();
-                        label.id = uuid();
-                        label.createdAt = new Date();
-                        label.text = text;
-                        savedEventLabels.set(text, label);
-
-                        return label;
-                      }),
-                    )),
-                  ];
 
                   const comment = new NotablePersonEventComment();
                   comment.id = uuid();
