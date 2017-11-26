@@ -51,7 +51,7 @@ type NotablePersonEvent {
   # an organization, a campaign, a political event... etc. */
   organizationName: String
   # the official website of the organization, campaign, political event... etc., if any
-  organizationWebsiteurl: String
+  organizationWebsiteUrl: String
   labels: [EventLabel!]!
   comments: [NotablePersonEventComment!]
     @deprecated(
