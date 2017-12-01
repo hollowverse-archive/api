@@ -1,9 +1,14 @@
 module.exports = {
-  ignoredPatterns: [
-    '*/**/typings/*',
-    'Dockerfile*',
-    'docker-compose.yml',
-    '**/LICENSE',
-    '**/README.md',
+  rules: [
+    {
+      validation: 'ignore',
+      patterns: [
+        '*/**/typings/*',
+        'Dockerfile*',
+        'docker-compose.yml',
+        '**/LICENSE',
+        '**/README.md',
+      ],
+    },
   ],
 };
