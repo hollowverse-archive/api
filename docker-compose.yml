@@ -38,9 +38,23 @@ services:
         source: nm
         target: /code/node_modules
     environment:
-      - RDS_HOSTNAME=database
-      - RDS_USERNAME=root
-      - RDS_PASSWORD=123456
+      - TYPEORM_CONNECTION=mysql
+      - TYPEORM_MIGRATIONS_RUN=0
+      - TYPEORM_DATABASE=hollowverse
+      - TYPEORM_HOST=database
+      - TYPEORM_PORT=3306
+      - TYPEORM_USERNAME=root
+      - TYPEORM_PASSWORD=123456
+
+      # The following variables are used for TypeORM CLI only,
+      # and are overridden in TypeScript connection code.
+      #
+      # Because the CLI only accepts JS files for migrations and entities,
+      # the project must be built to be able to use the CLI to
+      # create migrations, even in development.
+      - TYPEORM_ENTITIES="dist/database/entities/*.js"
+      - TYPEORM_MIGRATIONS="dist/database/migrations/*.js" #
+      - TYPEORM_MIGRATIONS_DIR=src/database/migrations
 
 volumes:
   nm:

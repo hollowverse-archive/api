@@ -7,7 +7,16 @@ import { EventLabel } from './entities/eventLabel';
 import { NotablePersonEventComment } from './entities/comment';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readFile';
-import { isUsingProductionDatabase } from '../env';
+import { isUsingProductionDatabase, isProd } from '../env';
+
+const entities = [
+  NotablePerson,
+  NotablePersonEvent,
+  NotablePersonLabel,
+  NotablePersonEventComment,
+  EventLabel,
+  User,
+];
 
 const {
   // These variables are for the development database
@@ -17,41 +26,64 @@ const {
   RDS_PORT,
   RDS_USERNAME,
   RDS_PASSWORD,
+
+  TYPEORM_DATABASE,
+  TYPEORM_HOST,
+  TYPEORM_PORT,
+  TYPEORM_USERNAME,
+  TYPEORM_PASSWORD,
 } = process.env;
 
-const getConfig = async (): Promise<ConnectionOptions> => ({
-  type: 'mysql',
+const getConfig = async (): Promise<ConnectionOptions> => {
+  let databaseConfig: Partial<DatabaseConfig>;
+  if (isUsingProductionDatabase) {
+    // RDS Aurora instance
+    databaseConfig = await readJson<DatabaseConfig>(
+      'secrets/db.production.json',
+    );
+  } else if (isProd) {
+    // AWS ElasticBeanstalk database instance
+    databaseConfig = {
+      database: RDS_DB_NAME,
+      host: RDS_HOSTNAME,
+      port: Number(RDS_PORT),
+      username: RDS_USERNAME,
+      password: RDS_PASSWORD,
+    };
+  } else {
+    // Development, fallback to environment variables
+    databaseConfig = {
+      database: TYPEORM_DATABASE,
+      host: TYPEORM_HOST,
+      port: Number(TYPEORM_PORT),
+      username: TYPEORM_USERNAME,
+      password: TYPEORM_PASSWORD,
+    };
+  }
 
-  ...isUsingProductionDatabase
-    ? {
-        ...await readJson<DatabaseConfig>('secrets/db.production.json'),
+  // Production configuration
+  if (isProd) {
+    return {
+      type: 'mysql',
+      ...databaseConfig,
+      synchronize: false,
+      dropSchema: false,
+      migrationsRun: true,
+      entities,
+      migrations: ['dist/database/migrations/*.js'],
+    };
+  }
 
-        // Do not set any of these to `true`,
-        // otherwise the database will be destroyed
-        synchronize: false,
-        dropSchema: false,
-      }
-    : {
-        database: RDS_DB_NAME || 'hollowverse',
-        host: RDS_HOSTNAME || 'localhost',
-        port: Number(RDS_PORT) || 3306,
-        username: RDS_USERNAME || 'root',
-        password: RDS_PASSWORD || '123456',
-        synchronize: true,
-        dropSchema: false,
-      },
-});
+  // Fallback to development configuration
+  return {
+    type: 'mysql',
+    ...databaseConfig,
+    synchronize: false,
+    dropSchema: false,
+    migrationsRun: true,
+    entities,
+    migrations: ['src/database/migrations/*.ts'],
+  };
+};
 
-export const connection = getConfig().then(async config =>
-  createConnection({
-    ...config,
-    entities: [
-      NotablePerson,
-      NotablePersonEvent,
-      NotablePersonLabel,
-      NotablePersonEventComment,
-      EventLabel,
-      User,
-    ],
-  }),
-);
+export const connection = getConfig().then(createConnection);
