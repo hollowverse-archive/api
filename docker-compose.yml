@@ -51,7 +51,7 @@ services:
       #
       # Because the CLI only accepts JS files for migrations and entities,
       # the project must be built to be able to use the CLI to
-      # create migrations, even in development.
+      # create migrations, even during development.
       - TYPEORM_ENTITIES="dist/database/entities/*.js"
       - TYPEORM_MIGRATIONS="dist/database/migrations/*.js" #
       - TYPEORM_MIGRATIONS_DIR=src/database/migrations
