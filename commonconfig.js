@@ -8,6 +8,7 @@ module.exports = {
         'docker-compose.yml',
         '**/LICENSE',
         '**/README.md',
+        'src/database/migrations/**/*.ts',
       ],
     },
   ],
