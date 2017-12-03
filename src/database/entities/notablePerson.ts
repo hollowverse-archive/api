@@ -12,6 +12,7 @@ import { IsNotEmpty } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonLabel } from './notablePersonLabel';
+import { EditorialSummaryNode } from './editorialSummaryNode';
 import { URL } from 'url';
 
 /**
@@ -70,6 +71,12 @@ export class NotablePerson extends BaseEntity {
     cascadeUpdate: true,
   })
   events: NotablePersonEvent[];
+
+  @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
+    cascadeInsert: true,
+    cascadeUpdate: true,
+  })
+  editorialSummaryNodes: EditorialSummaryNode[];
 
   @ManyToMany(_ => NotablePersonLabel, {
     cascadeInsert: true,

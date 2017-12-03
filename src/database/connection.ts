@@ -5,6 +5,7 @@ import { NotablePersonEvent } from './entities/event';
 import { NotablePersonLabel } from './entities/notablePersonLabel';
 import { EventLabel } from './entities/eventLabel';
 import { NotablePersonEventComment } from './entities/comment';
+import { EditorialSummaryNode } from './entities/editorialSummaryNode';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase } from '../env';
@@ -51,6 +52,7 @@ export const connection = getConfig().then(async config =>
       NotablePersonLabel,
       NotablePersonEventComment,
       EventLabel,
+      EditorialSummaryNode,
       User,
     ],
   }),
