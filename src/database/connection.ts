@@ -78,9 +78,9 @@ const getConfig = async (): Promise<ConnectionOptions> => {
   return {
     type: 'mysql',
     ...databaseConfig,
-    synchronize: false,
+    synchronize: true,
     dropSchema: false,
-    migrationsRun: true,
+    migrationsRun: false,
     entities,
     migrations: ['src/database/migrations/*.ts'],
   };
