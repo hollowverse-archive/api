@@ -16,13 +16,7 @@ import { NotablePersonEventComment } from './comment';
 import { EventLabel } from './eventLabel';
 import * as isUrl from 'validator/lib/isURL';
 import { NotablePersonEventType } from '../../typings/schema';
-
-const urlValidationOptions = {
-  require_protocol: true,
-  require_host: true,
-  require_valid_protocol: true,
-  protocols: ['https', 'http'],
-};
+import { urlValidationOptions } from '../../helpers/validation';
 
 const eventTypes: Record<NotablePersonEventType, string> = {
   quote: '',
