@@ -24,7 +24,7 @@ export type NodeType = keyof typeof nodeTypes;
  * Editorial content from the old Hollowverse website
  */
 @Entity()
-@Index(['order', 'notablePersonId'], { unique: true })
+@Index(['order', 'notablePerson'], { unique: true })
 export class EditorialSummaryNode extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
