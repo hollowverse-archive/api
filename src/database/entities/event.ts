@@ -87,6 +87,7 @@ export class NotablePersonEvent extends BaseEntity {
   @ManyToMany(_ => EventLabel, {
     cascadeInsert: true,
     cascadeUpdate: true,
+    eager: true,
   })
   @JoinTable()
   labels: EventLabel[];
