@@ -1,0 +1,3 @@
+[submodule "src/scraper"]
+	path = src/scraper
+	url = git@github.com:hollowverse/scraper.git
