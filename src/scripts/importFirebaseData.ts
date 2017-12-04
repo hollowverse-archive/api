@@ -86,7 +86,6 @@ connection
           notablePerson.id = uuid();
           notablePerson.name = name;
           notablePerson.slug = findKey(json.slugToID, v => v === id)!;
-          notablePerson.photoId = notablePerson.slug;
           notablePerson.summary = summary;
           notablePerson.oldSlug = oldSlug;
 

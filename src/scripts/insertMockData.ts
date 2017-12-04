@@ -52,7 +52,6 @@ if (isUsingProductionDatabase === false) {
             );
             notablePerson.summary = faker.lorem.paragraphs(2);
             notablePerson.slug = notablePerson.name.replace(/\s/g, '_');
-            notablePerson.photoId = faker.random.uuid();
             notablePerson.commentsUrl = faker.internet.url();
             notablePerson.labels = take(
               faker.helpers.shuffle(notablePersonLabels),

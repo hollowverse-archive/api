@@ -45,12 +45,6 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   summary: string | null;
 
-  /** The filename of the photo as stored in S3 */
-  @Column({ type: 'varchar', nullable: false, unique: true })
-  @IsNotEmpty()
-  @Trim()
-  photoId: string;
-
   /** Photo URL computed from `photoId`, not an actual column. */
   photoUrl: string;
 
