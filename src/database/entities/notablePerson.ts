@@ -8,7 +8,7 @@ import {
   JoinTable,
 } from 'typeorm';
 import { Trim } from 'class-sanitizer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, ValidateIf } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonLabel } from './notablePersonLabel';
@@ -66,11 +66,23 @@ export class NotablePerson extends BaseEntity {
   })
   events: NotablePersonEvent[];
 
+  /**
+   * Nodes used to reconstruct the editorial summary,
+   * which is the content from the old Hollowverse
+   */
+
   @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
   editorialSummaryNodes: EditorialSummaryNode[];
+
+  /** Author of old Hollowverse content for this notable person */
+  @Trim()
+  @IsNotEmpty()
+  @ValidateIf((_, v) => typeof v === 'string')
+  @Column({ type: 'varchar', nullable: true })
+  editorialSummaryAuthor: string | null;
 
   @ManyToMany(_ => NotablePersonLabel, {
     cascadeInsert: true,

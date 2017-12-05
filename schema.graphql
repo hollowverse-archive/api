@@ -52,6 +52,12 @@ type EditorialSummaryNode {
   sourceTitle: String
 }
 
+# Content from the old Hollowverse
+type EditorialSummary {
+  nodes: [EditorialSummaryNode!]!
+  author: String!
+}
+
 # An event about a notable person, must have a source link
 type NotablePersonEvent {
   id: ID!
@@ -72,9 +78,8 @@ type NotablePersonEvent {
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
-  # Nodes used to reconstruct the editorial summary,
-  # which is the content from the old Hollowverse
-  editorialSummaryNodes: [EditorialSummaryNode!]
+  # The content from the old Hollowverse
+  editorialSummary: EditorialSummary
 }
 
 input EventsQueryInput {
