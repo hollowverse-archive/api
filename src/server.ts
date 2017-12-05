@@ -93,21 +93,10 @@ api.use(
   }),
 );
 
-const debugHeaders = [
-  process.env.FB_ACCESS_TOKEN
-    ? `'Authorization': 'Bearer ${process.env.FB_ACCESS_TOKEN}'`
-    : null,
-].filter(Boolean);
-
 api.use(
   '/graphiql',
   graphiqlExpress({
     endpointURL: '/graphql',
-    ...process.env.NODE_ENV === 'production'
-      ? undefined
-      : {
-          passHeader: debugHeaders.join('\n'),
-        },
   }),
 );
 
