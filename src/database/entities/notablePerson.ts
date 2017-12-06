@@ -46,13 +46,13 @@ export class NotablePerson extends BaseEntity {
   summary: string | null;
 
   /** The filename of the photo as stored in S3 */
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: true, unique: true })
   @IsNotEmpty()
   @Trim()
-  photoId: string;
+  photoId: string | null;
 
   /** Photo URL computed from `photoId`, not an actual column. */
-  photoUrl: string;
+  photoUrl: string | null;
 
   /**
    * This is used to load Facebook comments on the client.
@@ -80,8 +80,9 @@ export class NotablePerson extends BaseEntity {
   @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
+    lazy: true,
   })
-  editorialSummaryNodes: EditorialSummaryNode[];
+  editorialSummaryNodes: Promise<EditorialSummaryNode[]>;
 
   /** Author of old Hollowverse content for this notable person */
   @Trim()
@@ -99,10 +100,12 @@ export class NotablePerson extends BaseEntity {
 
   @AfterLoad()
   setPhotoUrl() {
-    this.photoUrl = new URL(
-      `notable-people/${this.slug}`,
-      'https://files.hollowverse.com',
-    ).toString();
+    this.photoUrl = this.photoId
+      ? new URL(
+          `notable-people/${this.photoId}`,
+          'https://files.hollowverse.com',
+        ).toString()
+      : null;
   }
 
   @AfterLoad()

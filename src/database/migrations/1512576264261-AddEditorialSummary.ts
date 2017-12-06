@@ -1,15 +1,21 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AddEditorialSummary1512400831138 implements MigrationInterface {
+export class AddEditorialSummary1512576264261 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
     await queryRunner.query(
       "CREATE TABLE `editorial_summary_node` (`id` varchar(255) NOT NULL PRIMARY KEY, `order` smallint(5) NOT NULL, `type` enum('break', 'sentence', 'quote', 'heading') NOT NULL, `text` varchar(1000), `sourceUrl` varchar(500), `sourceTitle` varchar(255), `notablePersonId` varchar(255) NOT NULL) ENGINE=InnoDB",
+    );
+    await queryRunner.query(
+      'ALTER TABLE `hollowverse`.`notable_person` ADD `editorialSummaryAuthor` varchar(255)',
     );
     await queryRunner.query(
       'ALTER TABLE `hollowverse`.`notable_person_label` CHANGE `id` `id` varchar(255) NOT NULL',
     );
     await queryRunner.query(
       'ALTER TABLE `hollowverse`.`notable_person` CHANGE `id` `id` varchar(255) NOT NULL',
+    );
+    await queryRunner.query(
+      'ALTER TABLE `hollowverse`.`notable_person` CHANGE `photoId` `photoId` varchar(255) UNIQUE',
     );
     await queryRunner.query(
       'ALTER TABLE `hollowverse`.`user` CHANGE `id` `id` varchar(255) NOT NULL',
@@ -57,10 +63,16 @@ export class AddEditorialSummary1512400831138 implements MigrationInterface {
       'ALTER TABLE `hollowverse`.`user` CHANGE `id` `id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL',
     );
     await queryRunner.query(
+      'ALTER TABLE `hollowverse`.`notable_person` CHANGE `photoId` `photoId` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL UNIQUE',
+    );
+    await queryRunner.query(
       'ALTER TABLE `hollowverse`.`notable_person` CHANGE `id` `id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL',
     );
     await queryRunner.query(
       'ALTER TABLE `hollowverse`.`notable_person_label` CHANGE `id` `id` varchar(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL',
+    );
+    await queryRunner.query(
+      'ALTER TABLE `hollowverse`.`notable_person` DROP `editorialSummaryAuthor`',
     );
     await queryRunner.query('DROP TABLE `editorial_summary_node`');
   }

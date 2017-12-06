@@ -5,6 +5,7 @@ import { NotablePersonEventComment } from '../../database/entities/comment';
 import {
   NotablePersonRootQueryArgs,
   EventsNotablePersonArgs,
+  NotablePerson as NotablePersonType,
 } from '../../typings/schema';
 
 export const notablePersonResolvers = {
@@ -38,6 +39,18 @@ export const notablePersonResolvers = {
         },
         relations: ['labels'],
       });
+    },
+
+    async editorialSummaryNodes(
+      notablePerson: NotablePerson,
+    ): Promise<NotablePersonType['editorialSummaryNodes']> {
+      return notablePerson.editorialSummaryNodes;
+    },
+
+    editorialSummaryAuthor(
+      notablePerson: NotablePerson,
+    ): NotablePerson['editorialSummaryAuthor'] {
+      return notablePerson.editorialSummaryAuthor;
     },
   },
 

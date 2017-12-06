@@ -52,12 +52,6 @@ type EditorialSummaryNode {
   sourceTitle: String
 }
 
-# Content from the old Hollowverse
-type EditorialSummary {
-  nodes: [EditorialSummaryNode!]!
-  author: String!
-}
-
 # An event about a notable person, must have a source link
 type NotablePersonEvent {
   id: ID!
@@ -78,8 +72,6 @@ type NotablePersonEvent {
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
-  # The content from the old Hollowverse
-  editorialSummary: EditorialSummary
 }
 
 input EventsQueryInput {
@@ -91,7 +83,7 @@ type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
   name: String!
-  photoUrl: Url!
+  photoUrl: Url
   events(query: EventsQueryInput): [NotablePersonEvent!]!
   labels: [Label!]!
   summary: String
@@ -104,6 +96,9 @@ type NotablePerson {
   #
   # Example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
   commentsUrl: String!
+  # The content from the old Hollowverse
+  editorialSummaryNodes: [EditorialSummaryNode!]
+  editorialSummaryAuthor: String
 }
 
 interface UserInterface {
