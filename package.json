@@ -61,7 +61,7 @@
     "mysql": "^2.14.1",
     "npm-run-all": "^4.0.2",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.1.6",
+    "typeorm": "^0.1.7",
     "validator": "^9.0.0"
   },
   "devDependencies": {
