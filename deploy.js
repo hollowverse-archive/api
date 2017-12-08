@@ -32,7 +32,7 @@ const secrets = [
 const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
-  const buildCommands = ['cd src/scraper && yarn', 'yarn test', 'yarn build'];
+  const buildCommands = ['yarn test', 'yarn build'];
   const deploymentCommands = [
     () =>
       writeJsonFile('env.json', {
