@@ -51,7 +51,10 @@ export class NotablePersonEvent extends BaseEntity {
 
   @IsUrl(urlValidationOptions)
   @Trim()
-  @Column({ type: 'text', nullable: false })
+  @Column('varchar', {
+    nullable: false,
+    length: 600,
+  })
   sourceUrl: string;
 
   /** the official website of the organization, campaign, political event... etc., if any */
@@ -85,8 +88,6 @@ export class NotablePersonEvent extends BaseEntity {
   comments: NotablePersonEventComment[];
 
   @ManyToMany(_ => EventLabel, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
     eager: true,
   })
   @JoinTable()

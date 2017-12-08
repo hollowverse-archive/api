@@ -47,6 +47,7 @@ export class NotablePerson extends BaseEntity {
 
   /** The filename of the photo as stored in S3 */
   @Column({ type: 'varchar', nullable: true, unique: true })
+  @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
   @Trim()
   photoId: string | null;
@@ -80,9 +81,8 @@ export class NotablePerson extends BaseEntity {
   @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
-    lazy: true,
   })
-  editorialSummaryNodes: Promise<EditorialSummaryNode[]>;
+  editorialSummaryNodes: EditorialSummaryNode[];
 
   /** Author of old Hollowverse content for this notable person */
   @Trim()
@@ -91,10 +91,7 @@ export class NotablePerson extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   editorialSummaryAuthor: string | null;
 
-  @ManyToMany(_ => NotablePersonLabel, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
-  })
+  @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
   labels: NotablePersonLabel[];
 

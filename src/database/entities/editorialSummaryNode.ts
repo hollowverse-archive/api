@@ -58,7 +58,7 @@ export class EditorialSummaryNode extends BaseEntity {
   @IsUrl(urlValidationOptions)
   @Column('varchar', {
     nullable: true,
-    length: 500,
+    length: 600,
   })
   sourceUrl: string | null;
 

@@ -68,7 +68,7 @@ connection
       });
 
       const savedEventLabels = await entityManager.save(
-        Array.from(eventLabels.values()).map(text => {
+        Array.from(eventLabels.values()).map(text => text.toLowerCase()).map(text => {
           const label = new EventLabel();
           label.id = uuid();
           label.createdAt = new Date();
