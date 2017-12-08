@@ -70,7 +70,7 @@ export class EditorialSummaryNode extends BaseEntity {
 
   @ManyToOne(
     _ => NotablePerson,
-    notablePerson => notablePerson.editorialSummaryNodes,
+    async notablePerson => notablePerson.editorialSummaryNodes,
     {
       nullable: false,
     },
