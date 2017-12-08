@@ -81,9 +81,8 @@ export class NotablePerson extends BaseEntity {
   @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
-    lazy: true,
   })
-  editorialSummaryNodes: Promise<EditorialSummaryNode[]>;
+  editorialSummaryNodes: EditorialSummaryNode[];
 
   /** Author of old Hollowverse content for this notable person */
   @Trim()

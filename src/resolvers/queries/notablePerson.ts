@@ -2,6 +2,7 @@ import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/notablePerson';
 import { NotablePersonEvent } from '../../database/entities/event';
 import { NotablePersonEventComment } from '../../database/entities/comment';
+import { EditorialSummaryNode } from '../../database/entities/editorialSummaryNode';
 import {
   NotablePersonRootQueryArgs,
   EventsNotablePersonArgs,
@@ -44,7 +45,17 @@ export const notablePersonResolvers = {
     async editorialSummaryNodes(
       notablePerson: NotablePerson,
     ): Promise<NotablePersonType['editorialSummaryNodes']> {
-      return notablePerson.editorialSummaryNodes;
+      const db = await connection;
+      const nodes = db.getRepository(EditorialSummaryNode);
+
+      return nodes.find({
+        where: {
+          notablePersonId: notablePerson.id,
+        },
+        order: {
+          order: 'ASC',
+        },
+      });
     },
 
     editorialSummaryAuthor(
