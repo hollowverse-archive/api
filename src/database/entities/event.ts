@@ -81,6 +81,9 @@ export class NotablePersonEvent extends BaseEntity {
   })
   owner: User;
 
+  /** 
+   * @deprecated
+   */
   @OneToMany(_ => NotablePersonEventComment, comment => comment.event, {
     cascadeInsert: true,
     cascadeUpdate: true,
