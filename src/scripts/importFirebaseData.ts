@@ -44,6 +44,9 @@ connection
   .then(async db =>
     db.transaction(async entityManager => {
       const users = db.getRepository(User);
+      const notablePeople = db.getRepository(NotablePerson);
+      const notablePersonLabels = db.getRepository(NotablePersonLabel);
+      const notablePersonLablesToSave = new Map<string, NotablePersonLabel>();
       let user = await users.findOne({ email: 'editor@hollowverse.com' });
 
       if (!user) {
@@ -68,36 +71,53 @@ connection
       });
 
       const savedEventLabels = await entityManager.save(
-        Array.from(eventLabels.values()).map(text => text.toLowerCase()).map(text => {
-          const label = new EventLabel();
-          label.id = uuid();
-          label.createdAt = new Date();
-          label.text = text;
+        Array.from(eventLabels.values())
+          .map(text => text.toLowerCase())
+          .map(text => {
+            const label = new EventLabel();
+            label.id = uuid();
+            label.createdAt = new Date();
+            label.text = text;
 
-          return label;
-        }),
+            return label;
+          }),
       );
 
       return Promise.all(
         Object.entries(
           json.notablePersons,
         ).map(async ([id, { name, labels, events, summary, oldSlug }]) => {
-          const notablePerson = new NotablePerson();
-          notablePerson.id = uuid();
-          notablePerson.name = name;
-          notablePerson.slug = findKey(json.slugToID, v => v === id)!;
-          notablePerson.summary = summary;
-          notablePerson.oldSlug = oldSlug;
+          const notablePerson =
+            (await notablePeople.findOne({ oldSlug })) || new NotablePerson();
+          notablePerson.id = notablePerson.id || uuid();
+          notablePerson.name = notablePerson.name || name;
+          notablePerson.slug =
+            notablePerson.slug || findKey(json.slugToID, v => v === id)!;
+          notablePerson.summary = notablePerson.summary || summary;
+          notablePerson.oldSlug = notablePerson.oldSlug || oldSlug;
 
-          notablePerson.labels = await entityManager.save(
-            labels.map(text => {
+          notablePerson.labels = await Promise.all(
+            labels.map(text => text.toLowerCase()).map(async text => {
+              const saved =
+                (await notablePersonLabels.findOne({ text })) ||
+                notablePersonLablesToSave.get(text);
+
+              if (saved) {
+                return saved;
+              }
+
               const label = new NotablePersonLabel();
               label.id = uuid();
               label.text = text;
               label.createdAt = new Date();
+              notablePersonLablesToSave.set(text, label);
 
               return label;
             }),
+          );
+
+          await entityManager.save(
+            Array.from(notablePersonLablesToSave.values()),
           );
 
           await entityManager.save(notablePerson);
