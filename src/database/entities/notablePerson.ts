@@ -64,7 +64,6 @@ export class NotablePerson extends BaseEntity {
    * of this URL might be different depending on whether the notable person
    * was imported from the old Hollowverse website or not. The trailing slash may
    * also be included or removed.
-   * @deprecated
    * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
    */
   commentsUrl: string;
