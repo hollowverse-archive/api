@@ -87,9 +87,7 @@ export class NotablePersonEvent extends BaseEntity {
   })
   comments: NotablePersonEventComment[];
 
-  @ManyToMany(_ => EventLabel, {
-    eager: true,
-  })
+  @ManyToMany(_ => EventLabel)
   @JoinTable()
   labels: EventLabel[];
 
