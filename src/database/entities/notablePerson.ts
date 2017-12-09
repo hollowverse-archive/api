@@ -3,6 +3,7 @@ import {
   Column,
   AfterLoad,
   PrimaryGeneratedColumn,
+  JoinColumn,
   OneToMany,
   OneToOne,
   ManyToMany,
@@ -84,6 +85,7 @@ export class NotablePerson extends BaseEntity {
     lazy: true,
     nullable: true,
   })
+  @JoinColumn()
   editorialSummary: Promise<EditorialSummary | null>;
 
   @ManyToMany(_ => NotablePersonLabel)
