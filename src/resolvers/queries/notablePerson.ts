@@ -47,7 +47,7 @@ export const notablePersonResolvers = {
     ): Promise<NotablePersonType['editorialSummary']> {
       const editorialSummary = await notablePerson.editorialSummary;
 
-      if (editorialSummary !== null) {
+      if (editorialSummary) {
         const nodesRepo = (await connection).getRepository(
           EditorialSummaryNode,
         );

@@ -86,7 +86,7 @@ export class NotablePerson extends BaseEntity {
     nullable: true,
   })
   @JoinColumn()
-  editorialSummary: Promise<EditorialSummary | null>;
+  editorialSummary: Promise<EditorialSummary | null | undefined>;
 
   @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
