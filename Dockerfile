@@ -24,6 +24,5 @@ RUN yarn --prod
 COPY ./dist ./dist/
 
 COPY ./schema.graphql ./
-COPY ./firebaseExport.json ./
 
 CMD yarn start

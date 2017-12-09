@@ -45,7 +45,6 @@ async function main() {
         'build.zip',
         [
           'schema.graphql',
-          'firebaseExport.json',
           'dist/**/*',
           'secrets/**/*',
           'yarn.lock',
