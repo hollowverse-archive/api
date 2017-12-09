@@ -27,9 +27,6 @@ export class NotablePersonEventComment extends BaseEntity {
 
   @ManyToOne(_ => User, user => user.comments, {
     nullable: false,
-    cascadeInsert: true,
-    cascadeUpdate: true,
-    cascadeRemove: true,
   })
   owner: User;
 }

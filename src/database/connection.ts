@@ -5,6 +5,8 @@ import { NotablePersonEvent } from './entities/event';
 import { NotablePersonLabel } from './entities/notablePersonLabel';
 import { EventLabel } from './entities/eventLabel';
 import { NotablePersonEventComment } from './entities/comment';
+import { EditorialSummary } from './entities/editorialSummary';
+import { EditorialSummaryNode } from './entities/editorialSummaryNode';
 import { User } from './entities/user';
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
@@ -16,6 +18,8 @@ const entities = [
   NotablePersonEventComment,
   EventLabel,
   User,
+  EditorialSummary,
+  EditorialSummaryNode,
 ];
 
 const {

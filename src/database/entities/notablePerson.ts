@@ -3,15 +3,18 @@ import {
   Column,
   AfterLoad,
   PrimaryGeneratedColumn,
+  JoinColumn,
   OneToMany,
+  OneToOne,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
 import { Trim } from 'class-sanitizer';
-import { IsNotEmpty } from 'class-validator';
+import { IsNotEmpty, ValidateIf } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonLabel } from './notablePersonLabel';
+import { EditorialSummary } from './editorialSummary';
 import { URL } from 'url';
 
 /**
@@ -45,13 +48,14 @@ export class NotablePerson extends BaseEntity {
   summary: string | null;
 
   /** The filename of the photo as stored in S3 */
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: true, unique: true })
+  @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
   @Trim()
-  photoId: string;
+  photoId: string | null;
 
   /** Photo URL computed from `photoId`, not an actual column. */
-  photoUrl: string;
+  photoUrl: string | null;
 
   /**
    * This is used to load Facebook comments on the client.
@@ -60,7 +64,6 @@ export class NotablePerson extends BaseEntity {
    * of this URL might be different depending on whether the notable person
    * was imported from the old Hollowverse website or not. The trailing slash may
    * also be included or removed.
-   * 
    * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
    */
   commentsUrl: string;
@@ -71,19 +74,31 @@ export class NotablePerson extends BaseEntity {
   })
   events: NotablePersonEvent[];
 
-  @ManyToMany(_ => NotablePersonLabel, {
+  /**
+   * Nodes used to reconstruct the editorial summary,
+   * which is the content from the old Hollowverse
+   */
+  @OneToOne(_ => EditorialSummary, {
     cascadeInsert: true,
     cascadeUpdate: true,
+    eager: true,
+    nullable: true,
   })
+  @JoinColumn()
+  editorialSummary: EditorialSummary;
+
+  @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
   labels: NotablePersonLabel[];
 
   @AfterLoad()
   setPhotoUrl() {
-    this.photoUrl = new URL(
-      `notable-people/${this.slug}`,
-      'https://files.hollowverse.com',
-    ).toString();
+    this.photoUrl = this.photoId
+      ? new URL(
+          `notable-people/${this.photoId}`,
+          'https://files.hollowverse.com',
+        ).toString()
+      : null;
   }
 
   @AfterLoad()

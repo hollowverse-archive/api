@@ -16,13 +16,7 @@ import { NotablePersonEventComment } from './comment';
 import { EventLabel } from './eventLabel';
 import * as isUrl from 'validator/lib/isURL';
 import { NotablePersonEventType } from '../../typings/schema';
-
-const urlValidationOptions = {
-  require_protocol: true,
-  require_host: true,
-  require_valid_protocol: true,
-  protocols: ['https', 'http'],
-};
+import { urlValidationOptions } from '../../helpers/validation';
 
 const eventTypes: Record<NotablePersonEventType, string> = {
   quote: '',
@@ -57,7 +51,10 @@ export class NotablePersonEvent extends BaseEntity {
 
   @IsUrl(urlValidationOptions)
   @Trim()
-  @Column({ type: 'text', nullable: false })
+  @Column('varchar', {
+    nullable: false,
+    length: 600,
+  })
   sourceUrl: string;
 
   /** the official website of the organization, campaign, political event... etc., if any */
@@ -84,16 +81,16 @@ export class NotablePersonEvent extends BaseEntity {
   })
   owner: User;
 
+  /** 
+   * @deprecated
+   */
   @OneToMany(_ => NotablePersonEventComment, comment => comment.event, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
   comments: NotablePersonEventComment[];
 
-  @ManyToMany(_ => EventLabel, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
-  })
+  @ManyToMany(_ => EventLabel)
   @JoinTable()
   labels: EventLabel[];
 
