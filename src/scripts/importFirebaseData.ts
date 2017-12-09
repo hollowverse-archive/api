@@ -88,7 +88,7 @@ connection
           json.notablePersons,
         ).map(async ([id, { name, labels, events, summary, oldSlug }]) => {
           const notablePerson =
-            (await notablePeople.findOne({ oldSlug })) || new NotablePerson();
+            (await notablePeople.findOne({ where: { oldSlug }, relations: ['labels'] })) || new NotablePerson();
           notablePerson.id = notablePerson.id || uuid();
           notablePerson.name = notablePerson.name || name;
           notablePerson.slug =
@@ -96,25 +96,28 @@ connection
           notablePerson.summary = notablePerson.summary || summary;
           notablePerson.oldSlug = notablePerson.oldSlug || oldSlug;
 
-          notablePerson.labels = await Promise.all(
-            labels.map(text => text.toLowerCase()).map(async text => {
-              const saved =
-                (await notablePersonLabels.findOne({ text })) ||
-                notablePersonLablesToSave.get(text);
+          notablePerson.labels = [
+            ...notablePerson.labels,
+            ...await Promise.all(
+              labels.map(text => text.toLowerCase()).map(async text => {
+                const saved =
+                  (await notablePersonLabels.findOne({ text })) ||
+                  notablePersonLablesToSave.get(text);
 
-              if (saved) {
-                return saved;
-              }
+                if (saved) {
+                  return saved;
+                }
 
-              const label = new NotablePersonLabel();
-              label.id = uuid();
-              label.text = text;
-              label.createdAt = new Date();
-              notablePersonLablesToSave.set(text, label);
+                const label = new NotablePersonLabel();
+                label.id = uuid();
+                label.text = text;
+                label.createdAt = new Date();
+                notablePersonLablesToSave.set(text, label);
 
-              return label;
-            }),
-          );
+                return label;
+              }),
+            )
+          ];
 
           await entityManager.save(
             Array.from(notablePersonLablesToSave.values()),

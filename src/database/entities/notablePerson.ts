@@ -82,11 +82,11 @@ export class NotablePerson extends BaseEntity {
   @OneToOne(_ => EditorialSummary, {
     cascadeInsert: true,
     cascadeUpdate: true,
-    lazy: true,
+    eager: true,
     nullable: true,
   })
   @JoinColumn()
-  editorialSummary: Promise<EditorialSummary | null | undefined>;
+  editorialSummary: EditorialSummary;
 
   @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
