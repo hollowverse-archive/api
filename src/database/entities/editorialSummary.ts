@@ -11,11 +11,6 @@ import { EditorialSummaryNode } from './editorialSummaryNode';
 export class EditorialSummary extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
-  @Column({ type: 'text', nullable: false })
-  @Trim()
-  @IsNotEmpty()
-  text: string;
-
   @Column({ type: 'date', nullable: true })
   lastUpdatedOn: Date | null;
 
