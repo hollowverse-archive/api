@@ -2,11 +2,11 @@ import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/notablePerson';
 import { NotablePersonEvent } from '../../database/entities/event';
 import { NotablePersonEventComment } from '../../database/entities/comment';
-// import { EditorialSummary } from '../../database/entities/editorialSummary';
+import { EditorialSummaryNode } from '../../database/entities/editorialSummaryNode';
 import {
   NotablePersonRootQueryArgs,
   EventsNotablePersonArgs,
-  // NotablePerson as NotablePersonType,
+  NotablePerson as NotablePersonType,
 } from '../../typings/schema';
 
 export const notablePersonResolvers = {
@@ -40,6 +40,32 @@ export const notablePersonResolvers = {
         },
         relations: ['labels'],
       });
+    },
+
+    async editorialSummary(
+      notablePerson: NotablePerson,
+    ): Promise<NotablePersonType['editorialSummary']> {
+      const editorialSummary = await notablePerson.editorialSummary;
+
+      if (editorialSummary !== null) {
+        const nodesRepo = (await connection).getRepository(
+          EditorialSummaryNode,
+        );
+
+        return {
+          ...editorialSummary,
+          nodes: await nodesRepo.find({
+            where: {
+              editorialSummaryId: editorialSummary.id,
+            },
+            order: {
+              order: 'ASC',
+            },
+          }),
+        };
+      }
+
+      return null;
     },
   },
 

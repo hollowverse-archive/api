@@ -75,6 +75,7 @@ type NotablePersonEvent {
 }
 
 type EditorialSummary {
+  id: ID!
   nodes: [EditorialSummaryNode!]!
   author: String!
   lastUpdatedOn: DateOnly

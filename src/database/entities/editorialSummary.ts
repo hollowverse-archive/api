@@ -18,8 +18,8 @@ export class EditorialSummary extends BaseEntity {
   @Trim()
   @IsNotEmpty()
   @ValidateIf((_, v) => typeof v === 'string')
-  @Column({ type: 'varchar', nullable: true })
-  author: string | null;
+  @Column({ type: 'varchar', nullable: false })
+  author: string;
 
   /**
    * Text nodes, headings, breaks... etc. used to reconstruct the editorial summary
@@ -28,7 +28,6 @@ export class EditorialSummary extends BaseEntity {
   @OneToMany(_ => EditorialSummaryNode, node => node.editorialSummary, {
     cascadeInsert: true,
     cascadeUpdate: true,
-    eager: true,
   })
   nodes: EditorialSummaryNode[];
 }
