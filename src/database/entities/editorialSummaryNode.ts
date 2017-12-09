@@ -7,7 +7,7 @@ import {
 } from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './base';
-import { NotablePerson } from './notablePerson';
+import { EditorialSummary } from './editorialSummary';
 import { EditorialSummaryNodeType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 
@@ -24,7 +24,7 @@ export type NodeType = keyof typeof nodeTypes;
  * Editorial content from the old Hollowverse website
  */
 @Entity()
-@Index(['order', 'notablePerson'], { unique: true })
+@Index(['order', 'editorialSummary'], { unique: true })
 export class EditorialSummaryNode extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
@@ -69,11 +69,11 @@ export class EditorialSummaryNode extends BaseEntity {
   sourceTitle: string | null;
 
   @ManyToOne(
-    _ => NotablePerson,
-    notablePerson => notablePerson.editorialSummaryNodes,
+    _ => EditorialSummary,
+    editorialSUmmary => editorialSUmmary.nodes,
     {
       nullable: false,
     },
   )
-  notablePerson: NotablePerson;
+  editorialSummary: EditorialSummary;
 }

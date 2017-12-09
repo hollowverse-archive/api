@@ -4,6 +4,7 @@ import {
   AfterLoad,
   PrimaryGeneratedColumn,
   OneToMany,
+  OneToOne,
   ManyToMany,
   JoinTable,
 } from 'typeorm';
@@ -12,7 +13,7 @@ import { IsNotEmpty, ValidateIf } from 'class-validator';
 import { BaseEntity } from './base';
 import { NotablePersonEvent } from './event';
 import { NotablePersonLabel } from './notablePersonLabel';
-import { EditorialSummaryNode } from './editorialSummaryNode';
+import { EditorialSummary } from './editorialSummary';
 import { URL } from 'url';
 
 /**
@@ -62,7 +63,7 @@ export class NotablePerson extends BaseEntity {
    * of this URL might be different depending on whether the notable person
    * was imported from the old Hollowverse website or not. The trailing slash may
    * also be included or removed.
-   * 
+   * @deprecated
    * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
    */
   commentsUrl: string;
@@ -77,19 +78,13 @@ export class NotablePerson extends BaseEntity {
    * Nodes used to reconstruct the editorial summary,
    * which is the content from the old Hollowverse
    */
-
-  @OneToMany(_ => EditorialSummaryNode, node => node.notablePerson, {
+  @OneToOne(_ => EditorialSummary, {
     cascadeInsert: true,
     cascadeUpdate: true,
+    lazy: true,
+    nullable: true,
   })
-  editorialSummaryNodes: EditorialSummaryNode[];
-
-  /** Author of old Hollowverse content for this notable person */
-  @Trim()
-  @IsNotEmpty()
-  @ValidateIf((_, v) => typeof v === 'string')
-  @Column({ type: 'varchar', nullable: true })
-  editorialSummaryAuthor: string | null;
+  editorialSummary: Promise<EditorialSummary | null>;
 
   @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()

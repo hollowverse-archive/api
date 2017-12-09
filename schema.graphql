@@ -74,6 +74,12 @@ type NotablePersonEvent {
     )
 }
 
+type EditorialSummary {
+  nodes: [EditorialSummaryNode!]!
+  author: String!
+  lastUpdatedOn: DateOnly
+}
+
 input EventsQueryInput {
   type: NotablePersonEventType
 }
@@ -97,8 +103,7 @@ type NotablePerson {
   # Example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
   commentsUrl: String!
   # The content from the old Hollowverse
-  editorialSummaryNodes: [EditorialSummaryNode!]
-  editorialSummaryAuthor: String
+  editorialSummary: EditorialSummary
 }
 
 interface UserInterface {
