@@ -30,7 +30,7 @@ const entities = [
   ColorPalette,
 ];
 
-const subscribers = [algoliaSubscribers];
+const subscribers = [...algoliaSubscribers];
 
 const {
   // These variables are for the development database

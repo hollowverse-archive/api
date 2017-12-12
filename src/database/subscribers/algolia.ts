@@ -6,10 +6,22 @@ import {
   UpdateEvent,
 } from 'typeorm';
 
+import { pick } from 'lodash';
+
 import { NotablePerson } from '../entities/notablePerson';
 
 import { notablePersonIndex } from '../../algolia';
 
+const indexedNotablePersonKeys: Array<keyof NotablePerson> = [
+  'name',
+  'summary',
+  'labels',
+];
+
+/**
+ * Listens to changes in the notable people table and related tables
+ * and updates the corresponding Algolia index.
+ */
 @EventSubscriber()
 class NotablePersonSubscriber
   implements EntitySubscriberInterface<NotablePerson> {
@@ -18,7 +30,10 @@ class NotablePersonSubscriber
   }
 
   async afterInsert(event: InsertEvent<NotablePerson>) {
-    return (await notablePersonIndex).addObject(event.entity, event.entity.id);
+    return (await notablePersonIndex).addObject({
+      ...pick(event.entity, indexedNotablePersonKeys),
+      objectID: event.entity.id,
+    });
   }
 
   async afterRemove(event: RemoveEvent<NotablePerson>) {
@@ -27,7 +42,7 @@ class NotablePersonSubscriber
 
   async afterUpdate(event: UpdateEvent<NotablePerson>) {
     return (await notablePersonIndex).partialUpdateObject({
-      ...event.entity,
+      ...pick(event.entity, indexedNotablePersonKeys),
       objectID: event.entity.id,
     });
   }
