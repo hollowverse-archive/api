@@ -1,13 +1,13 @@
 import 'reflect-metadata';
 import { createConnection, ConnectionOptions } from 'typeorm';
-import { NotablePerson } from './entities/notablePerson';
-import { NotablePersonEvent } from './entities/event';
-import { NotablePersonLabel } from './entities/notablePersonLabel';
-import { EventLabel } from './entities/eventLabel';
-import { NotablePersonEventComment } from './entities/comment';
-import { EditorialSummary } from './entities/editorialSummary';
-import { EditorialSummaryNode } from './entities/editorialSummaryNode';
-import { User } from './entities/user';
+import { NotablePerson } from './entities/NotablePerson';
+import { NotablePersonEvent } from './entities/NotablePersonEvent';
+import { NotablePersonLabel } from './entities/NotablePersonLabel';
+import { EventLabel } from './entities/EventLabel';
+import { NotablePersonEventComment } from './entities/NotablePersonEventComment';
+import { EditorialSummary } from './entities/EditorialSummary';
+import { EditorialSummaryNode } from './entities/EditorialSummaryNode';
+import { User } from './entities/User';
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
 
