@@ -1,14 +1,20 @@
 import { User } from '../../database/entities/user';
-import { SchemaContext } from '../../typings/schemaContext';
+import { connection } from '../../database/connection';
+import { ResolverMap } from '../../typings/resolverMap';
 
-export const userResolvers = {
+export const resolvers: Partial<ResolverMap> = {
   User: {
-    async photoUrl(
-      { fbId }: User,
-      _: undefined,
-      { userPhotoUrlLoader }: SchemaContext,
-    ) {
-      return userPhotoUrlLoader.load(fbId);
+    async photoUrl({ id }, _, { userPhotoUrlLoader }) {
+      if (id) {
+        const db = await connection;
+        const users = db.getRepository(User);
+        const user = await users.findOne({ where: { id }, select: ['fbId'] });
+        if (user) {
+          return userPhotoUrlLoader.load(user.fbId);
+        }
+      }
+
+      return null;
     },
   },
 };
