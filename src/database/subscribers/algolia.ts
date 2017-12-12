@@ -16,7 +16,7 @@ const algoliaClient = algoliaSearch(applicationId, apiKey);
 const index = algoliaClient.initIndex('notable-people');
 
 @EventSubscriber()
-export class AlgoliaSubscriber
+class NotablePersonSubscriber
   implements EntitySubscriberInterface<NotablePerson> {
   listenTo() {
     return NotablePerson;
@@ -37,3 +37,5 @@ export class AlgoliaSubscriber
     });
   }
 }
+
+export const algoliaSubscribers = [NotablePersonSubscriber];

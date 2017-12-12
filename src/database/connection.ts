@@ -11,6 +11,8 @@ import { EditorialSummaryNode } from './entities/EditorialSummaryNode';
 import { Photo } from './entities/Photo';
 import { User } from './entities/User';
 
+import { algoliaSubscribers } from './subscribers/algolia';
+
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
 import { ColorPalette } from './entities/ColorPalette';
@@ -27,6 +29,8 @@ const entities = [
   Photo,
   ColorPalette,
 ];
+
+const subscribers = [algoliaSubscribers];
 
 const {
   // These variables are for the development database
@@ -80,6 +84,7 @@ const getConfig = async (): Promise<ConnectionOptions> => {
       dropSchema: false,
       migrationsRun: true,
       entities,
+      subscribers: subscribers as any,
       migrations: ['dist/database/migrations/*.js'],
     };
   }
@@ -92,6 +97,7 @@ const getConfig = async (): Promise<ConnectionOptions> => {
     dropSchema: false,
     migrationsRun: false,
     entities,
+    subscribers,
     migrations: ['src/database/migrations/*.ts'],
   };
 };
