@@ -6,6 +6,21 @@ import { EditorialSummaryNode } from '../../database/entities/editorialSummaryNo
 import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
+  RootQuery: {
+    async notablePerson(_, { slug }) {
+      const db = await connection;
+      const npRepository = db.getRepository(NotablePerson);
+
+      return (
+        (await npRepository.findOne({
+          where: {
+            slug,
+          },
+          relations: ['labels'],
+        })) || null
+      );
+    },
+  },
   NotablePerson: {
     async events(notablePerson, args) {
       const db = await connection;
@@ -46,21 +61,6 @@ export const resolvers: Partial<ResolverMap> = {
       }
 
       return null;
-    },
-  },
-  RootQuery: {
-    async notablePerson(_, { slug }) {
-      const db = await connection;
-      const npRepository = db.getRepository(NotablePerson);
-
-      return (
-        (await npRepository.findOne({
-          where: {
-            slug,
-          },
-          relations: ['labels'],
-        })) || null
-      );
     },
   },
   NotablePersonEvent: {
