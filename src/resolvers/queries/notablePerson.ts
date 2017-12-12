@@ -15,7 +15,7 @@ export const resolvers: Partial<ResolverMap> = {
       return repo.find({
         where: {
           ...args.query,
-          notablePersonId: notablePerson.id!,
+          notablePersonId: notablePerson.id,
         },
         order: {
           postedAt: 'DESC',
@@ -34,7 +34,6 @@ export const resolvers: Partial<ResolverMap> = {
 
         return {
           ...editorialSummary,
-          asd: 1,
           nodes: await nodesRepo.find({
             where: {
               editorialSummaryId: editorialSummary.id,
