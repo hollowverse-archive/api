@@ -7,67 +7,86 @@ import {
   NotablePersonRootQueryArgs,
   EventsNotablePersonArgs,
   NotablePerson as NotablePersonType,
+  RootQuery,
 } from '../../typings/schema';
+import { SchemaContext } from '../../typings/schemaContext';
 
-export const notablePersonResolvers = {
-  RootQuery: {
-    async notablePerson(_: undefined, { slug }: NotablePersonRootQueryArgs) {
-      const db = await connection;
-      const npRepository = db.getRepository(NotablePerson);
+type Result<T> = Promise<T> | T;
 
-      return npRepository.findOne({
+type DeepPartial<T> = { [K in keyof T]: DeepPartial<T[K]> };
+
+type TypeResolver<Type, Context> = Partial<
+  {
+    [K in keyof Type]: (
+      type: Partial<Type>,
+      args: Record<string, any>,
+      context: Context,
+    ) => Result<DeepPartial<Type[K]>>
+  }
+>;
+
+const NotablePersonResolvers: TypeResolver<NotablePersonType, SchemaContext> = {
+  async events(notablePerson, args: EventsNotablePersonArgs) {
+    const db = await connection;
+
+    const repo = db.getRepository(NotablePersonEvent);
+
+    return repo.find({
+      where: {
+        ...args.query,
+        notablePersonId: notablePerson.id!,
+      },
+      order: {
+        postedAt: 'DESC',
+      },
+      relations: ['labels'],
+    });
+  },
+
+  async editorialSummary(notablePerson) {
+    const editorialSummary = notablePerson.editorialSummary;
+
+    if (editorialSummary) {
+      const nodesRepo = (await connection).getRepository(EditorialSummaryNode);
+
+      return {
+        ...editorialSummary,
+        asd: 1,
+        nodes: await nodesRepo.find({
+          where: {
+            editorialSummaryId: editorialSummary.id,
+          },
+          order: {
+            order: 'ASC',
+          },
+        }),
+      };
+    }
+
+    return null;
+  },
+};
+
+const RootQueryResolvers: TypeResolver<RootQuery, SchemaContext> = {
+  async notablePerson(_, { slug }: NotablePersonRootQueryArgs) {
+    const db = await connection;
+    const npRepository = db.getRepository(NotablePerson);
+
+    return (
+      (await npRepository.findOne({
         where: {
           slug,
         },
         relations: ['labels'],
-      });
-    },
+      })) || null
+    );
   },
+};
 
-  NotablePerson: {
-    async events(notablePerson: NotablePerson, args: EventsNotablePersonArgs) {
-      const db = await connection;
+export const notablePersonResolvers = {
+  RootQuery: RootQueryResolvers,
 
-      const repo = db.getRepository(NotablePersonEvent);
-
-      return repo.find({
-        where: {
-          ...args.query,
-          notablePersonId: notablePerson.id,
-        },
-        order: {
-          postedAt: 'DESC',
-        },
-        relations: ['labels'],
-      });
-    },
-
-    async editorialSummary(
-      notablePerson: NotablePerson,
-    ): Promise<NotablePersonType['editorialSummary']> {
-      const editorialSummary = notablePerson.editorialSummary;
-
-      if (editorialSummary) {
-        const nodesRepo = (await connection).getRepository(
-          EditorialSummaryNode,
-        );
-
-        return {
-          ...editorialSummary,
-          nodes: await nodesRepo.find({
-            where: {
-              editorialSummaryId: editorialSummary.id,
-            },
-            order: {
-              order: 'ASC',
-            },
-          }),
-        };
-      }
-
-      return null;
-    },
-  },
+  NotablePerson: NotablePersonResolvers,
 
   NotablePersonEvent: {
     async comments(event: NotablePersonEvent) {
