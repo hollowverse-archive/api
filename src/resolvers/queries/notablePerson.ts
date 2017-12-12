@@ -69,7 +69,7 @@ export const notablePersonResolvers = {
       return null;
     },
 
-    photoUrl(notablePerson: NotablePerson) {
+    photoUrl(notablePerson: NotablePerson): NotablePersonType['photoUrl'] {
       return notablePerson.photoId
         ? new URL(
             `notable-people/${notablePerson.photoId}`,
@@ -78,7 +78,9 @@ export const notablePersonResolvers = {
         : null;
     },
 
-    commentsUrl(notablePerson: NotablePerson) {
+    commentsUrl(
+      notablePerson: NotablePerson,
+    ): NotablePersonType['commentsUrl'] {
       let url: URL;
 
       if (notablePerson.oldSlug !== null) {
