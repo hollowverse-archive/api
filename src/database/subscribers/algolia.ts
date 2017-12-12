@@ -1,4 +1,3 @@
-import * as algoliaSearch from 'algoliasearch';
 import {
   EventSubscriber,
   EntitySubscriberInterface,
@@ -9,11 +8,7 @@ import {
 
 import { NotablePerson } from '../entities/notablePerson';
 
-const applicationId = '';
-const apiKey = '';
-
-const algoliaClient = algoliaSearch(applicationId, apiKey);
-const index = algoliaClient.initIndex('notable-people');
+import { notablePersonIndex } from '../../algolia';
 
 @EventSubscriber()
 class NotablePersonSubscriber
@@ -23,15 +18,15 @@ class NotablePersonSubscriber
   }
 
   async afterInsert(event: InsertEvent<NotablePerson>) {
-    await index.addObject(event.entity, event.entity.id);
+    return (await notablePersonIndex).addObject(event.entity, event.entity.id);
   }
 
   async afterRemove(event: RemoveEvent<NotablePerson>) {
-    await index.deleteObject(event.entityId);
+    return (await notablePersonIndex).deleteObject(event.entityId);
   }
 
   async afterUpdate(event: UpdateEvent<NotablePerson>) {
-    await index.partialUpdateObject({
+    return (await notablePersonIndex).partialUpdateObject({
       ...event.entity,
       objectID: event.entity.id,
     });
