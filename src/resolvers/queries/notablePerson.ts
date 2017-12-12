@@ -8,6 +8,7 @@ import {
   EventsNotablePersonArgs,
   NotablePerson as NotablePersonType,
 } from '../../typings/schema';
+import { URL } from 'url';
 
 export const notablePersonResolvers = {
   RootQuery: {
@@ -66,6 +67,31 @@ export const notablePersonResolvers = {
       }
 
       return null;
+    },
+
+    photoUrl(notablePerson: NotablePerson) {
+      return notablePerson.photoId
+        ? new URL(
+            `notable-people/${notablePerson.photoId}`,
+            'https://files.hollowverse.com',
+          ).toString()
+        : null;
+    },
+
+    commentsUrl(notablePerson: NotablePerson) {
+      let url: URL;
+
+      if (notablePerson.oldSlug !== null) {
+        url = new URL(
+          `${notablePerson.oldSlug}/`,
+          // tslint:disable-next-line:no-http-string
+          'http://hollowverse.com',
+        );
+      } else {
+        url = new URL(`${notablePerson.slug}`, 'https://hollowverse.com');
+      }
+
+      return url.toString();
     },
   },
 
