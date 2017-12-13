@@ -8,7 +8,7 @@ import {
 
 import { pick } from 'lodash';
 
-import { NotablePerson } from '../entities/notablePerson';
+import { NotablePerson } from '../entities/NotablePerson';
 
 import { notablePersonIndex } from '../../algolia';
 

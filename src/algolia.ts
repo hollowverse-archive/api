@@ -7,7 +7,7 @@ const algoliaConfig = readJson<AlgoliaAppCredentials>(
 );
 
 const algoliaClient = algoliaConfig.then(({ appId, apiKey }) =>
-  algoliaSearch(appId, apiKey),
+  algoliaSearch(appId, apiKey, { timeout: 30000 }),
 );
 
 const getIndexName = (name: string) =>
