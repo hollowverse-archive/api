@@ -1,5 +1,5 @@
 import { connection } from '../database/connection';
-import { User } from '../database/entities/user';
+import { User } from '../database/entities/User';
 import { sendFacebookAuthenticatedRequest } from './facebook';
 
 export async function findUserByFacebookAccessToken(fbAccessToken: string) {

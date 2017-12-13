@@ -1,4 +1,4 @@
-import { User } from '../database/entities/user';
+import { User } from '../database/entities/User';
 import * as DataLoader from 'dataloader';
 
 export type SchemaContext = {

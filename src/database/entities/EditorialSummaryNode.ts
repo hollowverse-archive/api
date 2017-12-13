@@ -6,8 +6,8 @@ import {
   ManyToOne,
 } from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
-import { BaseEntity } from './base';
-import { EditorialSummary } from './editorialSummary';
+import { BaseEntity } from './BaseEntity';
+import { EditorialSummary } from './EditorialSummary';
 import { EditorialSummaryNodeType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 

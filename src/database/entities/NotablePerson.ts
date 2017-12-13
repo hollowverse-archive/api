@@ -10,10 +10,10 @@ import {
 } from 'typeorm';
 import { Trim } from 'class-sanitizer';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
-import { BaseEntity } from './base';
-import { NotablePersonEvent } from './event';
-import { NotablePersonLabel } from './notablePersonLabel';
-import { EditorialSummary } from './editorialSummary';
+import { BaseEntity } from './BaseEntity';
+import { NotablePersonEvent } from './NotablePersonEvent';
+import { NotablePersonLabel } from './NotablePersonLabel';
+import { EditorialSummary } from './EditorialSummary';
 
 /**
  * A public figure or an influential person

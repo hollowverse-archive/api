@@ -1,8 +1,8 @@
 import { connection } from '../../database/connection';
-import { NotablePerson } from '../../database/entities/notablePerson';
-import { NotablePersonEvent } from '../../database/entities/event';
-import { NotablePersonEventComment } from '../../database/entities/comment';
-import { EditorialSummaryNode } from '../../database/entities/editorialSummaryNode';
+import { NotablePerson } from '../../database/entities/NotablePerson';
+import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
+import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
+import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
 import {
   NotablePersonRootQueryArgs,
   EventsNotablePersonArgs,

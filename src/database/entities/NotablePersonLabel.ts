@@ -1,14 +1,14 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
 import { Trim } from 'class-sanitizer';
-import { BaseEntity } from './base';
+import { BaseEntity } from './BaseEntity';
 
 /**
- * A event's label
- * @example democracy, philosophy
+ * A notable person's label
+ * @example Liberal, Democrat
  */
 @Entity()
-export class EventLabel extends BaseEntity {
+export class NotablePersonLabel extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
   @Trim()
