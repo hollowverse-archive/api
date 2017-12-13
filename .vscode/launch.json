@@ -2,6 +2,29 @@
     "version": "0.2.0",
     "configurations": [
       {
+        "type": "node",
+        "request": "launch",
+        "name": "Debug Populate Algolia Indices",
+        "runtimeExecutable": "node",
+        "runtimeArgs": [
+          "--nolazy", "-r", "ts-node/register"
+        ],
+        "args": [
+          "src/scripts/populateAlgoliaIndices.ts"
+        ],
+        "env": {
+          "TYPEORM_CONNECTION": "mysql",
+          "TYPEORM_PORT": "3306",
+          "TYPEORM_HOST": "localhost",
+          "TYPEORM_DATABASE": "hollowverse",
+          "TYPEORM_USERNAME": "root",
+          "TYPEORM_PASSWORD": "123456"
+        },
+        "cwd": "${workspaceRoot}",
+        "sourceMaps": true,
+        "protocol": "inspector"
+      },
+      {
         "name": "Docker: Attach to Node",
         "type": "node",
         "request": "attach",
