@@ -59,7 +59,6 @@ if (isUsingProductionDatabase === false) {
               null,
               faker.random.uuid(),
             ]);
-            notablePerson.commentsUrl = faker.internet.url();
             notablePerson.labels = take(
               faker.helpers.shuffle(notablePersonLabels),
               Math.min(4, faker.random.number(notablePersonLabels.length)),
