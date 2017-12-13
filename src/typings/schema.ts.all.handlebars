@@ -1,13 +1,15 @@
 
 /* tslint:disable */
+
+// region Scalar Types
 {{#each scalars}}
 
 /** {{ description }} */
 export type {{ name }} = any;
 {{/each}}
+// endregion Scalar Types
 
-/** Input types */
-
+// region Input Types
 {{#each inputTypes}}
 /** {{ description }} */
 export interface {{ name }}{{#if hasInterfaces}} extends {{#each interfaces}}{{this}}{{#unless @last}},{{/unless}}{{/each}}{{/if}} {
@@ -18,6 +20,9 @@ export interface {{ name }}{{#if hasInterfaces}} extends {{#each interfaces}}{{t
 }
 {{/each}}
 
+// endregion Input Types
+
+// region Non-Input Types
 {{#each types}}
 /** {{ description }} */
 export interface {{ name }}{{#if hasInterfaces}} extends {{#each interfaces}}{{this}}{{#unless @last}},{{/unless}}{{/each}}{{/if}} {
@@ -41,18 +46,55 @@ export interface {{ toPascalCase name }}{{ toPascalCase ../name }}Args {
     {{/if}}
   {{/each}}
 {{/each}}
+
+// endregion Non-Input Types
+
+// region Enums
 {{#each enums}}
 
 /** {{ description }} */
 export type {{ name }} = {{#each values }}"{{ value }}"{{#unless @last}} | {{/unless}}{{/each}};
 
 {{/each}}
+
+// endregion Enums
+
+// region Unions
 {{#each unions}}
 
 /** {{ description }} */
 export type {{ name }} = {{#each possibleTypes}}{{this}}{{#unless @last}} | {{/unless}}{{/each}};
 
 {{/each}}
+
+// endregion Unions
+
+// region Interfaces
+{{#each interfaces}}
+/** {{ description }} */
+export interface {{ name }}{{#if hasInterfaces}} extends {{#each interfaces}}{{this}}{{#unless @last}},{{/unless}}{{/each}}{{/if}} {
+{{#each fields}}
+  /** {{ description }} */
+  {{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}};
+{{/each}}
+}
+{{/each}}
+
+{{~#each types}}
+  {{~#each fields}}
+    {{~# if hasArguments }}
+export interface {{ toPascalCase name }}{{ toPascalCase ../name }}Args {
+{{#each arguments}}
+
+  /** {{ description }} */
+  {{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}};
+{{/each}}
+}
+    {{/if}}
+  {{/each}}
+{{/each}}
+
+// endregion Interfaces
 
 export type TypesMap = {
 {{#each types}}

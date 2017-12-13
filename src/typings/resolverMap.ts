@@ -1,7 +1,6 @@
+import { TypesMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
-
-import { TypesMap } from '../../types';
 
 type Result<T> = Promise<T> | T;
 

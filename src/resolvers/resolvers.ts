@@ -1,7 +1,5 @@
 import { merge } from 'lodash';
 
-import { ResolverMap } from '../typings/resolverMap';
-
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';
@@ -23,7 +21,7 @@ const scalarTypes = {
   Url,
 };
 
-export const resolvers: Partial<ResolverMap> = merge(
+export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
   viewerResolvers,
