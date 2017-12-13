@@ -3,7 +3,8 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as moment from 'moment';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import { graphqlExpress } from 'apollo-server-express';
+import playgroundExpress from 'graphql-playground-middleware-express';
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
 import { redirectToHttps } from './redirectToHttps';
@@ -93,10 +94,10 @@ api.use(
   }),
 );
 
-api.use(
-  '/graphiql',
-  graphiqlExpress({
-    endpointURL: '/graphql',
+api.get(
+  '/playground',
+  playgroundExpress({
+    endpoint: '/graphql',
   }),
 );
 
