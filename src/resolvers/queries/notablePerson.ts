@@ -4,6 +4,7 @@ import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
 import { ResolverMap } from '../../typings/resolverMap';
+import { URL } from 'url';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
@@ -73,7 +74,7 @@ export const resolvers: Partial<ResolverMap> = {
         if (notablePerson) {
           const { photoId } = notablePerson;
           if (photoId) {
-            new URL(
+            return new URL(
               `notable-people/${photoId}`,
               'https://files.hollowverse.com',
             ).toString();
