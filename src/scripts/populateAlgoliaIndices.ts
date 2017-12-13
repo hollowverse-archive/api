@@ -1,6 +1,6 @@
 // tslint:disable no-console
 
-import { notablePersonIndex } from '../algolia';
+import { notablePersonIndex } from '../algoliaClient';
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { omit } from 'lodash';
