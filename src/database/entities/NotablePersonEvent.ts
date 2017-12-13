@@ -9,11 +9,11 @@ import {
 } from 'typeorm';
 import { IsUrl, IsNotEmpty, ValidateIf } from 'class-validator';
 import { Trim } from 'class-sanitizer';
-import { BaseEntity } from './base';
-import { NotablePerson } from './notablePerson';
-import { User } from './user';
-import { NotablePersonEventComment } from './comment';
-import { EventLabel } from './eventLabel';
+import { BaseEntity } from './BaseEntity';
+import { NotablePerson } from './NotablePerson';
+import { User } from './User';
+import { NotablePersonEventComment } from './NotablePersonEventComment';
+import { EventLabel } from './EventLabel';
 import * as isUrl from 'validator/lib/isURL';
 import { NotablePersonEventType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';

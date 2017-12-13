@@ -1,5 +1,5 @@
 import { connection } from '../../database/connection';
-import { User } from '../../database/entities/user';
+import { User } from '../../database/entities/User';
 import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { ApiError } from '../../helpers/apiError';
 
@@ -51,7 +51,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       user.fbId = profile.id;
       user.name = name || profile.name;
-      user.email = email;
+      user.email = email || null;
 
       user.signedUpAt = new Date();
 

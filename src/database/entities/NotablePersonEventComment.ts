@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { IsNotEmpty } from 'class-validator';
 import { Trim } from 'class-sanitizer';
-import { BaseEntity } from './base';
-import { NotablePersonEvent } from './event';
-import { User } from './user';
+import { BaseEntity } from './BaseEntity';
+import { NotablePersonEvent } from './NotablePersonEvent';
+import { User } from './User';
 
 /**
  * A comment on a notable person's event

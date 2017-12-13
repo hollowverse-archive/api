@@ -1,4 +1,4 @@
-import { User } from '../../database/entities/user';
+import { User } from '../../database/entities/User';
 import { connection } from '../../database/connection';
 import { ResolverMap } from '../../typings/resolverMap';
 

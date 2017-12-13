@@ -1,7 +1,6 @@
 import {
   Entity,
   Column,
-  AfterLoad,
   PrimaryGeneratedColumn,
   JoinColumn,
   OneToMany,
@@ -11,11 +10,10 @@ import {
 } from 'typeorm';
 import { Trim } from 'class-sanitizer';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
-import { BaseEntity } from './base';
-import { NotablePersonEvent } from './event';
-import { NotablePersonLabel } from './notablePersonLabel';
-import { EditorialSummary } from './editorialSummary';
-import { URL } from 'url';
+import { BaseEntity } from './BaseEntity';
+import { NotablePersonEvent } from './NotablePersonEvent';
+import { NotablePersonLabel } from './NotablePersonLabel';
+import { EditorialSummary } from './EditorialSummary';
 
 /**
  * A public figure or an influential person
@@ -54,20 +52,6 @@ export class NotablePerson extends BaseEntity {
   @Trim()
   photoId: string | null;
 
-  /** Photo URL computed from `photoId`, not an actual column. */
-  photoUrl: string | null;
-
-  /**
-   * This is used to load Facebook comments on the client.
-   * 
-   * This should be treated as an opaque value because the protocol and path parts
-   * of this URL might be different depending on whether the notable person
-   * was imported from the old Hollowverse website or not. The trailing slash may
-   * also be included or removed.
-   * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
-   */
-  commentsUrl: string;
-
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,
     cascadeUpdate: true,
@@ -90,31 +74,4 @@ export class NotablePerson extends BaseEntity {
   @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
   labels: NotablePersonLabel[];
-
-  @AfterLoad()
-  setPhotoUrl() {
-    this.photoUrl = this.photoId
-      ? new URL(
-          `notable-people/${this.photoId}`,
-          'https://files.hollowverse.com',
-        ).toString()
-      : null;
-  }
-
-  @AfterLoad()
-  setCommentsUrl() {
-    let url: URL;
-
-    if (this.oldSlug !== null) {
-      url = new URL(
-        `${this.oldSlug}/`,
-        // tslint:disable-next-line:no-http-string
-        'http://hollowverse.com',
-      );
-    } else {
-      url = new URL(`${this.slug}`, 'https://hollowverse.com');
-    }
-
-    this.commentsUrl = url.toString();
-  }
 }

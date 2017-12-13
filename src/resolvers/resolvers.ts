@@ -1,5 +1,7 @@
 import { merge } from 'lodash';
 
+import { ResolverMap } from '../typings/resolverMap';
+
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';

@@ -5,7 +5,7 @@ import { TypesMap } from '../../types';
 
 type Result<T> = Promise<T> | T;
 
-type DeepPartial<T> = { [K in keyof T]: DeepPartial<T[K]> };
+type DeepPartial<T> = { [K in keyof T]?: DeepPartial<T[K]> };
 
 export type GeneratedType<T> = {
   returnType: T;
