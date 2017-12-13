@@ -20,24 +20,24 @@ export const resolvers: Partial<ResolverMap> = {
     },
   },
   NotablePerson: {
-    async events({ slug }, args) {
-      const db = await connection;
+    async events({ slug }, args, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const db = await connection;
+          const events = db.getRepository(NotablePersonEvent);
 
-      const events = db.getRepository(NotablePersonEvent);
-      const notablePeople = db.getRepository(NotablePerson);
-      const notablePerson = await notablePeople.findOne({ slug });
-
-      if (notablePerson) {
-        return events.find({
-          where: {
-            ...args.query,
-            notablePersonId: notablePerson.id,
-          },
-          order: {
-            postedAt: 'DESC',
-          },
-          relations: ['labels'],
-        });
+          return events.find({
+            where: {
+              ...args.query,
+              notablePersonId: notablePerson.id,
+            },
+            order: {
+              postedAt: 'DESC',
+            },
+            relations: ['labels'],
+          });
+        }
       }
 
       return [];
@@ -67,30 +67,28 @@ export const resolvers: Partial<ResolverMap> = {
       return null;
     },
 
-    async photoUrl({ slug }) {
-      const db = await connection;
-      const notablePeople = db.getRepository(NotablePerson);
-      const person = await notablePeople.findOne({ slug });
-      if (person) {
-        const { photoId } = person;
-        if (photoId) {
-          new URL(
-            `notable-people/${photoId}`,
-            'https://files.hollowverse.com',
-          ).toString();
+    async photoUrl({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const { photoId } = notablePerson;
+          if (photoId) {
+            new URL(
+              `notable-people/${photoId}`,
+              'https://files.hollowverse.com',
+            ).toString();
+          }
         }
       }
 
       return null;
     },
 
-    async commentsUrl({ slug }) {
+    async commentsUrl({ slug }, _, { notablePersonBySlugLoader }) {
       if (slug) {
-        const db = await connection;
-        const notablePeople = db.getRepository(NotablePerson);
-        const person = await notablePeople.findOne({ slug });
-        if (person) {
-          const { oldSlug } = person;
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const { oldSlug } = notablePerson;
 
           if (oldSlug !== null) {
             return new URL(
