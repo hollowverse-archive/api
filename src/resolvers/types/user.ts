@@ -1,4 +1,4 @@
-import { User } from '../../database/entities/user';
+import { User } from '../../database/entities/User';
 import { SchemaContext } from '../../typings/schemaContext';
 
 export const userResolvers = {

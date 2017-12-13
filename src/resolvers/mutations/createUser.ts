@@ -1,5 +1,5 @@
 import { connection } from '../../database/connection';
-import { User } from '../../database/entities/user';
+import { User } from '../../database/entities/User';
 import { CreateUserRootMutationArgs, RootMutation } from '../../typings/schema';
 import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { SchemaContext } from '../../typings/schemaContext';

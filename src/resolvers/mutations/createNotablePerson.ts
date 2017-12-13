@@ -1,5 +1,5 @@
 import { connection } from '../../database/connection';
-import { NotablePerson } from '../../database/entities/notablePerson';
+import { NotablePerson } from '../../database/entities/NotablePerson';
 import {
   CreateNotablePersonRootMutationArgs,
   RootMutation,
