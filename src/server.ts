@@ -3,7 +3,11 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as moment from 'moment';
-import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
+import * as DataLoader from 'dataloader';
+import { graphqlExpress } from 'apollo-server-express';
+// tslint:disable-next-line match-default-export-name
+import playgroundExpress from 'graphql-playground-middleware-express';
+
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
 import { redirectToHttps } from './redirectToHttps';
@@ -12,7 +16,6 @@ import { SchemaContext } from './typings/schemaContext';
 import { findUserByFacebookAccessToken } from './helpers/auth';
 import { connection } from './database/connection';
 import { isProd } from './env';
-import * as DataLoader from 'dataloader';
 import { getPhotoUrlByFbId } from './helpers/facebook';
 
 connection.catch(_ => {
@@ -93,10 +96,10 @@ api.use(
   }),
 );
 
-api.use(
-  '/graphiql',
-  graphiqlExpress({
-    endpointURL: '/graphql',
+api.get(
+  '/playground',
+  playgroundExpress({
+    endpoint: '/graphql',
   }),
 );
 
