@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as moment from 'moment';
-import * as DataLoader from 'dataloader';
 import { graphqlExpress } from 'apollo-server-express';
 // tslint:disable-next-line match-default-export-name
 import playgroundExpress from 'graphql-playground-middleware-express';
