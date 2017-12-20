@@ -3,16 +3,12 @@ import { NotablePerson } from '../../database/entities/NotablePerson';
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
-import {
-  NotablePersonRootQueryArgs,
-  EventsNotablePersonArgs,
-  NotablePerson as NotablePersonType,
-} from '../../typings/schema';
+import { ResolverMap } from '../../typings/resolverMap';
 import { URL } from 'url';
 
-export const notablePersonResolvers = {
+export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
-    async notablePerson(_: undefined, { slug }: NotablePersonRootQueryArgs) {
+    async notablePerson(_, { slug }) {
       const db = await connection;
       const npRepository = db.getRepository(NotablePerson);
 
@@ -24,28 +20,31 @@ export const notablePersonResolvers = {
       });
     },
   },
-
   NotablePerson: {
-    async events(notablePerson: NotablePerson, args: EventsNotablePersonArgs) {
-      const db = await connection;
+    async events({ slug }, args, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const db = await connection;
+          const events = db.getRepository(NotablePersonEvent);
 
-      const repo = db.getRepository(NotablePersonEvent);
+          return events.find({
+            where: {
+              ...args.query,
+              notablePersonId: notablePerson.id,
+            },
+            order: {
+              postedAt: 'DESC',
+            },
+            relations: ['labels'],
+          });
+        }
+      }
 
-      return repo.find({
-        where: {
-          ...args.query,
-          notablePersonId: notablePerson.id,
-        },
-        order: {
-          postedAt: 'DESC',
-        },
-        relations: ['labels'],
-      });
+      return [];
     },
 
-    async editorialSummary(
-      notablePerson: NotablePerson,
-    ): Promise<NotablePersonType['editorialSummary']> {
+    async editorialSummary(notablePerson) {
       const editorialSummary = notablePerson.editorialSummary;
 
       if (editorialSummary) {
@@ -69,36 +68,46 @@ export const notablePersonResolvers = {
       return null;
     },
 
-    photoUrl(notablePerson: NotablePerson): NotablePersonType['photoUrl'] {
-      return notablePerson.photoId
-        ? new URL(
-            `notable-people/${notablePerson.photoId}`,
-            'https://files.hollowverse.com',
-          ).toString()
-        : null;
-    },
-
-    commentsUrl(
-      notablePerson: NotablePerson,
-    ): NotablePersonType['commentsUrl'] {
-      let url: URL;
-
-      if (notablePerson.oldSlug !== null) {
-        url = new URL(
-          `${notablePerson.oldSlug}/`,
-          // tslint:disable-next-line:no-http-string
-          'http://hollowverse.com',
-        );
-      } else {
-        url = new URL(`${notablePerson.slug}`, 'https://hollowverse.com');
+    async photoUrl({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const { photoId } = notablePerson;
+          if (photoId) {
+            return new URL(
+              `notable-people/${photoId}`,
+              'https://files.hollowverse.com',
+            ).toString();
+          }
+        }
       }
 
-      return url.toString();
+      return null;
+    },
+
+    async commentsUrl({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const { oldSlug } = notablePerson;
+
+          if (oldSlug !== null) {
+            return new URL(
+              `${oldSlug}/`,
+              // tslint:disable-next-line:no-http-string
+              'http://hollowverse.com',
+            ).toString();
+          } else {
+            return new URL(`${slug}`, 'https://hollowverse.com').toString();
+          }
+        }
+      }
+
+      throw new TypeError();
     },
   },
-
   NotablePersonEvent: {
-    async comments(event: NotablePersonEvent) {
+    async comments(event) {
       const db = await connection;
 
       const repo = db.getRepository(NotablePersonEventComment);

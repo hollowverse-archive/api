@@ -1,25 +1,24 @@
 import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/NotablePerson';
-import {
-  CreateNotablePersonRootMutationArgs,
-  RootMutation,
-} from '../../typings/schema';
-import { SchemaContext } from '../../typings/schemaContext';
+import { ResolverMap } from '../../typings/resolverMap';
+import { requireAuthentication } from '../../helpers/requireAuthentication';
 
-export async function createNotablePerson(
-  _: undefined,
-  { input: { name, slug } }: CreateNotablePersonRootMutationArgs,
-  __: SchemaContext,
-): Promise<RootMutation['createNotablePerson']> {
-  const db = await connection;
-  const notablePerson = new NotablePerson();
+export const resolvers: Partial<ResolverMap> = {
+  RootMutation: {
+    createNotablePerson: requireAuthentication(
+      async (_, { input: { name, slug } }) => {
+        const db = await connection;
+        const notablePerson = new NotablePerson();
 
-  notablePerson.name = name;
-  notablePerson.slug = slug;
+        notablePerson.name = name;
+        notablePerson.slug = slug;
 
-  const notablePeople = db.getRepository(NotablePerson);
+        const notablePeople = db.getRepository(NotablePerson);
 
-  await notablePeople.save(notablePerson);
+        await notablePeople.save(notablePerson);
 
-  return { name };
-}
+        return { name };
+      },
+    ),
+  },
+};

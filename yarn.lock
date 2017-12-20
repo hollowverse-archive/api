@@ -187,6 +187,10 @@
   version "0.9.4"
   resolved "https://registry.yarnpkg.com/@types/graphql/-/graphql-0.9.4.tgz#cdeb6bcbef9b6c584374b81aa7f48ecf3da404fa"
 
+"@types/handlebars@^4.0.33":
+  version "4.0.36"
+  resolved "https://registry.yarnpkg.com/@types/handlebars/-/handlebars-4.0.36.tgz#ff57c77fa1ab6713bb446534ddc4d979707a3a79"
+
 "@types/helmet@^0.0.37":
   version "0.0.37"
   resolved "https://registry.yarnpkg.com/@types/helmet/-/helmet-0.0.37.tgz#6b150f30219c0d6563e8e0a3fbcad8dd90fa4f68"
@@ -770,7 +774,7 @@ chalk@^2.0.0, chalk@^2.0.1, chalk@^2.1.0:
     escape-string-regexp "^1.0.5"
     supports-color "^4.0.0"
 
-change-case@^3.0.0:
+change-case@^3.0.0, change-case@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/change-case/-/change-case-3.0.1.tgz#ee5f5ad0415ad1ad9e8072cf49cd4cfa7660a554"
   dependencies:
@@ -2005,6 +2009,41 @@ graphql-code-generator@^0.5.1:
     pascal-case "^2.0.1"
     request "^2.81.0"
 
+graphql-code-generator@^0.8.14:
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/graphql-code-generator/-/graphql-code-generator-0.8.14.tgz#79eefdf628c020cdd8f85533a7cfd5af2dd433f9"
+  dependencies:
+    commander "^2.11.0"
+    glob "^7.1.2"
+    graphql-codegen-compiler "0.8.14"
+    graphql-codegen-core "0.8.14"
+    graphql-codegen-generators "0.8.14"
+    mkdirp "^0.5.1"
+    request "^2.81.0"
+
+graphql-codegen-compiler@0.8.14:
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/graphql-codegen-compiler/-/graphql-codegen-compiler-0.8.14.tgz#9392aa91e2d6a405e436667dd9df2123ad377db6"
+  dependencies:
+    "@types/handlebars" "^4.0.33"
+    change-case "^3.0.1"
+    common-tags "^1.4.0"
+    graphql-codegen-compiler "0.8.14"
+    graphql-codegen-core "0.8.14"
+    graphql-codegen-generators "0.8.14"
+    handlebars "^4.0.10"
+
+graphql-codegen-core@0.8.14:
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/graphql-codegen-core/-/graphql-codegen-core-0.8.14.tgz#ded0176bb09f26d550d43474b59a3cfa96ff26c4"
+  dependencies:
+    graphql-tag "^2.4.2"
+    graphql-tools "^1.0.0"
+
+graphql-codegen-generators@0.8.14:
+  version "0.8.14"
+  resolved "https://registry.yarnpkg.com/graphql-codegen-generators/-/graphql-codegen-generators-0.8.14.tgz#126946eceef0788f6c127a220e9a97b6f5c8e402"
+
 graphql-config@^1.0.9:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/graphql-config/-/graphql-config-1.1.0.tgz#0d1089db1da7695f556ed9204099fea8a238af88"
@@ -2095,6 +2134,10 @@ graphql-subscriptions@^0.3.1:
   dependencies:
     es6-promise "^3.2.1"
 
+graphql-tag@^2.4.2:
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/graphql-tag/-/graphql-tag-2.6.0.tgz#0fb1b9f6d6651263c47a3420e827910e6fed3952"
+
 graphql-to-typescript@^0.1.2:
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/graphql-to-typescript/-/graphql-to-typescript-0.1.2.tgz#a5a3ba625216c7408f13e5c62724f9973f42909b"
@@ -2116,7 +2159,7 @@ graphql-tools@^0.10.1:
   optionalDependencies:
     "@types/graphql" "^0.8.5"
 
-graphql-tools@^1.1.0, graphql-tools@^1.2.3:
+graphql-tools@^1.0.0, graphql-tools@^1.1.0, graphql-tools@^1.2.3:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/graphql-tools/-/graphql-tools-1.2.3.tgz#079bf4d157e46c0a0bae9fec117e0eea6e03ba2c"
   dependencies:

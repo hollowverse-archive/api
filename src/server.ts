@@ -3,7 +3,6 @@ import * as bodyParser from 'body-parser';
 import * as cors from 'cors';
 import * as helmet from 'helmet';
 import * as moment from 'moment';
-import * as DataLoader from 'dataloader';
 import { graphqlExpress } from 'apollo-server-express';
 // tslint:disable-next-line match-default-export-name
 import playgroundExpress from 'graphql-playground-middleware-express';
@@ -16,7 +15,8 @@ import { SchemaContext } from './typings/schemaContext';
 import { findUserByFacebookAccessToken } from './helpers/auth';
 import { connection } from './database/connection';
 import { isProd } from './env';
-import { getPhotoUrlByFbId } from './helpers/facebook';
+import { notablePersonBySlugLoader } from './dataLoaders/notablePerson';
+import { userPhotoUrlLoader } from './dataLoaders/user';
 
 connection.catch(_ => {
   setIsHealthy(false);
@@ -68,11 +68,8 @@ api.use(
   bodyParser.json(),
   graphqlExpress(async req => {
     const context: SchemaContext = {
-      userPhotoUrlLoader: new DataLoader<string, string>(async fbIds => {
-        return Promise.all(
-          fbIds.map(async fbId => getPhotoUrlByFbId(fbId, 'normal')),
-        );
-      }),
+      userPhotoUrlLoader,
+      notablePersonBySlugLoader,
     };
     if (req) {
       const authorization = req.header('Authorization');

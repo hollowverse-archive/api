@@ -1,14 +1,14 @@
-import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
-import { createUser } from './mutations/createUser';
-import { createNotablePerson } from './mutations/createNotablePerson';
-import { viewer } from './queries/viewer';
-import { requireAuthentication } from '../helpers/requireAuthentication';
-import { notablePersonResolvers } from './queries/notablePerson';
 import { merge } from 'lodash';
+
+import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';
-import { userResolvers } from './types/user';
-import { viewerResolvers } from './types/viewer';
+
+import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
+import { resolvers as notablePersonResolvers } from './queries/notablePerson';
+import { resolvers as createUserResolvers } from './mutations/createUser';
+import { resolvers as userResolvers } from './types/user';
+import { resolvers as viewerResolvers } from './types/viewer';
 
 /**
  * Resolvers for custom scalar types.
@@ -22,18 +22,11 @@ const scalarTypes = {
 };
 
 export const resolvers = merge(
-  {
-    RootQuery: {
-      viewer,
-    },
-
-    RootMutation: {
-      createUser,
-      createNotablePerson: requireAuthentication(createNotablePerson),
-    },
-  },
+  createUserResolvers,
+  createNotablePersonResolvers,
+  viewerResolvers,
+  notablePersonResolvers,
   userResolvers,
   viewerResolvers,
   scalarTypes,
-  notablePersonResolvers,
 );
