@@ -13,10 +13,8 @@ export const resolvers: Partial<ResolverMap> = {
       const npRepository = db.getRepository(NotablePerson);
 
       return npRepository.findOne({
-        where: {
-          slug,
-        },
-        relations: ['labels'],
+        where: { slug },
+        relations: ['labels', 'relatedPeople', 'mainPhoto'],
       });
     },
   },

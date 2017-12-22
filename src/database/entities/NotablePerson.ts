@@ -89,9 +89,7 @@ export class NotablePerson extends BaseEntity {
   @JoinTable()
   labels: NotablePersonLabel[];
 
-  @ManyToMany(_ => NotablePerson, {
-    lazy: true,
-  })
+  @ManyToMany(_ => NotablePerson, { eager: false })
   @JoinTable()
-  relatedPeople: Promise<NotablePerson[]>;
+  relatedPeople: NotablePerson[];
 }
