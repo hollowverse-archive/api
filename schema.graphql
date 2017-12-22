@@ -46,6 +46,7 @@ enum EditorialSummaryNodeType {
 
 type EditorialSummaryNode {
   id: ID!
+  parentId: ID
   type: EditorialSummaryNodeType!
   text: String
   sourceUrl: Url
