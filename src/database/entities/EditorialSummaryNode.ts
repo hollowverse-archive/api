@@ -4,6 +4,7 @@ import {
   PrimaryGeneratedColumn,
   Index,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
@@ -76,4 +77,10 @@ export class EditorialSummaryNode extends BaseEntity {
     },
   )
   editorialSummary: EditorialSummary;
+
+  @ManyToOne(_ => EditorialSummaryNode, node => node.children)
+  parent: EditorialSummaryNode | null;
+
+  @OneToMany(_ => EditorialSummaryNode, node => node.parent)
+  children: EditorialSummaryNode[];
 }
