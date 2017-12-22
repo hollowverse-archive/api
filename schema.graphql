@@ -50,7 +50,6 @@ type EditorialSummaryNode {
   text: String
   sourceUrl: Url
   sourceTitle: String
-  children: [EditorialSummaryNode!]!
 }
 
 # An event about a notable person, must have a source link
