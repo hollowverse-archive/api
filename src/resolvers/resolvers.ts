@@ -9,6 +9,7 @@ import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
+import { resolvers as photoResolvers } from './types/photo';
 
 /**
  * Resolvers for custom scalar types.
@@ -28,5 +29,6 @@ export const resolvers = merge(
   notablePersonResolvers,
   userResolvers,
   viewerResolvers,
+  photoResolvers,
   scalarTypes,
 );
