@@ -27,6 +27,10 @@
   "license": "Unlicense",
   "homepage": "https://github.com/hollowverse/api#readme",
   "lint-staged": {
+    "**/*.md": [
+      "prettier --write",
+      "git add"
+    ],
     "**/*.{j,t}s{x,}": [
       "prettier --write",
       "git add"
