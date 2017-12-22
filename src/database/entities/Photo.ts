@@ -3,6 +3,7 @@ import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { urlValidationOptions } from '../../helpers/validation';
 
+/** A photo with metadata, including license and copyright information */
 @Entity()
 export class Photo extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
