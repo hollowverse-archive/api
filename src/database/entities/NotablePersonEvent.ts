@@ -14,7 +14,6 @@ import { NotablePerson } from './NotablePerson';
 import { User } from './User';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { EventLabel } from './EventLabel';
-import * as isUrl from 'validator/lib/isURL';
 import { NotablePersonEventType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 
