@@ -43,7 +43,7 @@ export class NotablePerson extends BaseEntity {
   name: string;
 
   @Trim()
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', length: 5000, nullable: true })
   summary: string | null;
 
   /**
@@ -67,8 +67,7 @@ export class NotablePerson extends BaseEntity {
   photos: Photo[];
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
+    // cascade: ['insert', 'update'],
   })
   events: NotablePersonEvent[];
 
@@ -77,8 +76,7 @@ export class NotablePerson extends BaseEntity {
    * which is the content from the old Hollowverse
    */
   @OneToOne(_ => EditorialSummary, {
-    cascadeInsert: true,
-    cascadeUpdate: true,
+    // cascade: ['insert'],
     eager: true,
     nullable: true,
   })

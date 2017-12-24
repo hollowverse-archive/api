@@ -38,19 +38,21 @@ enum NotablePersonEventType {
 }
 
 enum EditorialSummaryNodeType {
-  sentence
-  break
   quote
   heading
+  paragraph
+  text
+  emphasis
+  link
 }
 
 type EditorialSummaryNode {
   id: ID!
-  parentId: ID
   type: EditorialSummaryNodeType!
   text: String
   sourceUrl: Url
   sourceTitle: String
+  parentId: ID
 }
 
 # An event about a notable person, must have a source link

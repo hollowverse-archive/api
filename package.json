@@ -19,7 +19,7 @@
     "dev": "npm-run-all -s --aggregate-output generate-graphql-types -p '*/dev'",
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
     "build": "tsc --project ./src",
-    "clean": "rm -rf ./dist",
+    "clean": "del-cli ./dist schema.json src/typings/schema.ts",
     "start": "node dist/server.js",
     "validate-filenames": "validate-filenames --config commonconfig.js",
     "lint-staged": "lint-staged"
@@ -67,7 +67,7 @@
     "mysql": "^2.14.1",
     "npm-run-all": "^4.0.2",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.1.7",
+    "typeorm": "^0.1.9",
     "validator": "^9.0.0"
   },
   "devDependencies": {
@@ -87,6 +87,7 @@
     "@types/uuid": "^3.4.2",
     "@types/validator": "^6.3.0",
     "babel-eslint": "^8.0.2",
+    "del-cli": "^1.1.0",
     "eslint": "^4.11.0",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.3.0",

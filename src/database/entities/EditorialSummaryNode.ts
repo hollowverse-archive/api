@@ -2,7 +2,6 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  Index,
   ManyToOne,
   OneToMany,
 } from 'typeorm';
@@ -13,10 +12,12 @@ import { EditorialSummaryNodeType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 
 const nodeTypes: Record<EditorialSummaryNodeType, string> = {
-  break: '',
-  sentence: '',
   quote: '',
   heading: '',
+  paragraph: '',
+  text: '',
+  link: '',
+  emphasis: '',
 };
 
 export type NodeType = keyof typeof nodeTypes;
@@ -25,7 +26,6 @@ export type NodeType = keyof typeof nodeTypes;
  * Editorial content from the old Hollowverse website
  */
 @Entity()
-@Index(['order', 'editorialSummary'], { unique: true })
 export class EditorialSummaryNode extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
@@ -59,7 +59,7 @@ export class EditorialSummaryNode extends BaseEntity {
   @IsUrl(urlValidationOptions)
   @Column('varchar', {
     nullable: true,
-    length: 600,
+    length: 1000,
   })
   sourceUrl: string | null;
 
