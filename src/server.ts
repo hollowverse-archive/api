@@ -102,4 +102,12 @@ api.get(
   }),
 );
 
-api.listen(process.env.PORT || 8080);
+const server = api.listen(process.env.PORT || 8080);
+
+const close = () => {
+  server.close();
+  process.exit();
+};
+
+process.on('SIGUSR2', close);
+process.on('SIGUSR1', close);
