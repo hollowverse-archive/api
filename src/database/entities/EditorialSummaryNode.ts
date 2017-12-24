@@ -78,9 +78,13 @@ export class EditorialSummaryNode extends BaseEntity {
   )
   editorialSummary: EditorialSummary;
 
-  @ManyToOne(_ => EditorialSummaryNode, node => node.children)
+  @ManyToOne(_ => EditorialSummaryNode, node => node.children, {
+    cascade: ['update', 'insert']
+  })
   parent: EditorialSummaryNode | null;
 
-  @OneToMany(_ => EditorialSummaryNode, node => node.parent)
+  @OneToMany(_ => EditorialSummaryNode, node => node.parent, {
+    cascade: ['update', 'insert'],
+  })
   children: EditorialSummaryNode[];
 }
