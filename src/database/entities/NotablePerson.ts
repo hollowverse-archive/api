@@ -76,18 +76,18 @@ export class NotablePerson extends BaseEntity {
    * which is the content from the old Hollowverse
    */
   @OneToOne(_ => EditorialSummary, {
-    cascade: ['insert', 'update'],
+    // cascade: ['insert'],
     eager: true,
     nullable: true,
   })
   @JoinColumn()
   editorialSummary: EditorialSummary;
 
-  @ManyToMany(_ => NotablePersonLabel, { cascade: ['insert'] })
+  @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
   labels: NotablePersonLabel[];
 
-  @ManyToMany(_ => NotablePerson, { eager: false, cascade: ['update', 'insert'] })
+  @ManyToMany(_ => NotablePerson, { eager: false })
   @JoinTable()
   relatedPeople: NotablePerson[];
 }

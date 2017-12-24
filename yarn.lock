@@ -864,7 +864,7 @@ cli-cursor@^2.1.0:
   dependencies:
     restore-cursor "^2.0.0"
 
-cli-highlight@^1.2.2:
+cli-highlight@^1.1.4:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/cli-highlight/-/cli-highlight-1.2.3.tgz#b200f97ed0e43d24633e89de0f489a48bb87d2bf"
   dependencies:
@@ -4900,13 +4900,13 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeorm@^0.2.0-alpha.13:
-  version "0.2.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.0-alpha.13.tgz#d3895684d83da64b3bde7e2647723e8262be67da"
+typeorm@^0.1.9:
+  version "0.1.9"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.9.tgz#208a5a2c7e0139621cacecb0636753190a988d2b"
   dependencies:
     app-root-path "^2.0.1"
     chalk "^2.0.1"
-    cli-highlight "^1.2.2"
+    cli-highlight "^1.1.4"
     debug "^3.1.0"
     dotenv "^4.0.0"
     glob "^7.1.2"
