@@ -14,7 +14,6 @@ import { NotablePerson } from './NotablePerson';
 import { User } from './User';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { EventLabel } from './EventLabel';
-import * as isUrl from 'validator/lib/isURL';
 import { NotablePersonEventType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 
@@ -58,6 +57,8 @@ export class NotablePersonEvent extends BaseEntity {
   sourceUrl: string;
 
   /** the official website of the organization, campaign, political event... etc., if any */
+  @ValidateIf((_, v) => typeof v === 'string')
+  @IsUrl(urlValidationOptions)
   @Column({ type: 'text', nullable: true })
   organizationWebsiteUrl: string | null;
 
@@ -81,7 +82,7 @@ export class NotablePersonEvent extends BaseEntity {
   })
   owner: User;
 
-  /** 
+  /**
    * @deprecated
    */
   @OneToMany(_ => NotablePersonEventComment, comment => comment.event, {
@@ -96,12 +97,6 @@ export class NotablePersonEvent extends BaseEntity {
 
   async validate() {
     if (typeof this.organizationWebsiteUrl === 'string') {
-      if (!isUrl(this.organizationWebsiteUrl, urlValidationOptions)) {
-        throw new TypeError(
-          'organizationWebsiteUrl must be a valid URL or null',
-        );
-      }
-
       if (typeof this.organizationName !== 'string') {
         throw new TypeError(
           '`organizationName` must be a string if `organizationWebsiteUrl` is specified',
@@ -111,18 +106,20 @@ export class NotablePersonEvent extends BaseEntity {
       }
     }
 
-    if (this.type === 'quote' && !this.quote) {
-      throw new TypeError(
-        'Events of type `quote` must have a valid `quote` field',
-      );
-    }
+    if (this.type === 'quote') {
+      if (!this.quote) {
+        if (typeof this.isQuoteByNotablePerson === 'boolean') {
+          throw new TypeError(
+            '`isQuoteByNotablePerson` should not be defined if `quote` is not specified',
+          );
+        }
 
-    if (typeof this.quote === 'string') {
-      this.quote = this.quote.trim();
-    } else if (typeof this.isQuoteByNotablePerson === 'boolean') {
-      throw new TypeError(
-        '`isQuoteByNotablePerson` should not be defined if `quote` is not specified',
-      );
+        throw new TypeError(
+          'Events of type `quote` must have a valid `quote` field',
+        );
+      } else {
+        this.quote = this.quote.trim();
+      }
     }
 
     return super.validate();
