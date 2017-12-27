@@ -2,6 +2,7 @@ import * as DataLoader from 'dataloader';
 
 import { Photo } from '../database/entities/Photo';
 import { connection } from '../database/connection';
+import { URL } from 'url';
 
 export const photoUrlLoader = new DataLoader<string | undefined, string>(
   async ids => {
