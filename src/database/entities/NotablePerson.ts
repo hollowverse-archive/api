@@ -91,4 +91,7 @@ export class NotablePerson extends BaseEntity {
   @ManyToMany(_ => NotablePerson, { eager: false })
   @JoinTable()
   relatedPeople: NotablePerson[];
+
+  @Column({ type: 'date', nullable: true, default: null })
+  addedOn: Date | null;
 }

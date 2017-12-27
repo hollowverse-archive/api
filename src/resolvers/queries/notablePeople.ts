@@ -10,7 +10,7 @@ export const resolvers: Partial<ResolverMap> = {
       const db = await connection;
       const query: FindManyOptions<NotablePerson> = {
         order: {
-          name: 'ASC',
+          addedOn: 'DESC',
         },
       };
       const notablePeople = db.getRepository(NotablePerson);
