@@ -85,7 +85,6 @@ export class NotablePerson extends BaseEntity {
   editorialSummary: Promise<EditorialSummary | null>;
 
   @ManyToMany(_ => NotablePersonLabel, {
-    eager: false,
     lazy: true,
   })
   @JoinTable()
