@@ -11,7 +11,7 @@ export class Photo extends BaseEntity {
 
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', length: 10000, nullable: true })
   description: string | null;
 
   @Column({ type: 'datetime', nullable: false })
