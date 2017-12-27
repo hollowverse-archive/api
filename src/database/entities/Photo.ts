@@ -1,10 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { urlValidationOptions } from '../../helpers/validation';
 
 /** A photo with metadata, including license and copyright information */
 @Entity()
+@Index(['sourceUrl', 's3Path'], { unique: true })
 export class Photo extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
@@ -36,7 +37,7 @@ export class Photo extends BaseEntity {
   isAttributionRequired: boolean;
 
   @IsUrl(urlValidationOptions)
-  @Column({ type: 'varchar', nullable: false, unique: true })
+  @Column({ type: 'varchar', nullable: false })
   sourceUrl: string;
 
   @ValidateIf((_, v) => typeof v === 'string')
