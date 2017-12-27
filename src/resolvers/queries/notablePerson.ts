@@ -1,5 +1,4 @@
 import { connection } from '../../database/connection';
-import { NotablePerson } from '../../database/entities/NotablePerson';
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
@@ -8,17 +7,45 @@ import { URL } from 'url';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
-    async notablePerson(_, { slug }) {
-      const db = await connection;
-      const npRepository = db.getRepository(NotablePerson);
+    async notablePerson(_, { slug }, { notablePersonBySlugLoader }) {
+      const person = await notablePersonBySlugLoader.load(slug);
 
-      return npRepository.findOne({
-        where: { slug },
-        relations: ['labels', 'relatedPeople'],
-      });
+      if (person) {
+        const { name, summary } = person;
+
+        return {
+          name,
+          slug,
+          summary,
+        };
+      }
+
+      return null;
     },
   },
   NotablePerson: {
+    async labels({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          return await notablePerson.labels;
+        }
+      }
+
+      return [];
+    },
+
+    async relatedPeople({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          return await notablePerson.relatedPeople;
+        }
+      }
+
+      return [];
+    },
+
     async events({ slug }, args, { notablePersonBySlugLoader }) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
@@ -42,29 +69,34 @@ export const resolvers: Partial<ResolverMap> = {
       return [];
     },
 
-    async editorialSummary(notablePerson) {
-      const editorialSummary = notablePerson.editorialSummary;
+    async editorialSummary({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          const editorialSummary = await notablePerson.editorialSummary;
 
-      if (editorialSummary) {
-        const nodesRepo = (await connection).getRepository(
-          EditorialSummaryNode,
-        );
+          if (editorialSummary) {
+            const nodesRepo = (await connection).getRepository(
+              EditorialSummaryNode,
+            );
 
-        return {
-          ...editorialSummary,
-          nodes: (await nodesRepo.find({
-            where: {
-              editorialSummaryId: editorialSummary.id,
-            },
-            order: {
-              order: 'ASC',
-            },
-            relations: ['parent'],
-          })).map(n => ({
-            ...n,
-            parentId: n.parent ? n.parent.id : null,
-          })),
-        };
+            return {
+              ...editorialSummary,
+              nodes: (await nodesRepo.find({
+                where: {
+                  editorialSummaryId: editorialSummary.id,
+                },
+                order: {
+                  order: 'ASC',
+                },
+                relations: ['parent'],
+              })).map(n => ({
+                ...n,
+                parentId: n.parent ? n.parent.id : null,
+              })),
+            };
+          }
+        }
       }
 
       return null;
