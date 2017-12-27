@@ -109,5 +109,4 @@ const close = () => {
   process.exit();
 };
 
-process.on('SIGUSR2', close);
 process.on('SIGUSR1', close);

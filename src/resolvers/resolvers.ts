@@ -6,6 +6,7 @@ import { Url } from './scalars/url';
 
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
+import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
 import { resolvers as createUserResolvers } from './mutations/createUser';
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
@@ -27,6 +28,7 @@ export const resolvers = merge(
   createNotablePersonResolvers,
   viewerResolvers,
   notablePersonResolvers,
+  notablePeopleResolvers,
   userResolvers,
   viewerResolvers,
   photoResolvers,

@@ -6,7 +6,7 @@ import { FnResolver } from '../typings/resolverMap';
 /**
  * Creates a higher-order GraphQL resolver that wraps a GraphQL resolver and checks
  * if the request is authenticated before calling the wrapped resolver.
- * 
+ *
  * If the request is not authenticated, an instance of `MustBeAuthorizedError` is thrown.
  */
 export function requireAuthentication<S, A, T>(

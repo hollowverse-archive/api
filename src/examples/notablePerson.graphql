@@ -1,34 +1,30 @@
-query GetNotablePerson {
-  notablePerson(slug: "Tom_Hanks") {
-    slug
+query NotablePerson($slug: String!) {
+  notablePerson(slug: $slug) {
     name
-    summary
-    photoUrl
+    slug
     mainPhoto {
       url
-    }
-    events {
-      id
-      quote
       sourceUrl
-      isQuoteByNotablePerson
-      postedAt
-      happenedOn
-      comments {
-        owner {
-          id
-          name
-          photoUrl
-        }
-        text
+    }
+    summary
+    commentsUrl
+    relatedPeople {
+      slug
+      name
+      mainPhoto {
+        url
       }
     }
     editorialSummary {
       author
       lastUpdatedOn
       nodes {
-        type
+        id
+        parentId
         text
+        type
+        sourceUrl
+        sourceTitle
       }
     }
   }

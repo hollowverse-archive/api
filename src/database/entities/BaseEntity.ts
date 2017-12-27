@@ -4,7 +4,7 @@ import { sanitizeAsync } from 'class-sanitizer';
 
 /**
  * Base entity for the database layer.
- * 
+ *
  * All entities should extend this class to automatically
  * perform validations on insertions and updates.
  */

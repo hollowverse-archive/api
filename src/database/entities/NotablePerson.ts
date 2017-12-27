@@ -79,17 +79,22 @@ export class NotablePerson extends BaseEntity {
    */
   @OneToOne(_ => EditorialSummary, {
     cascadeInsert: true,
-    eager: true,
     nullable: true,
+    lazy: true,
   })
   @JoinColumn()
-  editorialSummary: EditorialSummary;
+  editorialSummary: Promise<EditorialSummary | null>;
 
-  @ManyToMany(_ => NotablePersonLabel)
+  @ManyToMany(_ => NotablePersonLabel, {
+    lazy: true,
+  })
   @JoinTable()
-  labels: NotablePersonLabel[];
+  labels: Promise<NotablePersonLabel[]>;
 
-  @ManyToMany(_ => NotablePerson, { eager: false })
+  @ManyToMany(_ => NotablePerson, { lazy: true })
   @JoinTable()
-  relatedPeople: NotablePerson[];
+  relatedPeople: Promise<NotablePerson[]>;
+
+  @Column({ type: 'date', nullable: true, default: null })
+  addedOn: Date | null;
 }

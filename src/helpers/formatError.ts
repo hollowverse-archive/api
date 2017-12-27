@@ -6,7 +6,7 @@ import { ApiError } from './apiError';
 /**
  * Picks properties of error objects that are assumed to not contain
  * potentially sensitive user data like emails and SQL queries.
- * 
+ *
  * This is used for error results in API queries
  */
 function pickSafeProps(error: Error | ValidationError | QueryFailedError) {

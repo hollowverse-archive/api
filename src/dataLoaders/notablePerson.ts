@@ -11,7 +11,11 @@ export const notablePersonBySlugLoader = new DataLoader<
 
   return Promise.all(
     slugs.map(async slug => {
-      return db.getRepository(NotablePerson).findOne({ slug });
+      if (slug) {
+        return db.getRepository(NotablePerson).findOne({ slug });
+      }
+
+      return undefined;
     }),
   );
 });

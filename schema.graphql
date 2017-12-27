@@ -164,10 +164,28 @@ type Viewer implements UserInterface {
   signedUpAt: DateTime!
 }
 
+type PageInfo {
+  hasNextPage: Boolean!
+}
+
+type NotablePersonEdge {
+  cursor: ID!
+  node: NotablePerson!
+}
+
+type NotablePersonConnection {
+  edges: [NotablePersonEdge!]!
+  pageInfo: PageInfo!
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
+
   notablePerson(slug: String!): NotablePerson
+
+  # Explore notable people
+  notablePeople(first: Int!, after: ID): NotablePersonConnection!
 }
 
 input CreateUserInput {
