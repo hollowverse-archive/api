@@ -58,6 +58,7 @@ export class NotablePerson extends BaseEntity {
 
   @OneToOne(_ => Photo, {
     nullable: true,
+    eager: true,
   })
   @JoinColumn()
   mainPhoto: Photo | null;
