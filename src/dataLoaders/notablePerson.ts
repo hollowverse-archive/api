@@ -14,7 +14,7 @@ export const notablePersonBySlugLoader = new DataLoader<
       if (slug) {
         return db.getRepository(NotablePerson).findOne({ slug });
       }
-      
+
       return undefined;
     }),
   );

@@ -14,7 +14,7 @@ const facebookAppConfig = readJson<FacebookAppConfig>(
  * without their consent, or worse steal their data.
  * This verification step prevents that scenario by confirming with Facebook that
  * the access token was actually issued for the Hollowverse application.
- * 
+ *
  * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
  */
 async function verifyFacebookAccessToken(token: string) {
@@ -47,7 +47,7 @@ async function verifyFacebookAccessToken(token: string) {
  * The access token is verified before the request is attempted.
  * If the access token is not valid, or if it was not issued for the Hollowverse app,
  * an `InvalidAccessTokenError` is thrown.
- * 
+ *
  * Note: if `options.query` is a string, the access token is not added automatically
  * to the request.
  */

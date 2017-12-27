@@ -10,7 +10,7 @@ export const resolvers: Partial<ResolverMap> = {
     /**
      * Create a new user using a valid Facebook access token
      * issued for the Hollowverse application.
-     * 
+     *
      * The name of the new user will be obtained from Facebook if
      * not specified in the mutation input.
      */
