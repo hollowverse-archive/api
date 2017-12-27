@@ -14,7 +14,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       return npRepository.findOne({
         where: { slug },
-        relations: ['labels', 'relatedPeople', 'mainPhoto'],
+        relations: ['labels', 'relatedPeople'],
       });
     },
   },
@@ -70,6 +70,7 @@ export const resolvers: Partial<ResolverMap> = {
       return null;
     },
 
+    /** @deprecated */
     async photoUrl({ slug }, _, { notablePersonBySlugLoader }) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
@@ -81,6 +82,17 @@ export const resolvers: Partial<ResolverMap> = {
               'https://files.hollowverse.com',
             ).toString();
           }
+        }
+      }
+
+      return null;
+    },
+
+    async mainPhoto({ slug }, _, { notablePersonBySlugLoader }) {
+      if (slug) {
+        const notablePerson = await notablePersonBySlugLoader.load(slug);
+        if (notablePerson) {
+          return notablePerson.mainPhoto;
         }
       }
 
