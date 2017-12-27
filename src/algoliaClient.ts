@@ -6,10 +6,10 @@ const algoliaConfig = readJson<AlgoliaAppCredentials>(
   'secrets/algoliaApp.json',
 );
 
-const getIndexName = (name: string) =>
+export const getIndexName = (name: string) =>
   `${name}-${isProd ? 'production' : 'dev'}`;
 
-const algoliaClient = algoliaConfig.then(({ appId, apiKey }) =>
+export const algoliaClient = algoliaConfig.then(({ appId, apiKey }) =>
   algoliaSearch(appId, apiKey, { timeout: 30000 }),
 );
 

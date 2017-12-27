@@ -1,32 +1,65 @@
 // tslint:disable no-console
+// tslint:disable:no-non-null-assertion
 
-import { notablePersonIndex } from '../algoliaClient';
-import { connection } from '../database/connection';
-import { NotablePerson } from '../database/entities/NotablePerson';
-import { omit } from 'lodash';
+import { GraphQLClient } from 'graphql-request';
+
+
+import { algoliaClient as _algoliaClient, getIndexName } from '../algoliaClient';
+
+// tslint:disable-next-line:no-http-string
+const API_ENDPOINT = 'http://localhost:8080/graphql';
 
 async function main() {
-  const index = await notablePersonIndex;
-  const db = await connection;
+  const algoliaClient = await _algoliaClient;
+  const apiClient = new GraphQLClient(API_ENDPOINT);
 
-  const notablePeople = db.getRepository(NotablePerson);
+  const tempIndexName = getIndexName('NotablePerson.temp');
+  const finalIndexName = getIndexName('NotablePerson');
 
-  const allPeople = await notablePeople.find({
-    select: ['name', 'slug', 'summary', 'id'],
-    relations: ['labels'],
+  const tempIndex = algoliaClient.initIndex(tempIndexName);
+
+  const data: any = await apiClient.request(
+    // tslint:disable-next-line:no-multiline-string
+    `
+      query NotablePeople($first: Int!) {
+        notablePeople(first: $first) {
+          edges {
+            node {
+              slug
+              name
+              mainPhoto {
+                url
+              }
+              labels {
+                text
+              }
+              summary
+            }
+          }
+        }
+      }
+    `
+  , {
+    first: 2000,
   });
 
-  console.log(allPeople);
+  const allPeople = data!.notablePeople.edges.map((e: any) => ({
+    ...e.node,
+    objectID: e.node.slug,
+  }));
 
-  await index.saveObjects(
-    allPeople.map(person => {
+  console.log(allPeople.length);
+
+  await tempIndex.saveObjects(
+    allPeople.map((person: any) => {
       return {
-        ...omit(person, 'id'),
-        labels: person.labels.map(label => label.text),
-        objectID: person.id,
+        ...person,
+        labels: person.labels.map((label: any) => label.text),
       };
     }),
   );
+
+  await algoliaClient.moveIndex(tempIndexName, finalIndexName);
 }
 
 main()

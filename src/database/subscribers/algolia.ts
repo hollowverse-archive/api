@@ -32,7 +32,7 @@ class NotablePersonSubscriber
   async afterInsert(event: InsertEvent<NotablePerson>) {
     return (await notablePersonIndex).addObject({
       ...pick(event.entity, indexedNotablePersonKeys),
-      labels: event.entity.labels.map(label => label.text),
+      // labels: event.entity.labels.map(label => label.text),
       objectID: event.entity.id,
     });
   }
@@ -44,7 +44,7 @@ class NotablePersonSubscriber
   async afterUpdate(event: UpdateEvent<NotablePerson>) {
     return (await notablePersonIndex).partialUpdateObject({
       ...pick(event.entity, indexedNotablePersonKeys),
-      labels: event.entity.labels.map(label => label.text),
+      // labels: event.entity.labels.map(label => label.text),
       objectID: event.entity.id,
     });
   }
