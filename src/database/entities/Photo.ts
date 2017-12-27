@@ -33,7 +33,7 @@ export class Photo extends BaseEntity {
   isCopyrighted: boolean | null;
 
   @Column({ type: 'tinyint', nullable: false })
-  isAttibutionRequired: boolean;
+  isAttributionRequired: boolean;
 
   @IsUrl(urlValidationOptions)
   @Column({ type: 'varchar', nullable: false, unique: true })
