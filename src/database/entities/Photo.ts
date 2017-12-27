@@ -36,7 +36,7 @@ export class Photo extends BaseEntity {
   isAttibutionRequired: boolean;
 
   @IsUrl(urlValidationOptions)
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: false, unique: true })
   sourceUrl: string;
 
   @ValidateIf((_, v) => typeof v === 'string')
