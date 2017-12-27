@@ -4,6 +4,9 @@ query GetNotablePerson {
     name
     summary
     photoUrl
+    mainPhoto {
+      url
+    }
     events {
       id
       quote
@@ -17,6 +20,14 @@ query GetNotablePerson {
           name
           photoUrl
         }
+        text
+      }
+    }
+    editorialSummary {
+      author
+      lastUpdatedOn
+      nodes {
+        type
         text
       }
     }

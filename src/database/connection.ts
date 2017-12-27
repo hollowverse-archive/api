@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import { createConnection, ConnectionOptions } from 'typeorm';
+
 import { NotablePerson } from './entities/NotablePerson';
 import { NotablePersonEvent } from './entities/NotablePersonEvent';
 import { NotablePersonLabel } from './entities/NotablePersonLabel';
@@ -7,7 +8,9 @@ import { EventLabel } from './entities/EventLabel';
 import { NotablePersonEventComment } from './entities/NotablePersonEventComment';
 import { EditorialSummary } from './entities/EditorialSummary';
 import { EditorialSummaryNode } from './entities/EditorialSummaryNode';
+import { Photo } from './entities/Photo';
 import { User } from './entities/User';
+
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
 
@@ -20,6 +23,7 @@ const entities = [
   User,
   EditorialSummary,
   EditorialSummaryNode,
+  Photo,
 ];
 
 const {

@@ -14,6 +14,7 @@ import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonLabel } from './NotablePersonLabel';
 import { EditorialSummary } from './EditorialSummary';
+import { Photo } from './Photo';
 
 /**
  * A public figure or an influential person
@@ -42,15 +43,28 @@ export class NotablePerson extends BaseEntity {
   name: string;
 
   @Trim()
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', length: 5000, nullable: true })
   summary: string | null;
 
-  /** The filename of the photo as stored in S3 */
+  /**
+   * The filename of the photo as stored in S3
+   * @deprecated `NotablePerson` can now have multiple photos. Use `mainPhoto` instead.
+   */
   @Column({ type: 'varchar', nullable: true, unique: true })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
   @Trim()
   photoId: string | null;
+
+  @OneToOne(_ => Photo, {
+    nullable: true,
+  })
+  @JoinColumn()
+  mainPhoto: Photo | null;
+
+  @ManyToMany(_ => Photo)
+  @JoinTable()
+  photos: Photo[];
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
     cascadeInsert: true,
@@ -64,7 +78,6 @@ export class NotablePerson extends BaseEntity {
    */
   @OneToOne(_ => EditorialSummary, {
     cascadeInsert: true,
-    cascadeUpdate: true,
     eager: true,
     nullable: true,
   })
@@ -74,4 +87,8 @@ export class NotablePerson extends BaseEntity {
   @ManyToMany(_ => NotablePersonLabel)
   @JoinTable()
   labels: NotablePersonLabel[];
+
+  @ManyToMany(_ => NotablePerson, { eager: false })
+  @JoinTable()
+  relatedPeople: NotablePerson[];
 }

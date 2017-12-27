@@ -13,10 +13,8 @@ export const resolvers: Partial<ResolverMap> = {
       const npRepository = db.getRepository(NotablePerson);
 
       return npRepository.findOne({
-        where: {
-          slug,
-        },
-        relations: ['labels'],
+        where: { slug },
+        relations: ['labels', 'relatedPeople', 'mainPhoto'],
       });
     },
   },
@@ -54,14 +52,18 @@ export const resolvers: Partial<ResolverMap> = {
 
         return {
           ...editorialSummary,
-          nodes: await nodesRepo.find({
+          nodes: (await nodesRepo.find({
             where: {
               editorialSummaryId: editorialSummary.id,
             },
             order: {
               order: 'ASC',
             },
-          }),
+            relations: ['parent'],
+          })).map(n => ({
+            ...n,
+            parentId: n.parent ? n.parent.id : null,
+          })),
         };
       }
 

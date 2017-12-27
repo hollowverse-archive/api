@@ -17,6 +17,7 @@ import { connection } from './database/connection';
 import { isProd } from './env';
 import { notablePersonBySlugLoader } from './dataLoaders/notablePerson';
 import { userPhotoUrlLoader } from './dataLoaders/user';
+import { photoUrlLoader } from './dataLoaders/photoUrl';
 
 connection.catch(_ => {
   setIsHealthy(false);
@@ -70,6 +71,7 @@ api.use(
     const context: SchemaContext = {
       userPhotoUrlLoader,
       notablePersonBySlugLoader,
+      photoUrlLoader,
     };
     if (req) {
       const authorization = req.header('Authorization');
