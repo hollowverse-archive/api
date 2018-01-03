@@ -3,8 +3,10 @@
 
 import { GraphQLClient } from 'graphql-request';
 
-
-import { algoliaClient as _algoliaClient, getIndexName } from '../algoliaClient';
+import {
+  algoliaClient as _algoliaClient,
+  getIndexName,
+} from '../algoliaClient';
 
 // tslint:disable-next-line:no-http-string
 const API_ENDPOINT = 'http://localhost:8080/graphql';
@@ -34,14 +36,18 @@ async function main() {
                 text
               }
               summary
+              editorialSummary {
+                author
+              }
             }
           }
         }
       }
-    `
-  , {
-    first: 2000,
-  });
+    `,
+    {
+      first: 2000,
+    },
+  );
 
   const allPeople = data!.notablePeople.edges.map((e: any) => ({
     ...e.node,
@@ -51,12 +57,14 @@ async function main() {
   console.log(allPeople.length);
 
   await tempIndex.saveObjects(
-    allPeople.map((person: any) => {
-      return {
-        ...person,
-        labels: person.labels.map((label: any) => label.text),
-      };
-    }),
+    allPeople
+      .filter((p: any) => p.editorialSummary !== null)
+      .map((person: any) => {
+        return {
+          ...person,
+          labels: person.labels.map((label: any) => label.text),
+        };
+      }),
   );
 
   await algoliaClient.moveIndex(tempIndexName, finalIndexName);
