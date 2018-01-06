@@ -47,7 +47,10 @@
   "husky": {
     "hooks": {
       "pre-commit": "run-p --aggregate-output validate-filenames lint-staged",
-      "pre-push": "yarn test"
+      "pre-push": "yarn test",
+      "post-merge": "yarnhook",
+      "post-checkout": "yarnhook",
+      "post-rewrite": "yarnhook"
     }
   },
   "dependencies": {
@@ -115,7 +118,8 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.2.0",
     "typescript": "^2.6.2",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "yarnhook": "^0.1.1"
   },
   "engines": {
     "node": ">= 9.2"
