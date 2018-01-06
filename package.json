@@ -44,10 +44,12 @@
       "eslint"
     ]
   },
-  "pre-commit": [
-    "validate-filenames",
-    "lint-staged"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-p --aggregate-output validate-filenames lint-staged",
+      "pre-push": "yarn test"
+    }
+  },
   "dependencies": {
     "@hollowverse/common": "hollowverse/common",
     "apollo-server-express": "^1.1.2",
@@ -97,10 +99,10 @@
     "faker": "^4.1.0",
     "graphql-code-generator": "^0.8.14",
     "graphql-to-typescript": "^0.1.2",
+    "husky": "^0.14.3",
     "lint-staged": "^4.0.3",
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.9.2",
     "shelljs": "^0.7.8",
     "stylelint": "^8.2.0",
