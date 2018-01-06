@@ -44,10 +44,15 @@
       "eslint"
     ]
   },
-  "pre-commit": [
-    "validate-filenames",
-    "lint-staged"
-  ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "run-p --aggregate-output validate-filenames lint-staged",
+      "pre-push": "yarn test",
+      "post-merge": "yarnhook",
+      "post-checkout": "yarnhook",
+      "post-rewrite": "yarnhook"
+    }
+  },
   "dependencies": {
     "@hollowverse/common": "hollowverse/common",
     "apollo-server-express": "^1.1.2",
@@ -97,10 +102,10 @@
     "faker": "^4.1.0",
     "graphql-code-generator": "^0.8.14",
     "graphql-to-typescript": "^0.1.2",
+    "husky": "^0.14.3",
     "lint-staged": "^4.0.3",
     "lodash": "^4.17.4",
     "nodemon": "^1.11.0",
-    "pre-commit": "^1.2.2",
     "prettier": "^1.9.2",
     "shelljs": "^0.7.8",
     "stylelint": "^8.2.0",
@@ -113,7 +118,8 @@
     "tslint-microsoft-contrib": "^5.0.1",
     "tslint-react": "^3.2.0",
     "typescript": "^2.6.2",
-    "uuid": "^3.1.0"
+    "uuid": "^3.1.0",
+    "yarnhook": "^0.1.1"
   },
   "engines": {
     "node": ">= 9.2"
