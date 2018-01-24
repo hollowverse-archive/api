@@ -8,7 +8,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { Trim } from 'class-sanitizer';
+import { Trim } from '@hollowverse/class-sanitizer';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';

@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
-import { Trim } from 'class-sanitizer';
+import { Trim } from '@hollowverse/class-sanitizer';
 import { BaseEntity } from './BaseEntity';
 import { EditorialSummaryNode } from './EditorialSummaryNode';
 

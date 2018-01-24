@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { IsEmail, IsNotEmpty, ValidateIf } from 'class-validator';
-import { Trim } from 'class-sanitizer';
+import { Trim } from '@hollowverse/class-sanitizer';
 import { normalizeEmail, isEmail } from 'validator';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
