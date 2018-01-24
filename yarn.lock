@@ -72,6 +72,12 @@
     glob "^7.1.2"
     graphql-tools "^1.1.0"
 
+"@hollowverse/class-sanitizer@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hollowverse/class-sanitizer/-/class-sanitizer-0.1.1.tgz#44f948a5640941103e22af877ea056f707af77d8"
+  dependencies:
+    validator "^9.2.0"
+
 "@hollowverse/common@hollowverse/common":
   version "2.1.0"
   resolved "https://codeload.github.com/hollowverse/common/tar.gz/9fe515915557cbc8c42bfe363254a1ae6cb922d1"
@@ -839,12 +845,6 @@ ci-info@^1.0.0:
 circular-json@^0.3.1:
   version "0.3.3"
   resolved "https://registry.yarnpkg.com/circular-json/-/circular-json-0.3.3.tgz#815c99ea84f6809529d2f45791bdf82711352d66"
-
-class-sanitizer@^0.0.5:
-  version "0.0.5"
-  resolved "https://registry.yarnpkg.com/class-sanitizer/-/class-sanitizer-0.0.5.tgz#1a0b357730328e0123cb6fea1cb2530aa3854c58"
-  dependencies:
-    validator "^5.1.0"
 
 class-validator@^0.7.2:
   version "0.7.2"
@@ -5076,10 +5076,6 @@ validate-npm-package-license@^3.0.1:
     spdx-correct "~1.0.0"
     spdx-expression-parse "~1.0.0"
 
-validator@^5.1.0:
-  version "5.7.0"
-  resolved "https://registry.yarnpkg.com/validator/-/validator-5.7.0.tgz#7a87a58146b695ac486071141c0c49d67da05e5c"
-
 validator@^7.0.0:
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-7.2.0.tgz#a63dcbaba51d4350bf8df20988e0d5a54d711791"
@@ -5087,6 +5083,10 @@ validator@^7.0.0:
 validator@^9.0.0:
   version "9.0.0"
   resolved "https://registry.yarnpkg.com/validator/-/validator-9.0.0.tgz#6c1ef955e007af704adea86ae8a76da84a6c172e"
+
+validator@^9.2.0:
+  version "9.2.0"
+  resolved "https://registry.yarnpkg.com/validator/-/validator-9.2.0.tgz#ad216eed5f37cac31a6fe00ceab1f6b88bded03e"
 
 vary@^1, vary@~1.1.1:
   version "1.1.2"

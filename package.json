@@ -54,10 +54,10 @@
     }
   },
   "dependencies": {
+    "@hollowverse/class-sanitizer": "^0.1.1",
     "@hollowverse/common": "hollowverse/common",
     "apollo-server-express": "^1.1.2",
     "body-parser": "^1.18.2",
-    "class-sanitizer": "^0.0.5",
     "class-validator": "^0.7.2",
     "cors": "^2.8.4",
     "dataloader": "^1.3.0",
