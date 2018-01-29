@@ -109,6 +109,10 @@ type NotablePerson {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
 
+  # The part of the URL to that notable person's page on the old website, e.g. tom-hanks.
+  # `null` if the notable person was added after the migration to the new website.
+  oldSlug: String
+
   name: String!
 
   photoUrl: Url

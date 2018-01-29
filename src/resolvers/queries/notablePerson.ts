@@ -11,11 +11,12 @@ export const resolvers: Partial<ResolverMap> = {
       const person = await notablePersonBySlugLoader.load(slug);
 
       if (person) {
-        const { name, summary } = person;
+        const { name, summary, oldSlug } = person;
 
         return {
           name,
           slug,
+          oldSlug,
           summary,
         };
       }
