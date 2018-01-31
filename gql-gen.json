@@ -9,6 +9,7 @@
     "DateTime": "Date",
     "DateOnly": "Date",
     "Url": "string",
-    "Email": "string"
+    "Email": "string",
+    "HexColor": "string"
   }
 }

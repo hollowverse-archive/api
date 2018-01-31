@@ -10,7 +10,7 @@ scalar Email
 # A full URL with the protocol. Accepted protocols are http and https only.
 scalar Url
 
-# A hexadecimal color string
+# A valid hexadecimal color string
 scalar HexColor
 
 # A notable person's label, e.g. Liberal, Democrat
