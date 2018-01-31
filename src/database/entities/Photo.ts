@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, Index, OneToOne, JoinColumn } from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
+import { ColorPalette } from './ColorPalette';
 import { urlValidationOptions } from '../../helpers/validation';
 
 /** A photo with metadata, including license and copyright information */
@@ -48,4 +49,11 @@ export class Photo extends BaseEntity {
   @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false })
   s3Path: string;
+
+  @OneToOne(_ => ColorPalette, {
+    nullable: false,
+    cascadeAll: true,
+  })
+  @JoinColumn()
+  colorPalette: ColorPalette;
 }

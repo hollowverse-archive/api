@@ -13,6 +13,7 @@ import { User } from './entities/User';
 
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
+import { ColorPalette } from './entities/ColorPalette';
 
 const entities = [
   NotablePerson,
@@ -24,6 +25,7 @@ const entities = [
   EditorialSummary,
   EditorialSummaryNode,
   Photo,
+  ColorPalette,
 ];
 
 const {
