@@ -51,10 +51,10 @@ export class Photo extends BaseEntity {
   s3Path: string;
 
   @OneToOne(_ => ColorPalette, {
-    nullable: false,
+    nullable: true,
     cascadeAll: true,
     lazy: true,
   })
   @JoinColumn()
-  colorPalette: Promise<ColorPalette>;
+  colorPalette: Promise<ColorPalette | null>;
 }

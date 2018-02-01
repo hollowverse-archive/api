@@ -9,42 +9,42 @@ import { StartsWith } from '../customValidators/startsWith';
 export class ColorPalette extends BaseEntity {
   @PrimaryGeneratedColumn('uuid') id: string;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()
   @Validate(StartsWith, ['#'])
   vibrant: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()
   @Validate(StartsWith, ['#'])
   darkVibrant: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()
   @Validate(StartsWith, ['#'])
   lightVibrant: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()
   @Validate(StartsWith, ['#'])
   muted: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()
   @Validate(StartsWith, ['#'])
   darkMuted: string | null;
 
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')
   @IsHexColor()
   @ToLowerCase()

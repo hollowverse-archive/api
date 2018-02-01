@@ -57,6 +57,7 @@
     "@hollowverse/class-sanitizer": "^0.1.2",
     "@hollowverse/common": "hollowverse/common",
     "apollo-server-express": "^1.1.2",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "class-validator": "^0.7.2",
     "cors": "^2.8.4",

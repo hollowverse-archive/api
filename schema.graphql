@@ -110,7 +110,7 @@ type Photo {
   artist: String
   license: String
   credits: String
-  colorPalette: ColorPalette!
+  colorPalette: ColorPalette
 }
 
 input EventsQueryInput {
