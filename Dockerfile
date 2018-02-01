@@ -23,6 +23,8 @@ RUN yarn --prod
 
 COPY ./dist ./dist/
 
+COPY ./data ./data/
+
 COPY ./schema.graphql ./
 
 CMD yarn start
