@@ -3,6 +3,7 @@ import { merge } from 'lodash';
 import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
 import { Email } from './scalars/email';
 import { Url } from './scalars/url';
+import { HexColor } from './scalars/hexColor';
 
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
@@ -21,6 +22,7 @@ const scalarTypes = {
   DateOnly: GraphQLDate,
   Email,
   Url,
+  HexColor,
 };
 
 export const resolvers = merge(

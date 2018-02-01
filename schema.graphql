@@ -7,8 +7,11 @@ scalar DateTime
 # A valid email address
 scalar Email
 
-# A full URL with the protocol. Accepted protocols are http and https only.
+# A full URL with the protocol. Accepted protocols are http and https only
 scalar Url
+
+# A valid hexadecimal color string, must start with `#`
+scalar HexColor
 
 # A notable person's label, e.g. Liberal, Democrat
 type Label {
@@ -89,6 +92,15 @@ type EditorialSummary {
   lastUpdatedOn: DateOnly
 }
 
+type ColorPalette {
+  vibrant: HexColor
+  darkVibrant: HexColor
+  lightVibrant: HexColor
+  muted: HexColor
+  darkMuted: HexColor
+  lightMuted: HexColor
+}
+
 type Photo {
   id: ID!
   url: Url!
@@ -98,6 +110,7 @@ type Photo {
   artist: String
   license: String
   credits: String
+  colorPalette: ColorPalette
 }
 
 input EventsQueryInput {

@@ -54,9 +54,10 @@
     }
   },
   "dependencies": {
-    "@hollowverse/class-sanitizer": "^0.1.1",
+    "@hollowverse/class-sanitizer": "^0.1.2",
     "@hollowverse/common": "hollowverse/common",
     "apollo-server-express": "^1.1.2",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "class-validator": "^0.7.2",
     "cors": "^2.8.4",
@@ -70,9 +71,10 @@
     "helmet": "^3.9.0",
     "moment": "^2.19.2",
     "mysql": "^2.14.1",
+    "node-vibrant": "^3.0.0",
     "npm-run-all": "^4.0.2",
     "reflect-metadata": "^0.1.10",
-    "typeorm": "^0.1.9",
+    "typeorm": "^0.1.12",
     "validator": "^9.0.0"
   },
   "devDependencies": {
