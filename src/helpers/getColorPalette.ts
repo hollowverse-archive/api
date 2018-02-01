@@ -1,4 +1,4 @@
-import Vibrant from 'node-vibrant';
+import Vibrant = require('node-vibrant');
 import { mapValues } from 'lodash';
 import { ColorPalette } from '../typings/schema';
 

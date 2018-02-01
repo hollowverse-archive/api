@@ -5,9 +5,7 @@
     "checkJs": false,
     "outDir": "../dist",
     "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true
+    "experimentalDecorators": true
   },
   "exclude": [
     "node_modules"
