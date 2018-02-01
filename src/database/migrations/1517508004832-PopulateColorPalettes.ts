@@ -2,13 +2,15 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 import { readJson } from '../../helpers/readFile';
 import { Photo } from '../entities/Photo';
 import * as bluebird from 'bluebird';
+import * as path from 'path';
 import { ColorPalette as ColorPaletteType } from '../../typings/schema';
 import { ColorPalette } from '../entities/ColorPalette';
 import { toPairs } from 'lodash';
 
 export class PopulateColorPalettes1517508004832 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<any> {
-    const json = await readJson<Record<string, Record<keyof ColorPaletteType, string | null>>>('data/palettes.json');
+    const json = await readJson<Record<string, Record<keyof ColorPaletteType, string | null>>>(
+      path.resolve(__dirname, '../../../data/palettes.json'));
     const photoRepository = queryRunner.connection.getRepository(Photo);
     const updatedPhotos = await bluebird.map(
       toPairs(json),
