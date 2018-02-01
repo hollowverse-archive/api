@@ -124,8 +124,14 @@ export const resolvers: Partial<ResolverMap> = {
     async mainPhoto({ slug }, _, { notablePersonBySlugLoader }) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
-        if (notablePerson) {
-          return notablePerson.mainPhoto;
+
+        if (notablePerson && notablePerson.mainPhoto) {
+          const { colorPalette, ...rest } = notablePerson.mainPhoto;
+          
+          return {
+            ...rest,
+            colorPalette: await colorPalette,
+          };
         }
       }
 
