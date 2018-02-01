@@ -52,7 +52,7 @@ export class Photo extends BaseEntity {
 
   @OneToOne(_ => ColorPalette, {
     nullable: true,
-    cascadeAll: true,
+    cascade: ['insert', 'update', 'remove'],
     lazy: true,
   })
   @JoinColumn()

@@ -1,4 +1,5 @@
-import Vibrant from 'node-vibrant';
+// tslint:disable-next-line:no-require-imports
+import Vibrant = require('node-vibrant');
 import { mapValues } from 'lodash';
 import { ColorPalette } from '../typings/schema';
 

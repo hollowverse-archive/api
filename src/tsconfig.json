@@ -6,7 +6,6 @@
     "outDir": "../dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
     "skipLibCheck": true
   },
   "exclude": [
