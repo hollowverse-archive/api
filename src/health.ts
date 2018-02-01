@@ -6,10 +6,9 @@ export const setIsHealthy = (value: boolean) => {
   isHealthy = value;
 };
 
-const health = express();
+export const health = express();
 
 health.get('/', (_, res) => {
   res.status(isHealthy ? 200 : 500).send();
 });
 
-export { health };
