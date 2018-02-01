@@ -19,7 +19,8 @@ import { notablePersonBySlugLoader } from './dataLoaders/notablePerson';
 import { userPhotoUrlLoader } from './dataLoaders/user';
 import { photoUrlLoader } from './dataLoaders/photoUrl';
 
-connection.catch(_ => {
+connection.catch(e => {
+  console.error(e);
   setIsHealthy(false);
 });
 
@@ -62,7 +63,7 @@ api.use(
   }),
 );
 
-api.use('/', health);
+api.use('/health', health);
 
 api.use(
   '/graphql',
