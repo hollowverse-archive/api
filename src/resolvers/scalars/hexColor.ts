@@ -16,7 +16,7 @@ const parseLiteral = (ast: ASTNode) => {
 export const HexColor = new GraphQLScalarType({
   name: 'HexColor',
   description:
-    'A valid hexadecimal color string.',
+    'A valid hexadecimal color string, must start with `#`.',
 
   parseLiteral,
 
