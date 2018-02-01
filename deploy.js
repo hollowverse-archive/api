@@ -47,7 +47,6 @@ async function main() {
           'schema.graphql',
           'dist/**/*',
           'secrets/**/*',
-          'data/**/*',
           'yarn.lock',
           'package.json',
           'env.json',
