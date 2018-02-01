@@ -6,7 +6,7 @@ import * as isHexColor from 'validator/lib/isHexColor';
 
 // Called when the user passes the value inline
 const parseLiteral = (ast: ASTNode) => {
-  if (ast.kind === Kind.STRING && isHexColor(ast.value)) {
+  if (ast.kind === Kind.STRING && isHexColor(ast.value) && ast.value.startsWith('#')) {
     return ast.value;
   }
 

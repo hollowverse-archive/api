@@ -72,9 +72,9 @@
     glob "^7.1.2"
     graphql-tools "^1.1.0"
 
-"@hollowverse/class-sanitizer@^0.1.1":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@hollowverse/class-sanitizer/-/class-sanitizer-0.1.1.tgz#44f948a5640941103e22af877ea056f707af77d8"
+"@hollowverse/class-sanitizer@^0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@hollowverse/class-sanitizer/-/class-sanitizer-0.1.2.tgz#35f9f5ad9ebea336cdf1dfedab12b5ba8eac74ea"
   dependencies:
     validator "^9.2.0"
 
