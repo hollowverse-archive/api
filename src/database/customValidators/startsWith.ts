@@ -1,6 +1,5 @@
 import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
 
-
 /** Custom validator to check if a string starts with a particular sequence of characters */
 @ValidatorConstraint()
 export class StartsWith implements ValidatorConstraintInterface {
