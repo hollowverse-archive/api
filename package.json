@@ -10,7 +10,7 @@
     "get-master-schema": "git show master:schema.graphql > masterSchema.graphql",
     "compare-master-schema-with-current-schema": "graphql-findbreakingchanges masterSchema.graphql schema.graphql",
     "find-breaking-schema-changes": "run-s get-master-schema compare-master-schema-with-current-schema",
-    "validate-schema": "graphql-validator -s './schema.graphql' './src/examples/*.graphql' 'clients/**/*.graphql'",
+    "validate-schema": "graphql-validator -s './schema.graphql' '{src,clients}/**/*.graphql'",
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' -e 'src/database/migrations/*.ts' --project tsconfig.json",
