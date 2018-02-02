@@ -15,7 +15,7 @@ const MASTER_SCHEMA_URL = 'https://raw.githubusercontent.com/hollowverse/api/mas
     const breakingChanges = findBreakingChanges(oldSchema, newSchema);
 
     if (breakingChanges.length > 0) {
-      console.warn(`Found ${breakingChanges.length} breaking shcmea changes:`);
+      console.warn(`Found ${breakingChanges.length} breaking schema changes:`);
       for (const { type, description } of breakingChanges) {
         console.log(`  * ${type}\t ${description}`);
       }
