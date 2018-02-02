@@ -4,6 +4,7 @@
 const shelljs = require('shelljs');
 const decryptSecrets = require('@hollowverse/common/helpers/decryptSecrets');
 const executeCommands = require('@hollowverse/common/helpers/executeCommands');
+const executeCommandsInParallel = require('@hollowverse/common/helpers/executeCommandsInParallel');
 const writeJsonFile = require('@hollowverse/common/helpers/writeJsonFile');
 const createZipFile = require('@hollowverse/common/helpers/createZipFile');
 
@@ -32,7 +33,19 @@ const secrets = [
 const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
-  const buildCommands = ['yarn test', 'yarn build'];
+  const buildCommands = [
+    'mkdir clients',
+    () => executeCommandsInParallel(
+      ['master', 'beta']
+      .map(branch => () => executeCommands([
+        'cd clients',
+        `curl https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}`,
+        `tar xpvf ${branch}`,
+      ])),
+    ),
+    'yarn test',
+    'yarn build',
+  ];
   const deploymentCommands = [
     () =>
       writeJsonFile('env.json', {

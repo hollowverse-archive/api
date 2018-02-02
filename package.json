@@ -7,7 +7,7 @@
   "scripts": {
     "pretest": "run-p generate-graphql-types",
     "test": "run-p validate-schema validate-filenames lint-js lint-ts",
-    "validate-schema": "graphql-validator -s './schema.graphql' './src/examples/*.graphql'",
+    "validate-schema": "graphql-validator -s './schema.graphql' './src/examples/*.graphql' 'clients/**/*.graphql'",
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' -e 'src/database/migrations/*.ts' --project tsconfig.json",
