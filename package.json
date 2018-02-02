@@ -6,8 +6,9 @@
   "repository": "https://github.com/hollowverse/api.git",
   "scripts": {
     "pretest": "run-p generate-graphql-types",
-    "test": "run-p validate-schema validate-filenames lint-js lint-ts",
-    "validate-schema": "graphql-validator -s './schema.graphql' './src/examples/*.graphql'",
+    "test": "run-p validate-examples validate-filenames lint-js lint-ts lint-schema",
+    "validate-examples": "graphql-validator -s './schema.graphql' './src/examples/*.graphql'",
+    "lint-schema": "graphql-schema-linter schema.graphql",
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' -e 'src/database/migrations/*.ts' --project tsconfig.json",
@@ -43,6 +44,9 @@
     ],
     "**/*.js{x,}": [
       "eslint"
+    ],
+    "schema.graphql": [
+      "graphql-schema-linter"
     ]
   },
   "husky": {
@@ -72,7 +76,6 @@
     "helmet": "^3.9.0",
     "moment": "^2.19.2",
     "mysql": "^2.14.1",
-    "node-vibrant": "^3.0.0",
     "npm-run-all": "^4.0.2",
     "reflect-metadata": "^0.1.10",
     "typeorm": "^0.1.12",
@@ -104,6 +107,7 @@
     "eslint-plugin-react": "^7.3.0",
     "faker": "^4.1.0",
     "graphql-code-generator": "^0.8.14",
+    "graphql-schema-linter": "^0.0.28",
     "graphql-to-typescript": "^0.1.2",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.3",
