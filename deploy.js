@@ -36,8 +36,7 @@ async function main() {
   const buildCommands = [
     'mkdir clients',
     () => executeCommandsInParallel(
-      ['master', 'beta']
-      .map(branch => () => executeCommands([
+      ['master', 'beta'].map(branch => () => executeCommands([
         'cd clients',
         `curl https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}`,
         `tar xpvf ${branch}`,
