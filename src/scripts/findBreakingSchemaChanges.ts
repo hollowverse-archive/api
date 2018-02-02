@@ -9,12 +9,12 @@ const MASTER_SCHEMA_URL = 'https://raw.githubusercontent.com/hollowverse/api/mas
 // tslint:disable-next-line no-floating-promises
 (async () => {
   try {
-    const [oldSchema, newSchema] = (await Promise.all([
+    const [referenceSchema, updatedSchema] = (await Promise.all([
       got(MASTER_SCHEMA_URL).then(response => response.body),
       readFile('schema.graphql', 'utf8')
     ])).map(buildSchema);
 
-    const breakingChanges = findBreakingChanges(oldSchema, newSchema);
+    const breakingChanges = findBreakingChanges(referenceSchema, updatedSchema);
 
     if (breakingChanges.length > 0) {
       console.warn(`Found ${breakingChanges.length} breaking schema changes:`);
