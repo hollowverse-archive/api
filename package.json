@@ -21,7 +21,7 @@
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
     "build-ts": "tsc --project ./src",
     "build": "run-s generate-graphql-types build-ts",
-    "clean": "del-cli ./dist schema.json src/typings/schema.ts masterSchema.graphql",
+    "clean": "del-cli ./dist schema.json src/typings/schema.ts",
     "start": "node dist/server.js",
     "validate-filenames": "validate-filenames --config commonconfig.js",
     "lint-staged": "lint-staged"
