@@ -34,6 +34,13 @@ const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
   const buildCommands = [
+    // Download and extract master and beta branches of the web app
+    // to validate the GraphQL queries used in the web app against
+    // the (possibly) updated API schema. This helps prevent
+    // breaking the API for already-deployed versions of the web app.
+    //
+    // The actual validation is performed by `yarn validate-queries`
+    // which is run as part of `yarn test`.
     () => executeCommandsInParallel(
       ['master', 'beta'].map(
         branch => () => executeCommands([
