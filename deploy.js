@@ -34,12 +34,14 @@ const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
   const buildCommands = [
-    'mkdir clients',
     () => executeCommandsInParallel(
-      ['master', 'beta'].map(branch => () => executeCommands([
-        `curl https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch} clients/${branch}`,
-        `tar xpvf clients/${branch}`,
-      ])),
+      ['master', 'beta'].map(
+        branch => () => executeCommands([
+          `mkdir -p clients/${branch}`,
+          `wget -qO- https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}` +
+          ` | tar xz -C clients/${branch}`
+        ])
+      )
     ),
     'yarn test',
     'yarn build',
