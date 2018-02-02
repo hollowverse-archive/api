@@ -37,9 +37,8 @@ async function main() {
     'mkdir clients',
     () => executeCommandsInParallel(
       ['master', 'beta'].map(branch => () => executeCommands([
-        'cd clients',
-        `curl https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}`,
-        `tar xpvf ${branch}`,
+        `curl https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch} clients/${branch}`,
+        `tar xpvf clients/${branch}`,
       ])),
     ),
     'yarn test',
