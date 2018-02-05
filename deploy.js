@@ -4,6 +4,7 @@
 const shelljs = require('shelljs');
 const decryptSecrets = require('@hollowverse/common/helpers/decryptSecrets');
 const executeCommands = require('@hollowverse/common/helpers/executeCommands');
+const executeCommandsInParallel = require('@hollowverse/common/helpers/executeCommandsInParallel');
 const writeJsonFile = require('@hollowverse/common/helpers/writeJsonFile');
 const createZipFile = require('@hollowverse/common/helpers/createZipFile');
 
@@ -32,7 +33,28 @@ const secrets = [
 const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
-  const buildCommands = ['yarn test', 'yarn build'];
+  const buildCommands = [
+    // Download and extract master and beta branches of the web app
+    // to validate the GraphQL queries used in the web app against
+    // the (possibly) updated API schema. This helps prevent
+    // breaking the API for already-deployed versions of the web app.
+    //
+    // The actual validation is performed by `yarn validate-queries`
+    // which is run as part of `yarn test`.
+    () => executeCommandsInParallel(
+      ['master', 'beta'].map(
+        branch => () => executeCommands([
+          `mkdir -p clients/${branch}`,
+          (
+            `wget -qO- https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}` +
+            ` | tar xz -C clients/${branch}`
+          ),
+        ])
+      )
+    ),
+    'yarn test',
+    'yarn build',
+  ];
   const deploymentCommands = [
     () =>
       writeJsonFile('env.json', {
