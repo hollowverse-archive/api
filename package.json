@@ -6,9 +6,8 @@
   "repository": "https://github.com/hollowverse/api.git",
   "scripts": {
     "pretest": "run-p generate-graphql-types",
-    "test": "run-p validate-queries validate-filenames lint-js lint-ts lint-schema find-breaking-schema-changes",
-    "find-breaking-schema-changes": "node -r 'ts-node/register' src/scripts/findBreakingSchemaChanges.ts",
-    "validate-queries": "graphql-validator -s './schema.graphql' '{src,clients}/**/*.graphql'",
+    "test": "run-p validate-examples validate-filenames lint-js lint-ts lint-schema",
+    "validate-examples": "graphql-validator -s './schema.graphql' './src/examples/*.graphql'",
     "lint-schema": "graphql-schema-linter schema.graphql",
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
@@ -39,7 +38,7 @@
       "git add"
     ],
     "**/*.{graphql,gql}": [
-      "validate-queries",
+      "validate-schema",
       "prettier --write",
       "git add"
     ],

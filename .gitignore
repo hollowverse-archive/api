@@ -58,4 +58,3 @@ build.zip
 # Auto-generated types based on the GraphQL schema definition
 src/typings/schema.ts
 schema.json
-clients
