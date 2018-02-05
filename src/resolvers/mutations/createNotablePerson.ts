@@ -17,7 +17,11 @@ export const resolvers: Partial<ResolverMap> = {
 
         await notablePeople.save(notablePerson);
 
-        return { name };
+        return {
+          notablePerson,
+          wasSuccessful: true,
+          userErrors: [],
+        };
       },
     ),
   },

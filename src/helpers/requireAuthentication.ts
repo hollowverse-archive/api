@@ -1,5 +1,5 @@
 import { SchemaContext } from '../typings/schemaContext';
-import { ApiError } from './apiError';
+import { UserError } from './apiError';
 import { GraphQLResolveInfo } from 'graphql/type';
 import { FnResolver } from '../typings/resolverMap';
 
@@ -21,7 +21,7 @@ export function requireAuthentication<S, A, T>(
     if (context.viewer) {
       return resolver(source, args, context, info);
     } else {
-      throw new ApiError('MustBeAuthorizedError');
+      throw new UserError('AUTHENTICATION_REQUIRED');
     }
   };
 }

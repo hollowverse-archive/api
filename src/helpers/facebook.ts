@@ -1,6 +1,6 @@
 import * as got from 'got';
 import { readJson } from './readFile';
-import { ApiError } from './apiError';
+import { UserError } from './apiError';
 
 const facebookAppConfig = readJson<FacebookAppConfig>(
   'secrets/facebookApp.json',
@@ -19,7 +19,7 @@ const facebookAppConfig = readJson<FacebookAppConfig>(
  */
 async function verifyFacebookAccessToken(token: string) {
   if (!token) {
-    throw new ApiError('InvalidAccessTokenError');
+    throw new UserError('INVALID_ACCESS_TOKEN');
   }
 
   const app = await facebookAppConfig;
@@ -39,7 +39,7 @@ async function verifyFacebookAccessToken(token: string) {
     }
   }
 
-  throw new ApiError('InvalidAccessTokenError');
+  throw new UserError('INVALID_ACCESS_TOKEN');
 }
 
 /**

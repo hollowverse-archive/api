@@ -1,7 +1,7 @@
 import { connection } from '../../database/connection';
 import { User } from '../../database/entities/User';
 import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
-import { ApiError } from '../../helpers/apiError';
+import { UserError } from '../../helpers/apiError';
 
 import { ResolverMap } from '../../typings/resolverMap';
 
@@ -16,8 +16,8 @@ export const resolvers: Partial<ResolverMap> = {
      */
     async createUser(_, { input: { fbAccessToken, email, name } }, context) {
       if (context.viewer) {
-        throw new ApiError(
-          'OperationNotAllowedError',
+        throw new UserError(
+          'OPERATION_NOT_ALLOWED',
           'Cannot create a new user because the request is already authenticated',
         );
       }
@@ -57,7 +57,13 @@ export const resolvers: Partial<ResolverMap> = {
 
       const users = db.getRepository(User);
 
-      return users.save(user);
+      await users.save(user);
+
+      return {
+        user,
+        wasSuccessful: true,
+        userErrors: [],
+      };
     },
   },
 };

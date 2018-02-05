@@ -1,7 +1,7 @@
 import { GraphQLError } from 'graphql/error';
 import { ValidationError } from 'class-validator';
 import { QueryFailedError } from 'typeorm';
-import { ApiError } from './apiError';
+import { UserError } from './apiError';
 
 /**
  * Picks properties of error objects that are assumed to not contain
@@ -14,7 +14,7 @@ function pickSafeProps(error: Error | ValidationError | QueryFailedError) {
     const { property, constraints } = error;
 
     return { property, constraints };
-  } else if (error instanceof ApiError) {
+  } else if (error instanceof UserError) {
     // `ApiError` knows how to remove unsafe props. Just return it as-is.
     return error;
   } else {
