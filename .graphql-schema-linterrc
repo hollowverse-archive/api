@@ -1,0 +1,9 @@
+{
+  "rules": [
+    "deprecations-have-a-reason",
+    "fields-are-camel-cased",
+    "input-object-values-are-camel-cased",
+    "input-object-values-have-descriptions",
+    "types-are-capitalized"
+  ]
+}

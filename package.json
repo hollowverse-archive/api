@@ -6,9 +6,10 @@
   "repository": "https://github.com/hollowverse/api.git",
   "scripts": {
     "pretest": "run-p generate-graphql-types",
-    "test": "run-p validate-queries validate-filenames lint-js lint-ts find-breaking-schema-changes",
+    "test": "run-p validate-queries validate-filenames lint-js lint-ts lint-schema find-breaking-schema-changes",
     "find-breaking-schema-changes": "node -r 'ts-node/register' src/scripts/findBreakingSchemaChanges.ts",
     "validate-queries": "graphql-validator -s './schema.graphql' '{src,clients}/**/*.graphql'",
+    "lint-schema": "graphql-schema-linter schema.graphql",
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts": "tslint './*.ts' 'src/**/*.ts{,x}' -e 'src/typings/schema.ts' -e 'src/database/migrations/*.ts' --project tsconfig.json",
@@ -44,6 +45,9 @@
     ],
     "**/*.js{x,}": [
       "eslint"
+    ],
+    "schema.graphql": [
+      "graphql-schema-linter"
     ]
   },
   "husky": {
@@ -105,6 +109,7 @@
     "eslint-plugin-react": "^7.3.0",
     "faker": "^4.1.0",
     "graphql-code-generator": "^0.8.14",
+    "graphql-schema-linter": "^0.0.28",
     "graphql-to-typescript": "^0.1.2",
     "husky": "^0.14.3",
     "lint-staged": "^4.0.3",

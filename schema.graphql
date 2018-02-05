@@ -114,6 +114,7 @@ type Photo {
 }
 
 input EventsQueryInput {
+  # Filter events by type
   type: NotablePersonEventType
 }
 
@@ -206,6 +207,7 @@ type RootQuery {
 }
 
 input CreateUserInput {
+  # A valid Facebook access token issued for the Hollowverse application on Facebook
   fbAccessToken: String!
 
   # Optional email address to override the one obtained from Facebook
@@ -216,7 +218,9 @@ input CreateUserInput {
 }
 
 input CreateNotablePersonInput {
+  # Path to the notable person page, e.g. `Tom_Hanks`
   slug: String!
+  # Name of the new notable person
   name: String!
 }
 
