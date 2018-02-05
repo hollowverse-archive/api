@@ -1,12 +1,12 @@
-import { ApiErrorType } from '../typings/schema';
-
-const messagesByErrorType: Record<ApiErrorType, string> = {
+const messagesByErrorType = {
   OperationNotAllowedError: 'This operation is not allowed',
   MustBeAuthorizedError:
     'This operation requires that the request is authenticated',
   InvalidAccessTokenError:
     'The passed access token is either empty, expired or invalid',
 };
+
+type ApiErrorType = keyof typeof messagesByErrorType;
 
 type ApiErrorOptions = {
   isSensitive: boolean;

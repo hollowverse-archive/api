@@ -205,6 +205,23 @@ type RootQuery {
   notablePeople(first: Int!, after: ID): NotablePersonConnection!
 }
 
+
+enum ApiErrorType {
+  # Thrown when an operation requires that the request is authorized
+  MustBeAuthorizedError
+
+  OperationNotAllowedError
+
+  # Thrown when an access token is empty, invalid or expired
+  InvalidAccessTokenError
+}
+
+type UserError {
+  type: ApiErrorType
+  message: String
+  field: String
+}
+
 input CreateUserInput {
   fbAccessToken: String!
 
@@ -221,7 +238,15 @@ input CreateNotablePersonInput {
 }
 
 type CreateNotablePersonPayload {
-  name: String!
+  notablePerson: NotablePerson
+  wasSuccessful: Boolean!
+  userErrors: [UserError!]
+}
+
+type CreateUserPayload {
+  user: Viewer
+  wasSuccessful: Boolean!
+  userErrors: [UserError!]
 }
 
 type RootMutation {
@@ -229,7 +254,7 @@ type RootMutation {
   # issued for the Hollowverse application.
   # The name of the new user will be obtained from Facebook if
   # not specified in the mutation input.
-  createUser(input: CreateUserInput!): Viewer
+  createUser(input: CreateUserInput!): CreateUserPayload
 
   # Create a new entry for a notable person
   createNotablePerson(
@@ -240,14 +265,4 @@ type RootMutation {
 schema {
   query: RootQuery
   mutation: RootMutation
-}
-
-enum ApiErrorType {
-  # Thrown when an operation requires that the request is authorized
-  MustBeAuthorizedError
-
-  OperationNotAllowedError
-
-  # Thrown when an access token is empty, invalid or expired
-  InvalidAccessTokenError
 }
