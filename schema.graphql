@@ -1,3 +1,7 @@
+directive @hasRoles(roles: [String]) on FIELD_DEFINITION
+
+directive @isAuthenticated on FIELD_DEFINITION
+
 # Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
 
@@ -198,7 +202,7 @@ type NotablePersonConnection {
 
 type RootQuery {
   # The authenticated user performing the request
-  viewer: Viewer
+  viewer: Viewer @isAuthenticated
 
   notablePerson(slug: String!): NotablePerson
 
@@ -238,7 +242,7 @@ type RootMutation {
   # Create a new entry for a notable person
   createNotablePerson(
     input: CreateNotablePersonInput!
-  ): CreateNotablePersonPayload
+  ): CreateNotablePersonPayload @hasRoles(roles: ["editor"])
 }
 
 schema {
