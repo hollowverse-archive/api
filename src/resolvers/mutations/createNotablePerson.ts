@@ -3,6 +3,7 @@ import { NotablePerson } from '../../database/entities/NotablePerson';
 import { ResolverMap } from '../../typings/resolverMap';
 import { requireAuthentication } from '../../helpers/requireAuthentication';
 
+// @ts-ignore
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
     createNotablePerson: requireAuthentication(
