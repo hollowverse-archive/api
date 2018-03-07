@@ -9,14 +9,14 @@ export const schema = readFile('schema.graphql', 'utf8').then(typeDefs =>
     typeDefs,
     resolvers: resolvers as any,
     directiveResolvers: {
-      requireAuth(next, _source, _args, context) {
+      async requireAuth(next, _source, _args, context) {
         if (context.viewer) {
           return next();
         } else {
           throw new ApiError('MustBeAuthorizedError');
         }
       },
-      requireRoles(_next, _source, _args, _context) {
+      async requireRoles(_next, _source, _args, _context) {
         // @TODO: implement this
         throw new ApiError('MustBeAuthorizedError');
       },
