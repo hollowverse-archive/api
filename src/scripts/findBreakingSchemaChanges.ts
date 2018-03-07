@@ -1,9 +1,10 @@
 #! /usr/bin/env node
 import { findBreakingChanges, buildSchema } from 'graphql';
 import { readFile } from '../helpers/readFile';
-import * as got from 'got';
+import got from 'got';
 
-const MASTER_SCHEMA_URL = 'https://raw.githubusercontent.com/hollowverse/api/master/schema.graphql';
+const MASTER_SCHEMA_URL =
+  'https://raw.githubusercontent.com/hollowverse/api/master/schema.graphql';
 
 // tslint:disable no-console
 // tslint:disable-next-line no-floating-promises
@@ -11,7 +12,7 @@ const MASTER_SCHEMA_URL = 'https://raw.githubusercontent.com/hollowverse/api/mas
   try {
     const [referenceSchema, updatedSchema] = (await Promise.all([
       got(MASTER_SCHEMA_URL).then(response => response.body),
-      readFile('schema.graphql', 'utf8')
+      readFile('schema.graphql', 'utf8'),
     ])).map(buildSchema);
 
     const breakingChanges = findBreakingChanges(referenceSchema, updatedSchema);
@@ -27,7 +28,10 @@ const MASTER_SCHEMA_URL = 'https://raw.githubusercontent.com/hollowverse/api/mas
       process.exit(0);
     }
   } catch (e) {
-    console.error('An error occured while trying to find breaking schema changes:', e);
+    console.error(
+      'An error occured while trying to find breaking schema changes:',
+      e,
+    );
     process.exit(1);
   }
 })();

@@ -1,8 +1,8 @@
-import * as express from 'express';
-import * as bodyParser from 'body-parser';
-import * as cors from 'cors';
-import * as helmet from 'helmet';
-import * as moment from 'moment';
+import express from 'express';
+import bodyParser from 'body-parser';
+import cors from 'cors';
+import helmet from 'helmet';
+import moment from 'moment';
 import { graphqlExpress } from 'apollo-server-express';
 // tslint:disable-next-line match-default-export-name
 import playgroundExpress from 'graphql-playground-middleware-express';

@@ -1,4 +1,4 @@
-import * as DataLoader from 'dataloader';
+import DataLoader from 'dataloader';
 
 import { Photo } from '../database/entities/Photo';
 import { connection } from '../database/connection';

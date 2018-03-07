@@ -2,11 +2,15 @@ import { GraphQLScalarType } from 'graphql/type';
 import { ASTNode, Kind } from 'graphql/language';
 import { GraphQLError } from 'graphql/error';
 
-import * as isHexColor from 'validator/lib/isHexColor';
+import isHexColor from 'validator/lib/isHexColor';
 
 // Called when the user passes the value inline
 const parseLiteral = (ast: ASTNode) => {
-  if (ast.kind === Kind.STRING && isHexColor(ast.value) && ast.value.startsWith('#')) {
+  if (
+    ast.kind === Kind.STRING &&
+    isHexColor(ast.value) &&
+    ast.value.startsWith('#')
+  ) {
     return ast.value;
   }
 
@@ -15,8 +19,7 @@ const parseLiteral = (ast: ASTNode) => {
 
 export const HexColor = new GraphQLScalarType({
   name: 'HexColor',
-  description:
-    'A valid hexadecimal color string, must start with `#`.',
+  description: 'A valid hexadecimal color string, must start with `#`.',
 
   parseLiteral,
 

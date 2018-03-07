@@ -9,7 +9,7 @@ import {
 import { NotablePersonEventComment } from '../database/entities/NotablePersonEventComment';
 import { NotablePersonLabel } from '../database/entities/NotablePersonLabel';
 import { EventLabel } from '../database/entities/EventLabel';
-import * as faker from 'faker';
+import faker from 'faker';
 import { times, take, uniqBy } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
 
