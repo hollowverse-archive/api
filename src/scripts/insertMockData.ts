@@ -1,4 +1,4 @@
-// tslint:disable no-console max-func-body-length
+// tslint:disable no-console max-func-body-length no-implicit-dependencies
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { User } from '../database/entities/User';
@@ -59,10 +59,12 @@ if (isUsingProductionDatabase === false) {
               null,
               faker.random.uuid(),
             ]);
-            notablePerson.labels = Promise.resolve(take(
-              faker.helpers.shuffle(notablePersonLabels),
-              Math.min(4, faker.random.number(notablePersonLabels.length)),
-            ));
+            notablePerson.labels = Promise.resolve(
+              take(
+                faker.helpers.shuffle(notablePersonLabels),
+                Math.min(4, faker.random.number(notablePersonLabels.length)),
+              ),
+            );
 
             return notablePerson;
           }),

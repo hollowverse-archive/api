@@ -4,7 +4,6 @@ import cors from 'cors';
 import helmet from 'helmet';
 import moment from 'moment';
 import { graphqlExpress } from 'apollo-server-express';
-// tslint:disable-next-line match-default-export-name
 import playgroundExpress from 'graphql-playground-middleware-express';
 
 import { schema } from './schema';
