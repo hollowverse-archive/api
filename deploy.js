@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint-disable no-console */
 const shelljs = require('shelljs');
 const {
   decryptSecrets,
