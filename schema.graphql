@@ -1,4 +1,4 @@
-directive @requireRoles(roles: [String]) on FIELD_DEFINITION
+directive @requireRoles(roles: [String!]) on FIELD_DEFINITION
 
 directive @requireAuth on FIELD_DEFINITION
 
