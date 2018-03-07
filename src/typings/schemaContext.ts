@@ -1,6 +1,6 @@
 import { User } from '../database/entities/User';
 import { NotablePerson } from '../database/entities/NotablePerson';
-import * as DataLoader from 'dataloader';
+import DataLoader from 'dataloader';
 
 export type SchemaContext = {
   viewer?: User;

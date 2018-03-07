@@ -1,4 +1,4 @@
-import * as express from 'express';
+import express from 'express';
 
 let isHealthy = true;
 
@@ -11,4 +11,3 @@ export const health = express();
 health.get('/', (_, res) => {
   res.status(isHealthy ? 200 : 500).send();
 });
-

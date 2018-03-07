@@ -1,4 +1,4 @@
-import * as got from 'got';
+import got from 'got';
 import { readJson } from './readFile';
 import { ApiError } from './apiError';
 

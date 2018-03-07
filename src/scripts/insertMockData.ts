@@ -1,4 +1,4 @@
-// tslint:disable no-console max-func-body-length
+// tslint:disable no-console max-func-body-length no-implicit-dependencies
 import { connection } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { User } from '../database/entities/User';
@@ -9,7 +9,7 @@ import {
 import { NotablePersonEventComment } from '../database/entities/NotablePersonEventComment';
 import { NotablePersonLabel } from '../database/entities/NotablePersonLabel';
 import { EventLabel } from '../database/entities/EventLabel';
-import * as faker from 'faker';
+import faker from 'faker';
 import { times, take, uniqBy } from 'lodash';
 import { isUsingProductionDatabase } from '../env';
 
@@ -59,10 +59,12 @@ if (isUsingProductionDatabase === false) {
               null,
               faker.random.uuid(),
             ]);
-            notablePerson.labels = Promise.resolve(take(
-              faker.helpers.shuffle(notablePersonLabels),
-              Math.min(4, faker.random.number(notablePersonLabels.length)),
-            ));
+            notablePerson.labels = Promise.resolve(
+              take(
+                faker.helpers.shuffle(notablePersonLabels),
+                Math.min(4, faker.random.number(notablePersonLabels.length)),
+              ),
+            );
 
             return notablePerson;
           }),

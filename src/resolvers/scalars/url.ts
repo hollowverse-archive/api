@@ -2,7 +2,7 @@ import { GraphQLScalarType } from 'graphql/type';
 import { ASTNode, Kind } from 'graphql/language';
 import { GraphQLError } from 'graphql/error';
 
-import * as isUrl from 'validator/lib/isURL';
+import isUrl from 'validator/lib/isURL';
 
 import { urlValidationOptions } from '../../helpers/validation';
 

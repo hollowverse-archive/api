@@ -29,7 +29,7 @@ export const resolvers: Partial<ResolverMap> = {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
         if (notablePerson) {
-          return await notablePerson.labels;
+          return notablePerson.labels;
         }
       }
 
@@ -40,7 +40,7 @@ export const resolvers: Partial<ResolverMap> = {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
         if (notablePerson) {
-          return await notablePerson.relatedPeople;
+          return notablePerson.relatedPeople;
         }
       }
 
@@ -127,7 +127,7 @@ export const resolvers: Partial<ResolverMap> = {
 
         if (notablePerson && notablePerson.mainPhoto) {
           const { colorPalette, ...rest } = notablePerson.mainPhoto;
-          
+
           return {
             ...rest,
             colorPalette: await colorPalette,

@@ -6,9 +6,8 @@
     "outDir": "../dist",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false
   },
-  "exclude": [
-    "node_modules"
-  ]
+  "exclude": ["node_modules"]
 }

@@ -2,7 +2,7 @@ import { GraphQLScalarType } from 'graphql/type';
 import { ASTNode, Kind } from 'graphql/language';
 import { GraphQLError } from 'graphql/error';
 
-import * as isEmail from 'validator/lib/isEmail';
+import isEmail from 'validator/lib/isEmail';
 
 // Called when the user passes the value inline
 const parseLiteral = (ast: ASTNode) => {
