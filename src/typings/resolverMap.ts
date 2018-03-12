@@ -33,7 +33,7 @@ export type TypeResolver<Type extends GeneratedType<any>, Context> =
   | (FnResolver<Type['returnType'], undefined, undefined, Context>);
 
 export type ResolverMap = {
-  [T in keyof TypesMap]: TypeResolver<TypesMap[T], SchemaContext>
+  [TypeName in keyof TypesMap]: TypeResolver<TypesMap[TypeName], SchemaContext>
 };
 
 type DirectiveResolver<Args, Context, Source = {}> = (
@@ -47,12 +47,15 @@ type DirectiveResolver<Args, Context, Source = {}> = (
 type BuiltInDirectives = 'pick' | 'include' | 'deprecated';
 
 type CustomDirectiveMap = {
-  [K in Exclude<keyof DirectiveMap, BuiltInDirectives>]: DirectiveMap[K]
+  [DirectiveName in Exclude<
+    keyof DirectiveMap,
+    BuiltInDirectives
+  >]: DirectiveMap[DirectiveName]
 };
 
 export type DirectiveResolverMap = {
-  [T in keyof CustomDirectiveMap]: DirectiveResolver<
-    DirectiveMap[T]['args'],
+  [DirectiveName in keyof CustomDirectiveMap]: DirectiveResolver<
+    DirectiveMap[DirectiveName]['args'],
     SchemaContext
   >
 };
