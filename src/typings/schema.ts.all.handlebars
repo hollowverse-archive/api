@@ -112,7 +112,7 @@ export type TypesMap = {
 // region Directives
 
 export type DirectiveMap = {
-  {{~#each definedDirectives}}
+  {{#each definedDirectives}}
   /** {{ description }} */ 
   {{ name }}: {
     args: {{# if hasArguments }}{{ toPascalCase name }}{{ toPascalCase ../name }}Args{{else}}{ }{{/if}};
