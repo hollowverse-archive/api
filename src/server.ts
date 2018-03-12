@@ -82,7 +82,11 @@ api.use(
           typeof token === 'string' &&
           token.length > 0
         ) {
-          context.viewer = await findUserByFacebookAccessToken(token);
+          try {
+            context.viewer = await findUserByFacebookAccessToken(token);
+          } catch {
+            context.viewer = undefined;
+          }
         }
       }
     }

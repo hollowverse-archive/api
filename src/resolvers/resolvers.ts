@@ -13,8 +13,8 @@ import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
 
-import { requireAuth } from './directives/requireAuth';
-import { requireRoles } from './directives/requireRoles';
+import { resolvers as requireAuthResolvers } from './directives/requireAuth';
+import { resolvers as requireRolesResolvers } from './directives/requireRoles';
 
 /**
  * Resolvers for custom scalar types.
@@ -41,6 +41,6 @@ export const resolvers = merge(
 );
 
 export const directiveResolvers = {
-  requireAuth,
-  requireRoles,
+  ...requireAuthResolvers,
+  ...requireRolesResolvers,
 };

@@ -16,7 +16,7 @@
     "introspect-schema": "apollo-codegen introspect-schema schema.graphql --output schema.json",
     "generate-types-from-template": "gql-gen --file ./schema.json --project src/typings",
     "generate-graphql-types": "run-s --aggregate-output introspect-schema generate-types-from-template",
-    "generate-graphql-types/dev": "nodemon -q --watch schema.graphql --exec 'run-p generate-graphql-types'",
+    "generate-graphql-types/dev": "nodemon -q --watch 'schema.graphql,**/*.handlebars' --exec 'run-p generate-graphql-types'",
     "server/dev": "PORT=${API_PORT:-8080} nodemon -q --watch ./src --ext ts,graphql,tsx,json --exec 'node --inspect=0.0.0.0:${API_DEBUG_PORT:-9229} -r 'ts-node/register' src/server.ts'",
     "dev": "npm-run-all -s --aggregate-output generate-graphql-types -p '*/dev'",
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
@@ -131,7 +131,7 @@
     "tslint-eslint-rules": "^5.1.0",
     "tslint-microsoft-contrib": "^5.0.3",
     "tslint-react": "^3.5.1",
-    "typescript": "^2.7.2",
+    "typescript": "^2.8.0-dev.20180308",
     "typescript-eslint-parser": "^14.0.0",
     "uuid": "^3.1.0",
     "yarnhook": "^0.1.1"

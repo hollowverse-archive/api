@@ -7,6 +7,6 @@ export const schema = readFile('schema.graphql', 'utf8').then(typeDefs =>
   makeExecutableSchema({
     typeDefs,
     resolvers: resolvers as any,
-    directiveResolvers,
+    directiveResolvers: directiveResolvers as any,
   }),
 );

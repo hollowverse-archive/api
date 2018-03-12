@@ -63,11 +63,11 @@ const getConfig = async (): Promise<ConnectionOptions> => {
   } else {
     // Development, fallback to environment variables
     databaseConfig = {
-      database: TYPEORM_DATABASE,
-      host: TYPEORM_HOST,
-      port: Number(TYPEORM_PORT),
-      username: TYPEORM_USERNAME,
-      password: TYPEORM_PASSWORD,
+      database: TYPEORM_DATABASE || 'hollowverse',
+      host: TYPEORM_HOST || 'localhost',
+      port: Number(TYPEORM_PORT) || 3306,
+      username: TYPEORM_USERNAME || 'root',
+      password: TYPEORM_PASSWORD || '123456',
     };
   }
 

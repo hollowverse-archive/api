@@ -1,16 +1,12 @@
 import { ApiError } from '../../helpers/apiError';
-import { DirectiveResolverFn } from 'graphql-tools/dist/Interfaces';
-import { SchemaContext } from '../../typings/schemaContext';
+import { DirectiveResolverMap } from '../../typings/resolverMap';
 
-export const requireRoles: DirectiveResolverFn<any, SchemaContext> = async (
-  next,
-  _source,
-  _args,
-  context,
-) => {
-  if (context.viewer && context.viewer.email === 'editor@hollowverse.com') {
-    return next();
-  } else {
-    throw new ApiError('MustBeAuthorizedError');
-  }
+export const resolvers: Pick<DirectiveResolverMap, 'requireRoles'> = {
+  async requireRoles(next, _source, _args, context) {
+    if (context.viewer && context.viewer.email === 'editor@hollowverse.com') {
+      return next();
+    } else {
+      throw new ApiError('MustBeAuthorizedError');
+    }
+  },
 };
