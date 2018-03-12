@@ -2,7 +2,6 @@ import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/NotablePerson';
 import { ResolverMap } from '../../typings/resolverMap';
 
-// @ts-ignore
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
     async createNotablePerson(_, { input: { name, slug } }) {
