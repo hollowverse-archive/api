@@ -1,12 +1,7 @@
-import { ApiError } from '../../helpers/apiError';
 import { DirectiveResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Pick<DirectiveResolverMap, 'requireRoles'> = {
-  async requireRoles(next, _source, _args, context) {
-    if (context.viewer && context.viewer.email === 'editor@hollowverse.com') {
-      return next();
-    } else {
-      throw new ApiError('MustBeAuthorizedError');
-    }
+  async requireRoles(_next, _source, _args, _context) {
+    throw new Error('Roles for users are not implemented yet');
   },
 };
