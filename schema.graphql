@@ -1,6 +1,10 @@
-directive @requireRoles(roles: [String!]) on FIELD_DEFINITION
-
+# Indicates that a specific field or object is only accessible to authenticated
+# users.
 directive @requireAuth on FIELD_DEFINITION
+
+# Indicates that a specific fields is only accessible to users with the specified roles
+# Implies `@requireAuth` so there is no need to specify both on the same field.
+directive @requireRoles(roles: [String!]) on FIELD_DEFINITION
 
 # Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
