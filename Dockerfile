@@ -1,6 +1,4 @@
-FROM node:9.2-alpine
-
-RUN apk update -q && apk add git -q
+FROM node:9.9.0-alpine
 
 ENV NODE_ENV=production
 ENV PORT=8080
