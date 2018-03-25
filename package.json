@@ -89,7 +89,7 @@
     "@creditkarma/graphql-loader": "^0.7.1",
     "@creditkarma/graphql-validator": "^0.5.0",
     "@hollowverse/config": "^4.0.0",
-    "@hollowverse/utils": "^4.0.1",
+    "@hollowverse/utils": "^4.0.2",
     "@hollowverse/validate-filenames": "^1.4.0",
     "@playlyfe/gql": "^2.6.0",
     "@types/body-parser": "^1.16.5",
