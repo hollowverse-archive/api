@@ -3,17 +3,15 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-disable no-console */
 const shelljs = require('shelljs');
-const {
-  decryptSecrets,
-} = require('@hollowverse/common/helpers/decryptSecrets');
+const { decryptSecrets } = require('@hollowverse/utils/helpers/decryptSecrets');
 const {
   executeCommands,
-} = require('@hollowverse/common/helpers/executeCommands');
+} = require('@hollowverse/utils/helpers/executeCommands');
 const {
   executeCommandsInParallel,
-} = require('@hollowverse/common/helpers/executeCommandsInParallel');
-const { writeJsonFile } = require('@hollowverse/common/helpers/writeJsonFile');
-const { createZipFile } = require('@hollowverse/common/helpers/createZipFile');
+} = require('@hollowverse/utils/helpers/executeCommandsInParallel');
+const { writeJsonFile } = require('@hollowverse/utils/helpers/writeJsonFile');
+const { createZipFile } = require('@hollowverse/utils/helpers/createZipFile');
 
 const {
   ENC_PASS_DB,
