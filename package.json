@@ -25,7 +25,8 @@
     "clean": "del-cli ./dist schema.json src/typings/schema.ts",
     "start": "node dist/server.js",
     "validate-filenames": "validate-filenames --config commonconfig.js",
-    "lint-staged": "lint-staged"
+    "lint-staged": "lint-staged",
+    "deploy": "node ./deploy.js"
   },
   "license": "Unlicense",
   "homepage": "https://github.com/hollowverse/api#readme",
