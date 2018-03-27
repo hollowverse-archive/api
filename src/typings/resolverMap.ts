@@ -1,6 +1,7 @@
-import { TypesMap } from './schema';
+import { TypesMap, DirectiveMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
+import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
 
 type Result<T> = Promise<T> | T;
 
@@ -32,5 +33,29 @@ export type TypeResolver<Type extends GeneratedType<any>, Context> =
   | (FnResolver<Type['returnType'], undefined, undefined, Context>);
 
 export type ResolverMap = {
-  [T in keyof TypesMap]: TypeResolver<TypesMap[T], SchemaContext>
+  [TypeName in keyof TypesMap]: TypeResolver<TypesMap[TypeName], SchemaContext>
+};
+
+type DirectiveResolver<Args, Context, Source = {}> = (
+  next: NextResolverFn,
+  source: Source,
+  args: Args,
+  context: Context,
+  info: GraphQLResolveInfo,
+) => any;
+
+type BuiltInDirectives = 'pick' | 'include' | 'deprecated';
+
+type CustomDirectiveMap = {
+  [DirectiveName in Exclude<
+    keyof DirectiveMap,
+    BuiltInDirectives
+  >]: DirectiveMap[DirectiveName]
+};
+
+export type DirectiveResolverMap = {
+  [DirectiveName in keyof CustomDirectiveMap]: DirectiveResolver<
+    DirectiveMap[DirectiveName]['args'],
+    SchemaContext
+  >
 };

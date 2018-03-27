@@ -108,3 +108,28 @@ export type TypesMap = {
   };
 {{/each}}
 };
+
+// region Directives
+
+export type DirectiveMap = {
+  {{#each definedDirectives}}
+  /** {{ description }} */ 
+  {{ name }}: {
+    args: {{# if hasArguments }}{{ toPascalCase name }}{{ toPascalCase ../name }}Args{{else}}{ }{{/if}};
+  }
+  {{/each}}
+};
+
+{{#each definedDirectives}}
+    {{#if hasArguments }}
+export interface {{ toPascalCase name }}Args {
+{{#each arguments}}
+
+  /** {{ description }} */
+  {{ name }}{{#unless isRequired}}?{{/unless}}: {{ toPrimitive type }}{{#if isArray}}[]{{/if}}{{#unless isRequired}} | null{{/unless}};
+{{/each}}
+}
+    {{/if}}
+{{/each}}
+
+// endregion Directives

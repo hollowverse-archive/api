@@ -13,6 +13,9 @@ import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
 
+import { resolvers as requireAuthResolvers } from './directives/requireAuth';
+import { resolvers as requireRolesResolvers } from './directives/requireRoles';
+
 /**
  * Resolvers for custom scalar types.
  * They define how to parse, validate and serialize these types.
@@ -36,3 +39,8 @@ export const resolvers = merge(
   photoResolvers,
   scalarTypes,
 );
+
+export const directiveResolvers = {
+  ...requireAuthResolvers,
+  ...requireRolesResolvers,
+};
