@@ -16,7 +16,7 @@ export const photoUrlLoader = new DataLoader<string | undefined, string>(
           const photo = await photos.findOne({ id });
           if (photo) {
             return String(
-              new URL(photo.s3Path, 'https://files.hollowverse.com'),
+              new URL(photo.s3Path, 'https://photos.hollowverse.com'),
             );
           }
         }
