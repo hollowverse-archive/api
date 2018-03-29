@@ -112,7 +112,7 @@ export const resolvers: Partial<ResolverMap> = {
           if (photoId) {
             return new URL(
               `notable-people/${photoId}`,
-              'https://photos.hollowverse.com',
+              'https://files.hollowverse.com',
             ).toString();
           }
         }
