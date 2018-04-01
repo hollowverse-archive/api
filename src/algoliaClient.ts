@@ -1,4 +1,4 @@
-import * as algoliaSearch from 'algoliasearch';
+import algoliaSearch from 'algoliasearch';
 import { readJson } from './helpers/readFile';
 import { isProd } from './env';
 
