@@ -1,4 +1,4 @@
-// tslint:disable no-console
+// tslint:disable no-console no-implicit-dependencies
 // tslint:disable:no-non-null-assertion
 
 import { GraphQLClient } from 'graphql-request';
@@ -9,7 +9,7 @@ import {
 } from '../algoliaClient';
 
 // tslint:disable-next-line:no-http-string
-const API_ENDPOINT = 'http://localhost:8080/graphql';
+const API_ENDPOINT = 'https://api.hollowverse.com/graphql';
 
 async function main() {
   const algoliaClient = await _algoliaClient;
@@ -49,7 +49,7 @@ async function main() {
     },
   );
 
-  const allPeople = data!.notablePeople.edges.map((e: any) => ({
+  const allPeople = data.notablePeople.edges.map((e: any) => ({
     ...e.node,
     objectID: e.node.slug,
   }));
