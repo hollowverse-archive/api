@@ -64,16 +64,21 @@ api.use(
 
 api.use('/', health);
 
+const PRIVATE_CACHE_CONTROL = 'private, no-store';
+const MAX_RESPONSE_CACHE_AGE = moment.duration(6, 'h').asSeconds();
+const PUBLIC_CACHE_CONTROL = `public, maxage=${MAX_RESPONSE_CACHE_AGE}`;
+
 api.use(
   '/graphql',
   bodyParser.json(),
-  graphqlExpress(async req => {
+  graphqlExpress(async (req, res) => {
     const context: SchemaContext = {
       userPhotoUrlLoader,
       notablePersonBySlugLoader,
       photoUrlLoader,
     };
-    if (req) {
+
+    if (req && res) {
       const authorization = req.header('Authorization');
       if (authorization) {
         const [type, token] = authorization.split(' ');
@@ -88,6 +93,12 @@ api.use(
             context.viewer = undefined;
           }
         }
+      }
+
+      if (req.method === 'GET' && !context.viewer) {
+        res.setHeader('Cache-Control', PUBLIC_CACHE_CONTROL);
+      } else {
+        res.setHeader('Cache-Control', PRIVATE_CACHE_CONTROL);
       }
     }
 
