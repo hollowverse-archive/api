@@ -66,7 +66,7 @@ api.use('/', health);
 
 const PRIVATE_CACHE_CONTROL = 'private, no-store';
 const MAX_RESPONSE_CACHE_AGE = moment.duration(6, 'h').asSeconds();
-const PUBLIC_CACHE_CONTROL = `public, maxage=${MAX_RESPONSE_CACHE_AGE}`;
+const PUBLIC_CACHE_CONTROL = `public, max-age=${MAX_RESPONSE_CACHE_AGE}`;
 
 api.use(
   '/graphql',
