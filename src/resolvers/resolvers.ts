@@ -14,7 +14,7 @@ import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
 
 import { resolvers as requireAuthResolvers } from './directives/requireAuth';
-import { resolvers as requireRolesResolvers } from './directives/requireRoles';
+import { resolvers as requireOneOfRolesResolvers } from './directives/requireOneOfRoles';
 
 /**
  * Resolvers for custom scalar types.
@@ -42,5 +42,5 @@ export const resolvers = merge(
 
 export const directiveResolvers = {
   ...requireAuthResolvers,
-  ...requireRolesResolvers,
+  ...requireOneOfRolesResolvers,
 };

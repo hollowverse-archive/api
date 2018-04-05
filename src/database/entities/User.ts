@@ -5,6 +5,13 @@ import { normalizeEmail, isEmail } from 'validator';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
+import { UserRole } from '../../typings/schema';
+
+const userRoles: Record<UserRole, string> = {
+  EDITOR: '',
+  CONTRIBUTOR: '',
+  MODERATOR: '',
+};
 
 /**
  * A Hollowverse user
@@ -40,6 +47,14 @@ export class User extends BaseEntity {
     cascadeUpdate: true,
   })
   comments: NotablePersonEventComment[];
+
+  @Column({
+    nullable: true,
+    type: 'enum',
+    default: null,
+    enum: Object.keys(userRoles),
+  })
+  role: UserRole | null;
 
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;

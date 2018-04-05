@@ -2,9 +2,15 @@
 # users.
 directive @requireAuth on FIELD_DEFINITION
 
-# Indicates that a specific fields is only accessible to users with the specified roles
+enum UserRole {
+  EDITOR
+  MODERATOR
+  CONTRIBUTOR
+}
+
+# Indicates that a field is only accessible to users who have one of the specified roles.
 # Implies `@requireAuth` so there is no need to specify both on the same field.
-directive @requireRoles(roles: [String!]) on FIELD_DEFINITION
+directive @requireOneOfRoles(roles: [UserRole]!) on FIELD_DEFINITION
 
 # Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
@@ -246,7 +252,7 @@ type RootMutation {
   # Create a new entry for a notable person
   createNotablePerson(
     input: CreateNotablePersonInput!
-  ): CreateNotablePersonPayload @requireRoles(roles: ["editor"])
+  ): CreateNotablePersonPayload @requireOneOfRoles(roles: [EDITOR])
 }
 
 schema {
