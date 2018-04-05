@@ -1,3 +1,5 @@
+// tslint:disable
+
 declare module 'loggy' {
   type Level = 'error' | 'warn' | 'log' | 'info' | 'success';
 
