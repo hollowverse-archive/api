@@ -2,7 +2,7 @@ import got from 'got';
 import { readJson } from './readFile';
 import { ApiError } from './apiError';
 
-const facebookAppConfig = readJson<FacebookAppConfig>(
+const facebookAppConfig = readJson<FacebookAppCredentials>(
   'secrets/facebookApp.json',
 );
 

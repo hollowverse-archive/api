@@ -16,6 +16,7 @@ const { createZipFile } = require('@hollowverse/utils/helpers/createZipFile');
 const {
   ENC_PASS_DB,
   ENC_PASS_FB,
+  ENC_PASS_ALGOLIA,
   IS_PULL_REQUEST,
   PROJECT,
   BRANCH,
@@ -32,6 +33,10 @@ const secrets = [
   {
     password: ENC_PASS_FB,
     decryptedFilename: 'facebookApp.json',
+  },
+  {
+    password: ENC_PASS_ALGOLIA,
+    decryptedFilename: 'algoliaApp.json',
   },
 ];
 

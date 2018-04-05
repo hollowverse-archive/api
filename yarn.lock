@@ -159,6 +159,10 @@
     parse-glob "3.0.4"
     promise-retry "1.1.1"
 
+"@types/algoliasearch@^3.24.5":
+  version "3.24.5"
+  resolved "https://registry.yarnpkg.com/@types/algoliasearch/-/algoliasearch-3.24.5.tgz#6101cb5cef8f9eac4c86391d43950cb419a69b4e"
+
 "@types/bluebird@^3.0.37":
   version "3.5.20"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.20.tgz#f6363172add6f4eabb8cada53ca9af2781e8d6a1"
@@ -348,6 +352,10 @@ acorn@^5.2.1:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/acorn/-/acorn-5.2.1.tgz#317ac7821826c22c702d66189ab8359675f135d7"
 
+agentkeepalive@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/agentkeepalive/-/agentkeepalive-2.2.0.tgz#c5d1bd4b129008f1163f236f86e5faea2026e2ef"
+
 ajv-keywords@^1.0.0:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-1.5.1.tgz#314dd0a4b3368fad3dfcdc54ede6171b886daf3c"
@@ -389,6 +397,26 @@ ajv@^5.3.0:
     fast-deep-equal "^1.0.0"
     fast-json-stable-stringify "^2.0.0"
     json-schema-traverse "^0.3.0"
+
+algoliasearch@^3.24.7:
+  version "3.24.7"
+  resolved "https://registry.yarnpkg.com/algoliasearch/-/algoliasearch-3.24.7.tgz#7ba6c41c9c87b3d36c3181e1d93d482b2ae1a660"
+  dependencies:
+    agentkeepalive "^2.2.0"
+    debug "^2.6.8"
+    envify "^4.0.0"
+    es6-promise "^4.1.0"
+    events "^1.1.0"
+    foreach "^2.0.5"
+    global "^4.3.2"
+    inherits "^2.0.1"
+    isarray "^2.0.1"
+    load-script "^1.0.0"
+    object-keys "^1.0.11"
+    querystring-es3 "^0.2.1"
+    reduce "^1.0.1"
+    semver "^5.1.0"
+    tunnel-agent "^0.6.0"
 
 align-text@^0.1.1, align-text@^0.1.3:
   version "0.1.4"
@@ -1824,6 +1852,13 @@ entities@^1.1.1, entities@~1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/entities/-/entities-1.1.1.tgz#6e5c2d0a5621b5dadaecef80b90edfb5cd7772f0"
 
+envify@^4.0.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/envify/-/envify-4.1.0.tgz#f39ad3db9d6801b4e6b478b61028d3f0b6819f7e"
+  dependencies:
+    esprima "^4.0.0"
+    through "~2.3.4"
+
 err-code@^1.0.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
@@ -1855,6 +1890,10 @@ es-to-primitive@^1.1.1:
 es6-promise@^3.0.2, es6-promise@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-3.3.1.tgz#a08cdde84ccdbf34d027a1451bc91d4bcd28a613"
+
+es6-promise@^4.1.0:
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/es6-promise/-/es6-promise-4.1.1.tgz#8811e90915d9a0dba36274f0b242dbda78f9c92a"
 
 es6-promise@~3.0.2:
   version "3.0.2"
@@ -2073,6 +2112,10 @@ event-stream@~3.3.0:
     split "0.3"
     stream-combiner "~0.0.4"
     through "~2.3.1"
+
+events@^1.1.0:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
 
 execa@^0.7.0:
   version "0.7.0"
@@ -2559,7 +2602,7 @@ global-dirs@^0.1.0:
   dependencies:
     ini "^1.3.4"
 
-global@~4.3.0:
+global@^4.3.2, global@~4.3.0:
   version "4.3.2"
   resolved "https://registry.yarnpkg.com/global/-/global-4.3.2.tgz#e76989268a6c74c38908b1305b10fc0e394e9d0f"
   dependencies:
@@ -3498,6 +3541,10 @@ isarray@1.0.0, isarray@^1.0.0, isarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
 
+isarray@^2.0.1:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/isarray/-/isarray-2.0.2.tgz#5aa99638daf2248b10b9598b763a045688ece3ee"
+
 isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
@@ -4031,6 +4078,10 @@ load-json-file@^4.0.0:
     parse-json "^4.0.0"
     pify "^3.0.0"
     strip-bom "^3.0.0"
+
+load-script@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/load-script/-/load-script-1.0.0.tgz#0491939e0bee5643ee494a7e3da3d2bac70c6ca4"
 
 locate-path@^2.0.0:
   version "2.0.0"
@@ -4666,7 +4717,7 @@ object-copy@^0.1.0:
     define-property "^0.2.5"
     kind-of "^3.0.3"
 
-object-keys@^1.0.8:
+object-keys@^1.0.11, object-keys@^1.0.8, object-keys@~1.0.0:
   version "1.0.11"
   resolved "https://registry.yarnpkg.com/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
 
@@ -5229,6 +5280,10 @@ qs@~6.4.0:
   version "6.4.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.4.0.tgz#13e26d28ad6b0ffaa91312cd3bf708ed351e7233"
 
+querystring-es3@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/querystring-es3/-/querystring-es3-0.2.1.tgz#9ec61f79049875707d69414596fd907a4d711e73"
+
 querystring@0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
@@ -5384,6 +5439,12 @@ redent@^2.0.0:
   dependencies:
     indent-string "^3.0.0"
     strip-indent "^2.0.0"
+
+reduce@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/reduce/-/reduce-1.0.1.tgz#14fa2e5ff1fc560703a020cbb5fbaab691565804"
+  dependencies:
+    object-keys "~1.0.0"
 
 referrer-policy@1.1.0:
   version "1.1.0"

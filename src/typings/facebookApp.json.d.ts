@@ -1,4 +1,4 @@
-declare type FacebookAppConfig = {
+declare type FacebookAppCredentials = {
   id: string;
   accessToken: string;
 };
