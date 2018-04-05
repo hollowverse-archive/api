@@ -52,7 +52,7 @@ export class User extends BaseEntity {
     default: null,
     enum: Object.keys(userRoles),
   })
-  role: UserRole;
+  role: UserRole | null;
 
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
