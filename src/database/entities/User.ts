@@ -9,6 +9,8 @@ import { UserRole } from '../../typings/schema';
 
 const userRoles: Record<UserRole, string> = {
   EDITOR: '',
+  CONTRIBUTOR: '',
+  MODERATOR: '',
 };
 
 /**

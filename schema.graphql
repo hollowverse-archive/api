@@ -4,6 +4,8 @@ directive @requireAuth on FIELD_DEFINITION
 
 enum UserRole {
   EDITOR
+  MODERATOR
+  CONTRIBUTOR
 }
 
 # Indicates that a field is only accessible to users who have one of the specified roles.

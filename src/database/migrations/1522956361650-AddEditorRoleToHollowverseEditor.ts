@@ -5,7 +5,7 @@ export class AddEditorRoleToHollowverseEditor1522956361650
   public async up(queryRunner: QueryRunner) {
     await queryRunner.query(
       // tslint:disable-next-line:quotemark
-      "ALTER TABLE `hollowverse`.`user` ADD role enum('EDITOR')",
+      "ALTER TABLE `hollowverse`.`user` ADD role enum('EDITOR', 'MODERATOR', 'CONTRIBUTOR')",
     );
   }
 
