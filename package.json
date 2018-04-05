@@ -17,7 +17,7 @@
     "generate-types-from-template": "gql-gen --file ./schema.json --project src/typings",
     "generate-graphql-types": "run-s introspect-schema generate-types-from-template",
     "generate-graphql-types/dev": "nodemon -q --watch schema.graphql --exec 'run-p generate-graphql-types'",
-    "server/dev": "PORT=${PORT:-8080} nodemon -q --watch ./src --ext ts --exec 'node --inspect=0.0.0.0:${API_DEBUG_PORT:-9229} -r 'ts-node/register' src/server.ts'",
+    "server/dev": "PORT=${PORT:-8080} nodemon -q --watch ./src --ext ts --exec 'node -r 'ts-node/register' src/server.ts'",
     "dev": "npm-run-all -s generate-graphql-types -p  --aggregate-output '*/dev'",
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
     "build-ts": "tsc --project ./src",
