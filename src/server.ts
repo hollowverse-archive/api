@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import moment from 'moment';
 import { graphqlExpress } from 'apollo-server-express';
 import playgroundExpress from 'graphql-playground-middleware-express';
+import loggy from 'loggy';
 
 import { schema } from './schema';
 import { formatError } from './helpers/formatError';
@@ -19,7 +20,7 @@ import { userPhotoUrlLoader } from './dataLoaders/user';
 import { photoUrlLoader } from './dataLoaders/photoUrl';
 
 connection.catch(e => {
-  console.error(e);
+  loggy.error('Database connection failed: ', e);
   setIsHealthy(false);
 });
 
@@ -117,11 +118,20 @@ api.get(
   }),
 );
 
-const server = api.listen(process.env.PORT || 8080);
+const PORT = process.env.PORT || 8080;
+
+const server = api.listen(PORT, () => {
+  loggy.info(`API server started on http://localhost:${PORT}`);
+  loggy.info(
+    `API playground accessible on http://localhost:${PORT}/playground`,
+  );
+  loggy.info(`API endpoint accessible on http://localhost:${PORT}/graphql`);
+});
 
 const close = () => {
   server.close();
   process.exit();
 };
 
+process.on('SIGUSR2', close);
 process.on('SIGUSR1', close);
