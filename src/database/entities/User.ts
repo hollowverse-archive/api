@@ -8,7 +8,7 @@ import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { UserRole } from '../../typings/schema';
 
 const userRoles: Record<UserRole, string> = {
-  editor: '',
+  EDITOR: '',
 };
 
 /**
