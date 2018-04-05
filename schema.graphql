@@ -6,9 +6,10 @@ enum UserRole {
   EDITOR
 }
 
-# Indicates that a specific fields is only accessible to users with the specified role
+# Indicates that a specific fields is only accessible to users who at least
+# have oneof  the specified roles
 # Implies `@requireAuth` so there is no need to specify both on the same field.
-directive @requireRole(role: UserRole!) on FIELD_DEFINITION
+directive @requireOneOfRoles(roles: [UserRole]!) on FIELD_DEFINITION
 
 # Date without time, serialized as a YYYY-MM-DD string
 scalar DateOnly
@@ -250,7 +251,7 @@ type RootMutation {
   # Create a new entry for a notable person
   createNotablePerson(
     input: CreateNotablePersonInput!
-  ): CreateNotablePersonPayload @requireRole(role: EDITOR)
+  ): CreateNotablePersonPayload @requireOneOfRoles(roles: [EDITOR])
 }
 
 schema {
