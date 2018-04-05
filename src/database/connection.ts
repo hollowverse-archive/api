@@ -15,7 +15,7 @@ import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
 import { ColorPalette } from './entities/ColorPalette';
 
-const entities = [
+export const entities = [
   NotablePerson,
   NotablePersonEvent,
   NotablePersonLabel,

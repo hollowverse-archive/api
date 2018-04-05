@@ -60,7 +60,8 @@
     }
   },
   "resolutions": {
-    "graphql": "^0.11.0"
+    "graphql": "^0.11.0",
+    "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
     "@hollowverse/class-sanitizer": "^0.1.2",
@@ -88,8 +89,10 @@
     "validator": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0-beta.44",
     "@creditkarma/graphql-loader": "^0.7.1",
     "@creditkarma/graphql-validator": "^0.5.0",
+    "@forabi/graphql-request": "^1.6.8",
     "@hollowverse/config": "^4.0.0",
     "@hollowverse/utils": "^4.0.2",
     "@hollowverse/validate-filenames": "^1.4.0",
@@ -98,8 +101,10 @@
     "@types/cors": "^2.8.3",
     "@types/express": "^4.11.1",
     "@types/faker": "^4.1.2",
+    "@types/get-port": "^3.2.0",
     "@types/got": "^7.1.4",
     "@types/helmet": "^0.0.37",
+    "@types/jest": "^22.2.2",
     "@types/lodash": "^4.14.74",
     "@types/node": "^8.0.8",
     "@types/shelljs": "^0.7.4",
@@ -114,18 +119,23 @@
     "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-react": "^7.7.0",
     "faker": "^4.1.0",
+    "get-port": "^3.2.0",
     "graphql-code-generator": "^0.8.21",
     "graphql-schema-linter": "^0.1.1",
+    "graphql-tag": "^2.8.0",
     "husky": "^0.15.0-rc.8",
+    "jest": "^22.4.3",
     "lint-staged": "^7.0.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.11.1",
     "rxjs": "^5.5.7",
     "rxjs-tslint-rules": "^3.15.0",
     "shelljs": "^0.7.8",
+    "sqlite3": "^4.0.0",
     "stylelint": "^8.0.0",
     "stylelint-config-standard": "^17.0.0",
     "stylelint-no-unsupported-browser-features": "^1.0.0",
+    "ts-jest": "^22.4.2",
     "ts-node": "^3.2.0",
     "tslint": "^5.9.1",
     "tslint-config-prettier": "^1.9.0",
@@ -139,5 +149,23 @@
   },
   "engines": {
     "node": ">= 9.2"
+  },
+  "jest": {
+    "globals": {
+      "ts-jest": {
+        "skipBabel": false
+      }
+    },
+    "transform": {
+      "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ]
   }
 }

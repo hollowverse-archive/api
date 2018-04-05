@@ -1,4 +1,3 @@
-import { connection } from '../../database/connection';
 import { User } from '../../database/entities/User';
 import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { ApiError } from '../../helpers/apiError';
@@ -14,8 +13,12 @@ export const resolvers: Partial<ResolverMap> = {
      * The name of the new user will be obtained from Facebook if
      * not specified in the mutation input.
      */
-    async createUser(_, { input: { fbAccessToken, email, name } }, context) {
-      if (context.viewer) {
+    async createUser(
+      _,
+      { input: { fbAccessToken, email, name } },
+      { connection, viewer },
+    ) {
+      if (viewer) {
         throw new ApiError(
           'OperationNotAllowedError',
           'Cannot create a new user because the request is already authenticated',
@@ -46,7 +49,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       const profile: Profile = response.body;
 
-      const db = await connection;
+      const db = connection;
       const user = new User();
 
       user.fbId = profile.id;

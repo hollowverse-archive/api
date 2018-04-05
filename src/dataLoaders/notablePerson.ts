@@ -1,21 +1,17 @@
 import DataLoader from 'dataloader';
 
 import { NotablePerson } from '../database/entities/NotablePerson';
-import { connection } from '../database/connection';
+import { Connection } from 'typeorm';
 
-export const notablePersonBySlugLoader = new DataLoader<
-  string,
-  NotablePerson | undefined
->(async slugs => {
-  const db = await connection;
+export const createNotablePersonBySlugLoader = (connection: Connection) =>
+  new DataLoader<string, NotablePerson | undefined>(async slugs => {
+    return Promise.all(
+      slugs.map(async slug => {
+        if (slug) {
+          return connection.getRepository(NotablePerson).findOne({ slug });
+        }
 
-  return Promise.all(
-    slugs.map(async slug => {
-      if (slug) {
-        return db.getRepository(NotablePerson).findOne({ slug });
-      }
-
-      return undefined;
-    }),
-  );
-});
+        return undefined;
+      }),
+    );
+  });
