@@ -6,8 +6,7 @@ enum UserRole {
   EDITOR
 }
 
-# Indicates that a specific fields is only accessible to users who at least
-# have oneof  the specified roles
+# Indicates that a field is only accessible to users who have one of the specified roles.
 # Implies `@requireAuth` so there is no need to specify both on the same field.
 directive @requireOneOfRoles(roles: [UserRole]!) on FIELD_DEFINITION
 
