@@ -8,14 +8,10 @@ import loggy from 'loggy';
 import { redirectToHttps } from './redirectToHttps';
 import { health, setIsHealthy } from './health';
 import { findUserByFacebookAccessToken } from './helpers/auth';
-import { connection } from './database/connection';
+import { connectionPromise } from './database/connection';
 import { isProd } from './env';
 import { createApiRouter } from './createApiServer';
-
-connection.catch(e => {
-  loggy.error('Database connection failed: ', e);
-  setIsHealthy(false);
-});
+import { sendFacebookAuthenticatedRequest } from './helpers/facebook';
 
 const api = express();
 
@@ -58,13 +54,6 @@ api.use(
 
 api.use('/', health);
 
-api.use(
-  '/graphql',
-  createApiRouter({
-    findUserByToken: findUserByFacebookAccessToken,
-  }),
-);
-
 api.get(
   '/playground',
   playgroundExpress({
@@ -74,18 +63,49 @@ api.get(
 
 const PORT = process.env.PORT || 8080;
 
-const server = api.listen(PORT, () => {
-  loggy.info(`API server started on http://localhost:${PORT}`);
-  loggy.info(
-    `API playground accessible on http://localhost:${PORT}/playground`,
-  );
-  loggy.info(`API endpoint accessible on http://localhost:${PORT}/graphql`);
-});
+const startServer = async () => {
+  const connection = await connectionPromise;
 
-const close = () => {
-  server.close();
-  process.exit();
+  api.use(
+    '/graphql',
+    createApiRouter({
+      connection,
+      findUserByToken: findUserByFacebookAccessToken,
+      getProfileDetailsFromAuthProvider: async token => {
+        const response = await sendFacebookAuthenticatedRequest(
+          token,
+          'https://graph.facebook.com/me',
+          {
+            query: {
+              fields: ['id', 'name', 'picture'].join(','),
+            },
+            json: true,
+          },
+        );
+
+        return response.body;
+      },
+    }),
+  );
+
+  const server = api.listen(PORT, () => {
+    loggy.info(`API server started on http://localhost:${PORT}`);
+    loggy.info(
+      `API playground accessible on http://localhost:${PORT}/playground`,
+    );
+    loggy.info(`API endpoint accessible on http://localhost:${PORT}/graphql`);
+  });
+
+  const close = () => {
+    server.close();
+    process.exit();
+  };
+
+  process.on('SIGUSR2', close);
+  process.on('SIGUSR1', close);
 };
 
-process.on('SIGUSR2', close);
-process.on('SIGUSR1', close);
+startServer().catch(e => {
+  loggy.error('Failed to start API server: ', e);
+  setIsHealthy(false);
+});

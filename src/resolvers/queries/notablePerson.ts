@@ -160,10 +160,8 @@ export const resolvers: Partial<ResolverMap> = {
     },
   },
   NotablePersonEvent: {
-    async comments(event) {
-      const db = await connection;
-
-      const repo = db.getRepository(NotablePersonEventComment);
+    async comments(event, _, { connection }) {
+      const repo = connection.getRepository(NotablePersonEventComment);
 
       return repo.find({
         where: {

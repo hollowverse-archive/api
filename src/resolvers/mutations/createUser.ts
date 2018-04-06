@@ -1,5 +1,4 @@
 import { User } from '../../database/entities/User';
-import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { ApiError } from '../../helpers/apiError';
 
 import { ResolverMap } from '../../typings/resolverMap';
@@ -16,7 +15,7 @@ export const resolvers: Partial<ResolverMap> = {
     async createUser(
       _,
       { input: { fbAccessToken, email, name } },
-      { connection, viewer },
+      { connection, viewer, getProfileDetailsFromAuthProvider },
     ) {
       if (viewer) {
         throw new ApiError(
@@ -25,31 +24,7 @@ export const resolvers: Partial<ResolverMap> = {
         );
       }
 
-      type Profile = {
-        id: string;
-        name: string;
-        picture: {
-          data: {
-            is_silhouette: boolean;
-            url: string;
-          };
-        };
-      };
-
-      const response = await sendFacebookAuthenticatedRequest(
-        fbAccessToken,
-        'https://graph.facebook.com/me',
-        {
-          query: {
-            fields: ['id', 'name', 'picture'].join(','),
-          },
-          json: true,
-        },
-      );
-
-      const profile: Profile = response.body;
-
-      const db = connection;
+      const profile = await getProfileDetailsFromAuthProvider(fbAccessToken);
       const user = new User();
 
       user.fbId = profile.id;
@@ -58,7 +33,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       user.signedUpAt = new Date();
 
-      const users = db.getRepository(User);
+      const users = connection.getRepository(User);
 
       return users.save(user);
     },

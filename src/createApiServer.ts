@@ -19,11 +19,12 @@ const PUBLIC_CACHE_CONTROL = `public, max-age=${MAX_RESPONSE_CACHE_AGE}`;
 export type CreateApiOptions = {
   connection: Connection;
   findUserByToken(token: string): Promise<User | undefined>;
-};
+} & Pick<SchemaContext, 'getProfileDetailsFromAuthProvider'>;
 
 export const createApiRouter = ({
   findUserByToken,
   connection,
+  getProfileDetailsFromAuthProvider,
 }: CreateApiOptions) => {
   const api = express();
   api.use(bodyParser.json());
@@ -35,6 +36,7 @@ export const createApiRouter = ({
         userPhotoUrlLoader: createUserPhotoUrlLoader(),
         notablePersonBySlugLoader: createNotablePersonBySlugLoader(connection),
         photoUrlLoader: createPhotoUrlLoader(connection),
+        getProfileDetailsFromAuthProvider,
       };
 
       if (req && res) {

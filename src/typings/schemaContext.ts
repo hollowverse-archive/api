@@ -9,4 +9,7 @@ export type SchemaContext = {
   userPhotoUrlLoader: DataLoader<string, string>;
   notablePersonBySlugLoader: DataLoader<string, NotablePerson | undefined>;
   photoUrlLoader: DataLoader<string | undefined, string>;
+  getProfileDetailsFromAuthProvider(
+    token: string,
+  ): Promise<{ id: string; name: string; email?: string }>;
 };

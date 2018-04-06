@@ -73,4 +73,4 @@ const getConfig = async (): Promise<ConnectionOptions> => {
   };
 };
 
-export const connection = getConfig().then(createConnection);
+export const connectionPromise = getConfig().then(createConnection);

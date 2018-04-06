@@ -6,6 +6,7 @@ import { createApiRouter, CreateApiOptions } from '../createApiServer';
 import { GraphQLClient } from '@forabi/graphql-request';
 import { createConnection } from 'typeorm';
 import { entities } from '../database/entities';
+import faker from 'faker';
 import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
 
@@ -22,7 +23,7 @@ export const createTestContext = async ({
     getPort(),
     createConnection({
       type: 'mysql',
-      host: 'database',
+      host: process.env.CI ? 'database' : 'localhost',
       username: 'root',
       password: '123456',
       port: 3306,
@@ -36,6 +37,10 @@ export const createTestContext = async ({
   const app = express();
   const router = createApiRouter({
     findUserByToken: async () => undefined,
+    getProfileDetailsFromAuthProvider: async () => ({
+      id: faker.internet.userName(),
+      name: faker.name.firstName(),
+    }),
     connection,
     ...createApiRouterOptions,
   });
