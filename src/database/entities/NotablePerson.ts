@@ -25,7 +25,7 @@ export class NotablePerson extends BaseEntity {
 
   @Trim()
   @IsNotEmpty()
-  @Column({ unique: true, nullable: false })
+  @Column({ type: 'varchar', unique: true, nullable: false })
   slug: string;
 
   /**

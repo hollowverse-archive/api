@@ -5,46 +5,71 @@ import getPort from 'get-port';
 import { createApiRouter, CreateApiOptions } from '../createApiServer';
 import { GraphQLClient } from '@forabi/graphql-request';
 import { createConnection } from 'typeorm';
-import { entities } from '../database/connection';
+import { entities } from '../database/entities';
+import { Server } from 'http';
+import { Options } from '@forabi/graphql-request/dist/src/types';
 
 type CreateTestContextOptions = {
   createApiRouterOptions?: Partial<CreateApiOptions>;
+  graphqlClientOptions?: Options;
 };
 
 export const createTestContext = async ({
   createApiRouterOptions,
+  graphqlClientOptions,
 }: CreateTestContextOptions = {}) => {
-  const serverPort = await getPort();
+  const [serverPort, connection] = await Promise.all([
+    getPort(),
+    createConnection({
+      type: 'mysql',
+      host: 'localhost',
+      username: 'root',
+      password: '123456',
+      port: 3306,
+      database: 'test-db',
+      synchronize: true,
+      // dropSchema: true,
+      entities,
+    }),
+  ]);
 
   const app = express();
   const router = createApiRouter({
     findUserByToken: async () => undefined,
-    connection: await createConnection({
-      type: 'sqlite',
-      database: ':memory:',
-      entities,
-    }),
+    connection,
     ...createApiRouterOptions,
   });
 
   app.use('/graphql', router);
 
-  await new Promise(resolve => app.listen(serverPort, resolve));
+  let server: Server;
+
+  await new Promise(resolve => {
+    server = app.listen(serverPort, resolve);
+  });
 
   // tslint:disable-next-line:no-http-string
-  const apiEndpoint = `http://localhost:${serverPort}/graphql'`;
+  const apiEndpoint = `http://localhost:${serverPort}/graphql`;
+
+  const client = new GraphQLClient(apiEndpoint, graphqlClientOptions);
 
   const makeRequest = async <T>(
     query: string,
     variables?: Record<string, any>,
-    options = {},
   ) => {
-    const client = new GraphQLClient(apiEndpoint, options);
-
     return client.request<T>(query, variables);
   };
 
-  return { makeRequest };
+  const teardown = async () => {
+    await Promise.all([
+      connection.dropDatabase(),
+      new Promise(resolve => {
+        server.close(resolve);
+      }),
+    ]);
+  };
+
+  return { makeRequest, client, teardown };
 };
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
