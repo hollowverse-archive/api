@@ -10,9 +10,10 @@ import faker from 'faker';
 import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
 import { AuthProvider } from '../authProvider/types';
+import { User } from '../database/entities/User';
 
-class FakeAuthProvider implements AuthProvider {
-  findUserByToken = async () => undefined;
+export class FakeAuthProvider implements AuthProvider {
+  findUserByToken = async (): Promise<User | undefined> => undefined;
 
   getProfileDetailsByToken = async () => ({
     id: faker.internet.userName(),
@@ -28,22 +29,28 @@ type CreateTestContextOptions = {
 };
 
 export const createTestContext = async ({
-  createApiRouterOptions,
+  createApiRouterOptions = {},
   graphqlClientOptions,
 }: CreateTestContextOptions = {}) => {
   const [serverPort, connection] = await Promise.all([
     getPort(),
-    createConnection({
-      type: 'mysql',
-      host: process.env.CI ? 'database' : 'localhost',
-      username: 'root',
-      password: '123456',
-      port: 3306,
-      database: 'test-db',
-      synchronize: true,
-      dropSchema: true,
-      entities,
-    }),
+    (async () => {
+      if (!createApiRouterOptions.connection) {
+        return createConnection({
+          type: 'mysql',
+          host: process.env.CI ? 'database' : 'localhost',
+          username: 'root',
+          password: '123456',
+          port: 3306,
+          database: 'test-db',
+          synchronize: true,
+          dropSchema: true,
+          entities,
+        });
+      }
+
+      return createApiRouterOptions.connection;
+    })(),
   ]);
 
   const app = express();
@@ -75,7 +82,7 @@ export const createTestContext = async ({
     ]);
   };
 
-  return { client, teardown };
+  return { client, connection, teardown };
 };
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
