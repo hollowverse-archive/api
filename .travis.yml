@@ -12,6 +12,7 @@ script:
     --tmpfs=/tmp/:rw,noexec,nosuid,size=50m mysql &&
     
     docker run
+    --network=host
     -v $(pwd):/repo
     -e PROJECT=hollowverse-api
     -e BRANCH=$TRAVIS_BRANCH

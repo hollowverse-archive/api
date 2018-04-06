@@ -6,7 +6,8 @@
   "repository": "https://github.com/hollowverse/api.git",
   "scripts": {
     "lint": "npm-run-all -s generate-graphql-types -p -c validate-queries validate-filenames lint-js lint-ts lint-schema find-breaking-schema-changes",
-    "pretest": "run-p -c lint",
+    "clean-clients": "del-cli clients",
+    "pretest": "run-s lint clean-clients",
     "test": "jest --colors",
     "find-breaking-schema-changes": "node -r 'ts-node/register' src/scripts/findBreakingSchemaChanges.ts",
     "validate-queries": "graphql-validator -s './schema.graphql' '{src,clients}/**/*.graphql'",

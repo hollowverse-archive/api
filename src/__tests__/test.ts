@@ -15,7 +15,7 @@ describe('it works', () => {
   });
 
   it('should work', async () => {
-    const query = gql`
+    const getNotablePersonQuery = gql`
       query GetNotablePerson($slug: String!) {
         notablePerson(slug: $slug) {
           name
@@ -23,7 +23,10 @@ describe('it works', () => {
       }
     `;
 
-    const result = await context.client.request(query, { slug: 'Tom_Hanks' });
+    const result = await context.client.request(getNotablePersonQuery, {
+      slug: 'Tom_Hanks',
+    });
+
     expect(result).toEqual({
       notablePerson: null,
     });
