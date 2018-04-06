@@ -6,13 +6,13 @@ describe('it works', () => {
 
   beforeAll(async () => {
     context = await createTestContext();
-  }, 10000);
+  });
 
   afterAll(async () => {
     if (context) {
       await context.teardown();
     }
-  }, 5000);
+  });
 
   it('should work', async () => {
     const query = gql`

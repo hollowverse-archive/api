@@ -28,7 +28,7 @@ export const createTestContext = async ({
       port: 3306,
       database: 'test-db',
       synchronize: true,
-      // dropSchema: true,
+      dropSchema: true,
       entities,
     }),
   ]);
