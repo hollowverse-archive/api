@@ -6,12 +6,10 @@ import { Connection } from 'typeorm';
 
 export const createPhotoUrlLoader = (connection: Connection) =>
   new DataLoader<string | undefined, string>(async ids => {
-    const db = await connection;
-
     return Promise.all(
       ids.map(async id => {
         if (id) {
-          const photos = db.getRepository(Photo);
+          const photos = connection.getRepository(Photo);
 
           const photo = await photos.findOne({ id });
           if (photo) {
