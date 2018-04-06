@@ -11,7 +11,10 @@ import { findUserByFacebookAccessToken } from './helpers/auth';
 import { connectionPromise } from './database/connection';
 import { isProd } from './env';
 import { createApiRouter } from './createApiServer';
-import { sendFacebookAuthenticatedRequest } from './helpers/facebook';
+import {
+  sendFacebookAuthenticatedRequest,
+  getPhotoUrlByFbId,
+} from './helpers/facebook';
 
 const api = express();
 
@@ -70,6 +73,7 @@ const startServer = async () => {
     '/graphql',
     createApiRouter({
       connection,
+      getPhotoUrlFromAuthProvider: getPhotoUrlByFbId,
       findUserByToken: findUserByFacebookAccessToken,
       getProfileDetailsFromAuthProvider: async token => {
         const response = await sendFacebookAuthenticatedRequest(

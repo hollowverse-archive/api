@@ -41,6 +41,7 @@ export const createTestContext = async ({
       id: faker.internet.userName(),
       name: faker.name.firstName(),
     }),
+    getPhotoUrlFromAuthProvider: async () => faker.internet.url(),
     connection,
     ...createApiRouterOptions,
   });

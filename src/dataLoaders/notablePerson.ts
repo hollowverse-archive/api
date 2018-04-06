@@ -1,9 +1,11 @@
 import DataLoader from 'dataloader';
 
 import { NotablePerson } from '../database/entities/NotablePerson';
-import { Connection } from 'typeorm';
+import { SchemaContext } from '../typings/schemaContext';
 
-export const createNotablePersonBySlugLoader = (connection: Connection) =>
+export const createNotablePersonBySlugLoader = ({
+  connection,
+}: Pick<SchemaContext, 'connection'>) =>
   new DataLoader<string, NotablePerson | undefined>(async slugs => {
     return Promise.all(
       slugs.map(async slug => {

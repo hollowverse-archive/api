@@ -12,4 +12,8 @@ export type SchemaContext = {
   getProfileDetailsFromAuthProvider(
     token: string,
   ): Promise<{ id: string; name: string; email?: string }>;
+  getPhotoUrlFromAuthProvider(
+    id: string,
+    size?: 'small' | 'normal' | 'large',
+  ): Promise<string>;
 };

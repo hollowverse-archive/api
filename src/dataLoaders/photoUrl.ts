@@ -2,9 +2,11 @@ import DataLoader from 'dataloader';
 
 import { Photo } from '../database/entities/Photo';
 import { URL } from 'url';
-import { Connection } from 'typeorm';
+import { SchemaContext } from '../typings/schemaContext';
 
-export const createPhotoUrlLoader = (connection: Connection) =>
+export const createPhotoUrlLoader = ({
+  connection,
+}: Pick<SchemaContext, 'connection'>) =>
   new DataLoader<string | undefined, string>(async ids => {
     return Promise.all(
       ids.map(async id => {

@@ -19,11 +19,15 @@ const PUBLIC_CACHE_CONTROL = `public, max-age=${MAX_RESPONSE_CACHE_AGE}`;
 export type CreateApiOptions = {
   connection: Connection;
   findUserByToken(token: string): Promise<User | undefined>;
-} & Pick<SchemaContext, 'getProfileDetailsFromAuthProvider'>;
+} & Pick<
+  SchemaContext,
+  'getProfileDetailsFromAuthProvider' | 'getPhotoUrlFromAuthProvider'
+>;
 
 export const createApiRouter = ({
   findUserByToken,
   connection,
+  getPhotoUrlFromAuthProvider,
   getProfileDetailsFromAuthProvider,
 }: CreateApiOptions) => {
   const api = express();
@@ -33,10 +37,15 @@ export const createApiRouter = ({
     graphqlExpress(async (req, res) => {
       const context: SchemaContext = {
         connection,
-        userPhotoUrlLoader: createUserPhotoUrlLoader(),
-        notablePersonBySlugLoader: createNotablePersonBySlugLoader(connection),
-        photoUrlLoader: createPhotoUrlLoader(connection),
+        userPhotoUrlLoader: createUserPhotoUrlLoader({
+          getPhotoUrlFromAuthProvider,
+        }),
+        notablePersonBySlugLoader: createNotablePersonBySlugLoader({
+          connection,
+        }),
+        photoUrlLoader: createPhotoUrlLoader({ connection }),
         getProfileDetailsFromAuthProvider,
+        getPhotoUrlFromAuthProvider,
       };
 
       if (req && res) {
