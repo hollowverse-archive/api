@@ -15,34 +15,6 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     this.appId = config.id;
   }
 
-  /**
-   * Send an authenticated request to Facebook API with an access token.
-   * The access token is verified before the request is attempted.
-   * If the access token is not valid, or if it was not issued for the Hollowverse app,
-   * an `InvalidAccessTokenError` is thrown.
-   *
-   * Note: if `options.query` is a string, the access token is not added automatically
-   * to the request.
-   */
-  async sendFacebookAuthenticatedRequest(
-    accessToken: string,
-    url: string,
-    options: got.GotJSONOptions,
-  ) {
-    await this.verifyFacebookAccessToken(accessToken);
-
-    return got(url, {
-      ...options,
-      query:
-        typeof options.query !== 'string'
-          ? {
-              access_token: accessToken,
-              ...options.query,
-            }
-          : options.query,
-    });
-  }
-
   async getPhotoUrlByUserId(id: string, type: PhotoSize) {
     const response = await got(`https://graph.facebook.com/${id}/picture`, {
       json: true,
@@ -127,5 +99,33 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     }
 
     throw new ApiError('InvalidAccessTokenError');
+  }
+
+  /**
+   * Send an authenticated request to Facebook API with an access token.
+   * The access token is verified before the request is attempted.
+   * If the access token is not valid, or if it was not issued for the Hollowverse app,
+   * an `InvalidAccessTokenError` is thrown.
+   *
+   * Note: if `options.query` is a string, the access token is not added automatically
+   * to the request.
+   */
+  private async sendFacebookAuthenticatedRequest(
+    accessToken: string,
+    url: string,
+    options: got.GotJSONOptions,
+  ) {
+    await this.verifyFacebookAccessToken(accessToken);
+
+    return got(url, {
+      ...options,
+      query:
+        typeof options.query !== 'string'
+          ? {
+              access_token: accessToken,
+              ...options.query,
+            }
+          : options.query,
+    });
   }
 }
