@@ -1,4 +1,3 @@
-// tslint:disable no-multiline-string no-implicit-dependencies no-floating-promises
 import {
   TestContext,
   createTestContext,
@@ -19,7 +18,7 @@ describe('Create and query a notable person by slug', () => {
   `;
 
   // tslint:disable-next-line:mocha-no-side-effect-code
-  const createNotablePersonQuery = gql`
+  const createNotablePersonMutation = gql`
     mutation CreateNotablePerson($input: CreateNotablePersonInput!) {
       createNotablePerson(input: $input) {
         name
@@ -48,7 +47,7 @@ describe('Create and query a notable person by slug', () => {
   });
 
   it('non-authorized users cannot create a new notable person', async () => {
-    const result = context.client.request(createNotablePersonQuery, {
+    const result = context.client.request(createNotablePersonMutation, {
       input: {
         slug: 'Tom_Hanks',
         name: 'Tom Hanks',
@@ -80,7 +79,7 @@ describe('Create and query a notable person by slug', () => {
       },
     });
 
-    const result = await context.client.request(createNotablePersonQuery, {
+    const result = await context.client.request(createNotablePersonMutation, {
       input: {
         slug: 'Tom_Hanks',
         name: 'Tom Hanks',

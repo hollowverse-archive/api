@@ -11,9 +11,11 @@ import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
 import { AuthProvider } from '../authProvider/types';
 import { User } from '../database/entities/User';
+import { isError } from 'lodash';
 
 export class FakeAuthProvider implements AuthProvider {
-  findUserByToken = async (): Promise<User | undefined> => undefined;
+  findUserByToken = async (_token: string): Promise<User | undefined> =>
+    undefined;
 
   getProfileDetailsByToken = async () => ({
     id: faker.internet.userName(),
@@ -32,6 +34,11 @@ export const createTestContext = async ({
   createApiRouterOptions = {},
   graphqlClientOptions,
 }: CreateTestContextOptions = {}) => {
+  const {
+    authProvider = new FakeAuthProvider(),
+    ...restCreateApiRouterOptions
+  } = createApiRouterOptions;
+
   const [serverPort, connection] = await Promise.all([
     getPort(),
     (async () => {
@@ -56,16 +63,23 @@ export const createTestContext = async ({
   const app = express();
   const router = createApiRouter({
     connection,
-    authProvider: new FakeAuthProvider(),
-    ...createApiRouterOptions,
+    authProvider,
+    ...restCreateApiRouterOptions,
   });
 
   app.use('/graphql', router);
 
   let server: Server;
 
-  await new Promise(resolve => {
-    server = app.listen(serverPort, resolve);
+  await new Promise((resolve, reject) => {
+    server = app.listen(serverPort, (err: any) => {
+      if (isError(err)) {
+        reject(err);
+
+        return;
+      }
+      resolve();
+    });
   });
 
   // tslint:disable-next-line:no-http-string
@@ -82,7 +96,7 @@ export const createTestContext = async ({
     ]);
   };
 
-  return { client, connection, teardown };
+  return { client, connection, authProvider, teardown };
 };
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
