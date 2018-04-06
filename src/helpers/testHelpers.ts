@@ -68,7 +68,7 @@ export const createTestContext = async ({
 
   const teardown = async () => {
     await Promise.all([
-      connection.dropDatabase(),
+      connection.dropDatabase().then(() => connection.close()),
       new Promise(resolve => {
         server.close(resolve);
       }),
