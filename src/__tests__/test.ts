@@ -7,7 +7,7 @@ import {
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
-describe('Query a notable person by slug', () => {
+describe('Create and query a notable person by slug', () => {
   let context: TestContext;
   // tslint:disable-next-line:mocha-no-side-effect-code
   const getNotablePersonQuery = gql`
