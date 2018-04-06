@@ -1,4 +1,5 @@
 import DataLoader from 'dataloader';
+import bluebird from 'bluebird';
 
 import { Photo } from '../database/entities/Photo';
 import { URL } from 'url';
@@ -8,8 +9,9 @@ export const createPhotoUrlLoader = ({
   connection,
 }: Pick<SchemaContext, 'connection'>) =>
   new DataLoader<string | undefined, string>(async ids => {
-    return Promise.all(
-      ids.map(async id => {
+    return bluebird.map(
+      ids,
+      async id => {
         if (id) {
           const photos = connection.getRepository(Photo);
 
@@ -22,6 +24,7 @@ export const createPhotoUrlLoader = ({
         }
 
         throw new TypeError('Expected `Photo` to have an `id`');
-      }),
+      },
+      { concurrency: 3 },
     );
   });

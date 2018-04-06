@@ -7,14 +7,11 @@ import loggy from 'loggy';
 
 import { redirectToHttps } from './redirectToHttps';
 import { health, setIsHealthy } from './health';
-import { findUserByFacebookAccessToken } from './helpers/auth';
 import { connectionPromise } from './database/connection';
 import { isProd } from './env';
 import { createApiRouter } from './createApiServer';
-import {
-  sendFacebookAuthenticatedRequest,
-  getPhotoUrlByFbId,
-} from './helpers/facebook';
+import { FacebookAuthProvider } from './authProvider/facebookAuthProvider';
+import { readJson } from './helpers/readFile';
 
 const api = express();
 
@@ -68,27 +65,15 @@ const PORT = process.env.PORT || 8080;
 
 const startServer = async () => {
   const connection = await connectionPromise;
+  const facebookAppConfig = await readJson<FacebookAppConfig>(
+    'secrets/facebookApp.json',
+  );
 
   api.use(
     '/graphql',
     createApiRouter({
       connection,
-      getPhotoUrlFromAuthProvider: getPhotoUrlByFbId,
-      findUserByToken: findUserByFacebookAccessToken,
-      getProfileDetailsFromAuthProvider: async token => {
-        const response = await sendFacebookAuthenticatedRequest(
-          token,
-          'https://graph.facebook.com/me',
-          {
-            query: {
-              fields: ['id', 'name', 'picture'].join(','),
-            },
-            json: true,
-          },
-        );
-
-        return response.body;
-      },
+      authProvider: new FacebookAuthProvider(connection, facebookAppConfig),
     }),
   );
 

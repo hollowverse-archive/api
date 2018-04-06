@@ -9,6 +9,18 @@ import { entities } from '../database/entities';
 import faker from 'faker';
 import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
+import { AuthProvider } from '../authProvider/types';
+
+class FakeAuthProvider implements AuthProvider {
+  findUserByToken = async () => undefined;
+
+  getProfileDetailsByToken = async () => ({
+    id: faker.internet.userName(),
+    name: faker.name.firstName(),
+  });
+
+  getPhotoUrlByUserId = async () => faker.internet.url();
+}
 
 type CreateTestContextOptions = {
   createApiRouterOptions?: Partial<CreateApiOptions>;
@@ -36,13 +48,8 @@ export const createTestContext = async ({
 
   const app = express();
   const router = createApiRouter({
-    findUserByToken: async () => undefined,
-    getProfileDetailsFromAuthProvider: async () => ({
-      id: faker.internet.userName(),
-      name: faker.name.firstName(),
-    }),
-    getPhotoUrlFromAuthProvider: async () => faker.internet.url(),
     connection,
+    authProvider: new FakeAuthProvider(),
     ...createApiRouterOptions,
   });
 

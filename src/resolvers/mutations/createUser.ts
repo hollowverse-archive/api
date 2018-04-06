@@ -15,7 +15,7 @@ export const resolvers: Partial<ResolverMap> = {
     async createUser(
       _,
       { input: { fbAccessToken, email, name } },
-      { connection, viewer, getProfileDetailsFromAuthProvider },
+      { connection, viewer, authProvider },
     ) {
       if (viewer) {
         throw new ApiError(
@@ -24,7 +24,9 @@ export const resolvers: Partial<ResolverMap> = {
         );
       }
 
-      const profile = await getProfileDetailsFromAuthProvider(fbAccessToken);
+      const profile = await authProvider.getProfileDetailsByToken(
+        fbAccessToken,
+      );
       const user = new User();
 
       user.fbId = profile.id;

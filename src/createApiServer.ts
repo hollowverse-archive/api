@@ -9,7 +9,6 @@ import { SchemaContext } from './typings/schemaContext';
 import { createNotablePersonBySlugLoader } from './dataLoaders/notablePerson';
 import { createUserPhotoUrlLoader } from './dataLoaders/user';
 import { createPhotoUrlLoader } from './dataLoaders/photoUrl';
-import { User } from './database/entities/User';
 import { Connection } from 'typeorm';
 
 const PRIVATE_CACHE_CONTROL = 'private, no-store';
@@ -18,17 +17,11 @@ const PUBLIC_CACHE_CONTROL = `public, max-age=${MAX_RESPONSE_CACHE_AGE}`;
 
 export type CreateApiOptions = {
   connection: Connection;
-  findUserByToken(token: string): Promise<User | undefined>;
-} & Pick<
-  SchemaContext,
-  'getProfileDetailsFromAuthProvider' | 'getPhotoUrlFromAuthProvider'
->;
+} & Pick<SchemaContext, 'authProvider'>;
 
 export const createApiRouter = ({
-  findUserByToken,
   connection,
-  getPhotoUrlFromAuthProvider,
-  getProfileDetailsFromAuthProvider,
+  authProvider,
 }: CreateApiOptions) => {
   const api = express();
   api.use(bodyParser.json());
@@ -38,14 +31,13 @@ export const createApiRouter = ({
       const context: SchemaContext = {
         connection,
         userPhotoUrlLoader: createUserPhotoUrlLoader({
-          getPhotoUrlFromAuthProvider,
+          authProvider,
         }),
         notablePersonBySlugLoader: createNotablePersonBySlugLoader({
           connection,
         }),
         photoUrlLoader: createPhotoUrlLoader({ connection }),
-        getProfileDetailsFromAuthProvider,
-        getPhotoUrlFromAuthProvider,
+        authProvider,
       };
 
       if (req && res) {
@@ -58,7 +50,7 @@ export const createApiRouter = ({
             token.length > 0
           ) {
             try {
-              context.viewer = await findUserByToken(token);
+              context.viewer = await authProvider.findUserByToken(token);
             } catch {
               context.viewer = undefined;
             }
