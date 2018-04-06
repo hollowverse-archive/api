@@ -59,13 +59,6 @@ export const createTestContext = async ({
 
   const client = new GraphQLClient(apiEndpoint, graphqlClientOptions);
 
-  const makeRequest = async <T>(
-    query: string,
-    variables?: Record<string, any>,
-  ) => {
-    return client.request<T>(query, variables);
-  };
-
   const teardown = async () => {
     await Promise.all([
       connection.dropDatabase().then(async () => connection.close()),
@@ -75,7 +68,7 @@ export const createTestContext = async ({
     ]);
   };
 
-  return { makeRequest, client, teardown };
+  return { client, teardown };
 };
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
