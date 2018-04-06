@@ -22,7 +22,7 @@ export const createTestContext = async ({
     getPort(),
     createConnection({
       type: 'mysql',
-      host: 'localhost',
+      host: 'database',
       username: 'root',
       password: '123456',
       port: 3306,
