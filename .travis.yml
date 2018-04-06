@@ -4,7 +4,6 @@ services:
 script:
   - docker run
     -d
-    --link
     --name=database
     -e MYSQL_ROOT_PASSWORD=123456
     -e MYSQL_DATABASE=test-db
