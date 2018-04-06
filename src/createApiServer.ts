@@ -66,7 +66,7 @@ export const createApiRouter = ({
 
       return {
         schema: await schema,
-        // formatError,
+        formatError,
         context,
       };
     }),
