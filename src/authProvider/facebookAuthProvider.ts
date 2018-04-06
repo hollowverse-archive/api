@@ -4,15 +4,15 @@ import { ApiError } from '../helpers/apiError';
 import { User } from '../database/entities/User';
 import { Connection } from 'typeorm';
 
-export class FacebookAuthProvider implements AuthProvider {
+export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
   private appAccessToken: string;
   private appId: string;
   private connection: Connection;
 
-  constructor(connection: Connection, facebookSecrets: FacebookAppConfig) {
+  constructor(connection: Connection, config: FacebookAppConfig) {
     this.connection = connection;
-    this.appAccessToken = facebookSecrets.accessToken;
-    this.appId = facebookSecrets.id;
+    this.appAccessToken = config.accessToken;
+    this.appId = config.id;
   }
 
   /**
