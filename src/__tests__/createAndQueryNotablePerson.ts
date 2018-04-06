@@ -1,4 +1,4 @@
-// tslint:disable no-multiline-string no-implicit-dependencies
+// tslint:disable no-multiline-string no-implicit-dependencies no-floating-promises
 import {
   TestContext,
   createTestContext,
