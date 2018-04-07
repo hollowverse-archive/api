@@ -1,8 +1,4 @@
-import {
-  TestContext,
-  createTestContext,
-  FakeAuthProvider,
-} from '../helpers/testHelpers';
+import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
@@ -113,7 +109,7 @@ describe('Create and query a notable person by slug', () => {
 
   it('newly created notable person can be viewed by all', async () => {
     context.client.setHeader('Authorization', '');
-    context.authProvider = new FakeAuthProvider();
+    context.authProvider.findUserByToken = async () => undefined;
 
     const result = await context.client.request(getNotablePersonQuery, {
       slug: 'Tom_Hanks',

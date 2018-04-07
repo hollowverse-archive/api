@@ -16,7 +16,7 @@ export const resolvers: Pick<DirectiveResolverMap, 'requireOneOfRoles'> = {
     if (roles.length === 1) {
       errorMessage = `Only users with an "${
         roles[0]
-      }" role can perform this query`;
+      }" role can perform this operation`;
     } else {
       errorMessage = oneLine`
         Only users with one of the following
