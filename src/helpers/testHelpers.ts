@@ -11,7 +11,7 @@ import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
 import { AuthProvider } from '../authProvider/types';
 import { User } from '../database/entities/User';
-import { isError } from 'lodash';
+import bluebird from 'bluebird';
 
 export class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
@@ -71,15 +71,8 @@ export const createTestContext = async ({
 
   let server: Server;
 
-  await new Promise((resolve, reject) => {
-    server = app.listen(serverPort, (err: any) => {
-      if (isError(err)) {
-        reject(err);
-
-        return;
-      }
-      resolve();
-    });
+  await bluebird.fromNode(cb => {
+    server = app.listen(serverPort, cb);
   });
 
   // tslint:disable-next-line:no-http-string
@@ -90,8 +83,8 @@ export const createTestContext = async ({
   const teardown = async () => {
     await Promise.all([
       connection.dropDatabase().then(async () => connection.close()),
-      new Promise(resolve => {
-        server.close(resolve);
+      bluebird.fromNode(cb => {
+        server.close(cb);
       }),
     ]);
   };

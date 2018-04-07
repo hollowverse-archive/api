@@ -1,8 +1,4 @@
-import {
-  TestContext,
-  createTestContext,
-  FakeAuthProvider,
-} from '../helpers/testHelpers';
+import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
@@ -46,20 +42,13 @@ describe('Create and query new user', () => {
     }
   });
 
-  it('visitors can create a new user with just', async () => {
-    context = await createTestContext({
-      createApiRouterOptions: {
-        connection: context.connection,
-        authProvider: new class extends FakeAuthProvider {
-          getProfileDetailsByToken = async () => {
-            return {
-              id: '123456',
-              name: 'New User',
-            };
-          };
-        }(),
-      },
-    });
+  it('visitors can create a new user', async () => {
+    context.authProvider.getProfileDetailsByToken = async () => {
+      return {
+        id: '123456',
+        name: 'New User',
+      };
+    };
 
     const result = await context.client.request(createUserMutation, {
       input: {
@@ -76,28 +65,17 @@ describe('Create and query new user', () => {
   });
 
   it('authenticated users can view their account details', async () => {
-    context = await createTestContext({
-      createApiRouterOptions: {
-        connection: context.connection,
-        authProvider: new class extends FakeAuthProvider {
-          findUserByToken = jest.fn(async (token: string) => {
-            // tslint:disable-next-line:possible-timing-attack
-            if (token === '123456') {
-              const user = new User();
-              user.name = 'New User';
+    context.client.setHeader('Authorization', 'Bearer 123456');
+    context.authProvider.findUserByToken = jest.fn(async (token: string) => {
+      // tslint:disable-next-line:possible-timing-attack
+      if (token === '123456') {
+        const user = new User();
+        user.name = 'New User';
 
-              return user;
-            }
+        return user;
+      }
 
-            return undefined;
-          });
-        }(),
-      },
-      graphqlClientOptions: {
-        headers: {
-          Authorization: 'Bearer 123456',
-        },
-      },
+      return undefined;
     });
 
     const result = await context.client.request(viewerQuery);
@@ -114,18 +92,7 @@ describe('Create and query new user', () => {
 
   it('users cannot access viewer info with invalid authentication details', async () => {
     expect.hasAssertions();
-
-    context = await createTestContext({
-      createApiRouterOptions: {
-        connection: context.connection,
-        authProvider: context.authProvider,
-      },
-      graphqlClientOptions: {
-        headers: {
-          Authorization: 'Bearer 000000',
-        },
-      },
-    });
+    context.client.setHeader('Authorization', 'Bearer 000000');
 
     try {
       await context.client.request(viewerQuery);

@@ -60,26 +60,15 @@ describe('Create and query a notable person by slug', () => {
   });
 
   it('users with required role can create a new notable person', async () => {
-    context = await createTestContext({
-      graphqlClientOptions: {
-        headers: {
-          Authorization: 'Bearer 123',
-        },
-      },
-      createApiRouterOptions: {
-        connection: context.connection,
-        authProvider: new class extends FakeAuthProvider {
-          findUserByToken = async () => {
-            const user = new User();
-            user.name = 'Editor';
-            user.email = 'editor@hollowverse.com';
-            user.role = 'EDITOR';
+    context.client.setHeader('Authorization', 'Bearer 123');
+    context.authProvider.findUserByToken = async () => {
+      const user = new User();
+      user.name = 'Editor';
+      user.email = 'editor@hollowverse.com';
+      user.role = 'EDITOR';
 
-            return user;
-          };
-        }(),
-      },
-    });
+      return user;
+    };
 
     const result = await context.client.request(createNotablePersonMutation, {
       input: {
@@ -98,25 +87,14 @@ describe('Create and query a notable person by slug', () => {
   it('users with some other role cannot create a new notable person', async () => {
     expect.hasAssertions();
 
-    context = await createTestContext({
-      graphqlClientOptions: {
-        headers: {
-          Authorization: 'Bearer 123',
-        },
-      },
-      createApiRouterOptions: {
-        connection: context.connection,
-        authProvider: new class extends FakeAuthProvider {
-          findUserByToken = async () => {
-            const user = new User();
-            user.name = 'Moderator';
-            user.role = 'MODERATOR';
+    context.client.setHeader('Authorization', 'Bearer 123456');
+    context.authProvider.findUserByToken = async () => {
+      const user = new User();
+      user.name = 'Moderator';
+      user.role = 'MODERATOR';
 
-            return user;
-          };
-        }(),
-      },
-    });
+      return user;
+    };
 
     try {
       await context.client.request(createNotablePersonMutation, {
@@ -131,11 +109,7 @@ describe('Create and query a notable person by slug', () => {
   });
 
   it('newly created notable person can be viewed by all', async () => {
-    context = await createTestContext({
-      createApiRouterOptions: {
-        connection: context.connection,
-      },
-    });
+    context.client.setHeader('Authorization', '');
 
     const result = await context.client.request(getNotablePersonQuery, {
       slug: 'Tom_Hanks',
