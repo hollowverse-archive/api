@@ -14,6 +14,11 @@ import { User } from '../database/entities/User';
 import bluebird from 'bluebird';
 import mysql from 'promise-mysql';
 
+const TEST_DB_HOST = process.env.CI ? 'database' : 'localhost';
+const TEST_DB_USERNAME = 'root';
+const TEST_DB_PASSWORD = '123456';
+const TEST_DB_PORT = 3306;
+
 export class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
     undefined;
@@ -60,11 +65,6 @@ const initializeDb = async (
     createDatabaseConnection.end(),
   ];
 };
-
-const TEST_DB_HOST = process.env.CI ? 'database' : 'localhost';
-const TEST_DB_USERNAME = 'root';
-const TEST_DB_PASSWORD = '123456';
-const TEST_DB_PORT = 3306;
 
 export const createTestContext = async ({
   createApiRouterOptions = {},
