@@ -113,7 +113,7 @@ describe('Create and query a notable person by slug', () => {
 
   it('newly created notable person can be viewed by all', async () => {
     context.client.setHeader('Authorization', '');
-    context.authProvider = new FakeAuthProvider();
+    context.authProvider.findUserByToken = async () => undefined;
 
     const result = await context.client.request(getNotablePersonQuery, {
       slug: 'Tom_Hanks',

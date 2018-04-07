@@ -66,6 +66,23 @@ const initializeDb = async (
   ];
 };
 
+/**
+ * Creates a new API server with a new, empty database instance
+ * that have all the required tables.
+ *
+ * A instance of `GraphQLClient` is returned. The client is configured
+ * to call the new API endpoint.
+ *
+ * A fake authentication provider is used to authenticate users.
+ * Methods on that provider can be overridden or spied on to
+ * test authentication functionality.
+ * This `AuthProvider` instance is also included in the return value.
+ * Do not replace the `AuthProvider` instance it self as this won't
+ * have any effect. Instead, override individual methods on that instance.
+ *
+ * Make sure to call `teardown` at the end of each test suite. Otherwise,
+ * the Node.js process won't exit.
+ */
 export const createTestContext = async ({
   createApiRouterOptions = {},
   graphqlClientOptions,
@@ -117,4 +134,6 @@ export const createTestContext = async ({
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
 
-export type TestContext = UnPromisify<ReturnType<typeof createTestContext>>;
+export type TestContext = Readonly<
+  UnPromisify<ReturnType<typeof createTestContext>>
+>;
