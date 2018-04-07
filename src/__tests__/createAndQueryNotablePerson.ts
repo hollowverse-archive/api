@@ -47,14 +47,16 @@ describe('Create and query a notable person by slug', () => {
   });
 
   it('non-authorized users cannot create a new notable person', async () => {
-    const result = context.client.request(createNotablePersonMutation, {
-      input: {
-        slug: 'Tom_Hanks',
-        name: 'Tom Hanks',
-      },
-    });
-
-    expect(result).rejects.toBeDefined();
+    try {
+      await context.client.request(createNotablePersonMutation, {
+        input: {
+          slug: 'Tom_Hanks',
+          name: 'Tom Hanks',
+        },
+      });
+    } catch (err) {
+      expect(err.message).toMatch(/auth/i);
+    }
   });
 
   it('users with required role can create a new notable person', async () => {
@@ -91,6 +93,41 @@ describe('Create and query a notable person by slug', () => {
         name: 'Tom Hanks',
       },
     });
+  });
+
+  it('users with some other role cannot create a new notable person', async () => {
+    expect.hasAssertions();
+
+    context = await createTestContext({
+      graphqlClientOptions: {
+        headers: {
+          Authorization: 'Bearer 123',
+        },
+      },
+      createApiRouterOptions: {
+        connection: context.connection,
+        authProvider: new class extends FakeAuthProvider {
+          findUserByToken = async () => {
+            const user = new User();
+            user.name = 'Moderator';
+            user.role = 'MODERATOR';
+
+            return user;
+          };
+        }(),
+      },
+    });
+
+    try {
+      await context.client.request(createNotablePersonMutation, {
+        input: {
+          slug: 'Tom_Hanks',
+          name: 'Tom Hanks',
+        },
+      });
+    } catch (error) {
+      expect(error.message).toMatch(/role/i);
+    }
   });
 
   it('newly created notable person can be viewed by all', async () => {

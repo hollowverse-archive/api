@@ -39,11 +39,11 @@ describe('Create and query new user', () => {
   });
 
   it('`viewer` inaccessible for unauthenticated users', async () => {
-    const result = context.client.request(viewerQuery);
-
-    expect(result).rejects.toThrowError(/auth/);
-
-    await result.catch(() => null);
+    try {
+      await context.client.request(viewerQuery);
+    } catch (error) {
+      expect(error.message).toMatch(/auth/i);
+    }
   });
 
   it('visitors can create a new user with just', async () => {
@@ -113,6 +113,8 @@ describe('Create and query new user', () => {
   });
 
   it('users cannot access viewer info with invalid authentication details', async () => {
+    expect.hasAssertions();
+
     context = await createTestContext({
       createApiRouterOptions: {
         connection: context.connection,
@@ -125,10 +127,10 @@ describe('Create and query new user', () => {
       },
     });
 
-    const result = context.client.request(viewerQuery);
-
-    expect(result).rejects.toThrowError(/auth/);
-
-    await result.catch(() => null);
+    try {
+      await context.client.request(viewerQuery);
+    } catch (error) {
+      expect(error.message).toMatch(/auth/i);
+    }
   });
 });
