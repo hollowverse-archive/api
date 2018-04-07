@@ -49,7 +49,7 @@ export const createTestContext = async ({
           username: 'root',
           password: '123456',
           port: 3306,
-          database: 'test-db',
+          database: 'hollowverse-api-test-db',
           synchronize: true,
           dropSchema: true,
           entities,
