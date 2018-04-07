@@ -132,6 +132,7 @@
     "lint-staged": "^7.0.0",
     "nodemon": "^1.11.0",
     "prettier": "^1.11.1",
+    "promise-mysql": "^3.2.1",
     "rxjs": "^5.5.7",
     "rxjs-tslint-rules": "^3.15.0",
     "shelljs": "^0.7.8",

@@ -269,7 +269,7 @@
     parse-glob "3.0.4"
     promise-retry "1.1.1"
 
-"@types/bluebird@^3.0.37":
+"@types/bluebird@^3.0.37", "@types/bluebird@^3.5.19":
   version "3.5.20"
   resolved "https://registry.yarnpkg.com/@types/bluebird/-/bluebird-3.5.20.tgz#f6363172add6f4eabb8cada53ca9af2781e8d6a1"
 
@@ -379,6 +379,12 @@
 "@types/minimatch@*":
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/@types/minimatch/-/minimatch-3.0.1.tgz#b683eb60be358304ef146f5775db4c0e3696a550"
+
+"@types/mysql@^2.15.2":
+  version "2.15.4"
+  resolved "https://registry.yarnpkg.com/@types/mysql/-/mysql-2.15.4.tgz#3b4f62a8a9b6e44b01ee3614486a913b65e5dc2b"
+  dependencies:
+    "@types/node" "*"
 
 "@types/node@*":
   version "8.0.51"
@@ -1038,7 +1044,7 @@ block-stream@*:
   dependencies:
     inherits "~2.0.0"
 
-bluebird@^3.4.7, bluebird@^3.5.1:
+bluebird@^3.4.7, bluebird@^3.5.0, bluebird@^3.5.1:
   version "3.5.1"
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.5.1.tgz#d9551f9de98f1fcda1e683d17ee91a0602ee2eb9"
 
@@ -6072,6 +6078,15 @@ process@~0.5.1:
 progress@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.0.tgz#8a1be366bf8fc23db2bd23f10c6fe920b4389d1f"
+
+promise-mysql@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/promise-mysql/-/promise-mysql-3.2.1.tgz#928dd7920d6e789a477f904b41d29b50f9636d1e"
+  dependencies:
+    "@types/bluebird" "^3.5.19"
+    "@types/mysql" "^2.15.2"
+    bluebird "^3.5.0"
+    mysql "^2.14.1"
 
 promise-retry@1.1.1:
   version "1.1.1"

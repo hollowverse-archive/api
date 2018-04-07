@@ -12,6 +12,7 @@ import { Options } from '@forabi/graphql-request/dist/src/types';
 import { AuthProvider } from '../authProvider/types';
 import { User } from '../database/entities/User';
 import bluebird from 'bluebird';
+import mysql from 'promise-mysql';
 
 export class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
@@ -39,17 +40,29 @@ export const createTestContext = async ({
     ...restCreateApiRouterOptions
   } = createApiRouterOptions;
 
+  const connectionConfig = {
+    host: process.env.CI ? 'database' : 'localhost',
+    password: '123456',
+    port: 3306,
+  };
+
+  const database = `hvTestDb${faker.random.alphaNumeric(6)}`;
+  const mysqlConnection = await mysql.createConnection({
+    ...connectionConfig,
+    user: 'root',
+  });
+
+  await mysqlConnection.query(`CREATE DATABASE ${database}`);
+
   const [serverPort, connection] = await Promise.all([
     getPort(),
     (async () => {
       if (!createApiRouterOptions.connection) {
         return createConnection({
           type: 'mysql',
-          host: process.env.CI ? 'database' : 'localhost',
+          ...connectionConfig,
+          database,
           username: 'root',
-          password: '123456',
-          port: 3306,
-          database: 'hollowverse-api-test-db',
           synchronize: true,
           dropSchema: true,
           entities,
@@ -82,6 +95,7 @@ export const createTestContext = async ({
 
   const teardown = async () => {
     await Promise.all([
+      mysqlConnection.end(),
       connection.dropDatabase().then(async () => connection.close()),
       bluebird.fromNode(cb => {
         server.close(cb);
