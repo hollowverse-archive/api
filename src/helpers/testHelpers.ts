@@ -19,7 +19,7 @@ const TEST_DB_USERNAME = 'root';
 const TEST_DB_PASSWORD = '123456';
 const TEST_DB_PORT = 3306;
 
-export class FakeAuthProvider implements AuthProvider {
+class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
     undefined;
 
