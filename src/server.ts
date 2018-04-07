@@ -12,6 +12,7 @@ import { isProd } from './env';
 import { createApiRouter } from './createApiServer';
 import { FacebookAuthProvider } from './authProvider/facebookAuthProvider';
 import { readJson } from './helpers/readFile';
+import { stripIndent } from 'common-tags';
 
 const api = express();
 
@@ -94,7 +95,35 @@ const startServer = async () => {
   process.on('SIGUSR1', close);
 };
 
-startServer().catch(e => {
-  loggy.error('Failed to start API server: ', e);
+startServer().catch(error => {
+  loggy.error('Failed to start API server: ', error);
+
+  if (process.env.NODE_ENV !== 'production') {
+    // tslint:disable-next-line:no-multiline-string
+    loggy.info(stripIndent`
+
+      Make sure that:
+
+       * A development database is running with the same
+         development configuration defined in ./src/database/connection.ts
+      
+         if you haven't created a database for the API before, run:
+
+          docker run --network=host -p 3306 --name=hollowverse-db \\
+            -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=hollowverse mysql
+
+         if you have created a database before but it's not running, run:
+            
+          docker run hollowverse-db
+          
+       * The port ${PORT} is not used by another program. If you are not sure,
+         try running this command again with a custom port:
+
+          PORT=<NEW_PORT> yarn dev
+
+       For more details, see https://github.com/hollowverse/hollowverse/wiki/API-Development
+    `);
+  }
+
   setIsHealthy(false);
 });
