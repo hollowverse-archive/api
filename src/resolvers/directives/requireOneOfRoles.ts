@@ -20,7 +20,7 @@ export const resolvers: Pick<DirectiveResolverMap, 'requireOneOfRoles'> = {
     } else {
       errorMessage = oneLine`
         Only users with one of the following
-        roles are allowed to perform this operation: ${roles.join(',')}
+        roles are allowed to perform this operation: ${roles.join(', ')}
       `;
     }
 
