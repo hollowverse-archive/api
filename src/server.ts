@@ -109,12 +109,12 @@ startServer().catch(error => {
       
          if you haven't created a database for the API before, run:
 
-          docker run --network=host -p 3306 --name=hollowverse-db \\
+          docker run -d --network=host -p 3306 --name=hollowverse-db \\
             -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=hollowverse mysql
 
          if you have created a database before but it's not running, run:
             
-          docker run hollowverse-db
+          docker start hollowverse-db
           
        * The port ${PORT} is not used by another program. If you are not sure,
          try running this command again with a custom port:
