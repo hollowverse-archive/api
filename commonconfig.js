@@ -12,6 +12,7 @@ module.exports = {
       validation: 'ignore',
       patterns: [
         '*/**/typings/*',
+        'src/__tests__/**/*',
         'gql-gen.json',
         'Dockerfile*',
         'docker-compose.yml',

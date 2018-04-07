@@ -1,5 +1,5 @@
 // tslint:disable no-console max-func-body-length no-implicit-dependencies
-import { connection } from '../database/connection';
+import { connectionPromise } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { User } from '../database/entities/User';
 import {
@@ -15,7 +15,7 @@ import { isUsingProductionDatabase } from '../env';
 
 if (isUsingProductionDatabase === false) {
   faker.seed(Number(process.env.SEED) || 1);
-  connection
+  connectionPromise
     .then(async db =>
       db.transaction(async entityManager => {
         const users = times(10, () => {

@@ -1,4 +1,3 @@
-import { connection } from '../../database/connection';
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
@@ -47,12 +46,11 @@ export const resolvers: Partial<ResolverMap> = {
       return [];
     },
 
-    async events({ slug }, args, { notablePersonBySlugLoader }) {
+    async events({ slug }, args, { notablePersonBySlugLoader, connection }) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
         if (notablePerson) {
-          const db = await connection;
-          const events = db.getRepository(NotablePersonEvent);
+          const events = connection.getRepository(NotablePersonEvent);
 
           return events.find({
             where: {
@@ -70,16 +68,18 @@ export const resolvers: Partial<ResolverMap> = {
       return [];
     },
 
-    async editorialSummary({ slug }, _, { notablePersonBySlugLoader }) {
+    async editorialSummary(
+      { slug },
+      _,
+      { connection, notablePersonBySlugLoader },
+    ) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
         if (notablePerson) {
           const editorialSummary = await notablePerson.editorialSummary;
 
           if (editorialSummary) {
-            const nodesRepo = (await connection).getRepository(
-              EditorialSummaryNode,
-            );
+            const nodesRepo = connection.getRepository(EditorialSummaryNode);
 
             return {
               ...editorialSummary,
@@ -160,10 +160,8 @@ export const resolvers: Partial<ResolverMap> = {
     },
   },
   NotablePersonEvent: {
-    async comments(event) {
-      const db = await connection;
-
-      const repo = db.getRepository(NotablePersonEventComment);
+    async comments(event, _, { connection }) {
+      const repo = connection.getRepository(NotablePersonEventComment);
 
       return repo.find({
         where: {

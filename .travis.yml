@@ -3,7 +3,17 @@ services:
 
 script:
   - docker run
+    -d
+    --name=database
+    -e MYSQL_ROOT_PASSWORD=123456
+    -e MYSQL_DATABASE=hollowverse-api-test-db
+    --tmpfs=/var/lib/mysql/:rw,noexec,nosuid,size=600m
+    --tmpfs=/tmp/:rw,noexec,nosuid,size=50m mysql &&
+    
+    docker run
+    --link database:database
     -v $(pwd):/repo
+    -e CI=true
     -e PROJECT=hollowverse-api
     -e BRANCH=$TRAVIS_BRANCH
     -e COMMIT_ID=$TRAVIS_COMMIT

@@ -1,6 +1,4 @@
-import { connection } from '../../database/connection';
 import { User } from '../../database/entities/User';
-import { sendFacebookAuthenticatedRequest } from '../../helpers/facebook';
 import { ApiError } from '../../helpers/apiError';
 
 import { ResolverMap } from '../../typings/resolverMap';
@@ -14,39 +12,21 @@ export const resolvers: Partial<ResolverMap> = {
      * The name of the new user will be obtained from Facebook if
      * not specified in the mutation input.
      */
-    async createUser(_, { input: { fbAccessToken, email, name } }, context) {
-      if (context.viewer) {
+    async createUser(
+      _,
+      { input: { fbAccessToken, email, name } },
+      { connection, viewer, authProvider },
+    ) {
+      if (viewer) {
         throw new ApiError(
           'OperationNotAllowedError',
           'Cannot create a new user because the request is already authenticated',
         );
       }
 
-      type Profile = {
-        id: string;
-        name: string;
-        picture: {
-          data: {
-            is_silhouette: boolean;
-            url: string;
-          };
-        };
-      };
-
-      const response = await sendFacebookAuthenticatedRequest(
+      const profile = await authProvider.getProfileDetailsByToken(
         fbAccessToken,
-        'https://graph.facebook.com/me',
-        {
-          query: {
-            fields: ['id', 'name', 'picture'].join(','),
-          },
-          json: true,
-        },
       );
-
-      const profile: Profile = response.body;
-
-      const db = await connection;
       const user = new User();
 
       user.fbId = profile.id;
@@ -55,7 +35,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       user.signedUpAt = new Date();
 
-      const users = db.getRepository(User);
+      const users = connection.getRepository(User);
 
       return users.save(user);
     },

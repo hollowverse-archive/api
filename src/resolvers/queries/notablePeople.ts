@@ -1,19 +1,17 @@
 import { FindManyOptions } from 'typeorm';
-import { connection } from '../../database/connection';
 import { NotablePerson } from '../../database/entities/NotablePerson';
 import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
-    async notablePeople(_, { after, first }) {
+    async notablePeople(_, { after, first }, { connection }) {
       const skip = (Number(after) || 0) + 1;
-      const db = await connection;
       const query: FindManyOptions<NotablePerson> = {
         order: {
           addedOn: 'DESC',
         },
       };
-      const notablePeople = db.getRepository(NotablePerson);
+      const notablePeople = connection.getRepository(NotablePerson);
 
       const [people, all] = await notablePeople.findAndCount({
         ...query,

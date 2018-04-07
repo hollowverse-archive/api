@@ -1,12 +1,11 @@
 import { User } from '../../database/entities/User';
-import { connection } from '../../database/connection';
 import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   User: {
-    async photoUrl({ id }, _, { userPhotoUrlLoader }) {
+    async photoUrl({ id }, _, { userPhotoUrlLoader, connection }) {
       if (id) {
-        const db = await connection;
+        const db = connection;
         const users = db.getRepository(User);
         const user = await users.findOne({ where: { id }, select: ['fbId'] });
         if (user) {

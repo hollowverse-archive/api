@@ -268,4 +268,8 @@ enum ApiErrorType {
 
   # Thrown when an access token is empty, invalid or expired
   InvalidAccessTokenError
+
+  # Thrown when the does not have any of the roles required to perform
+  # an operation
+  RoleMismatchError
 }

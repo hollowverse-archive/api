@@ -1,11 +1,15 @@
 import DataLoader from 'dataloader';
+import bluebird from 'bluebird';
 
-import { getPhotoUrlByFbId } from '../helpers/facebook';
+import { SchemaContext } from '../typings/schemaContext';
 
-export const userPhotoUrlLoader = new DataLoader<string, string>(
-  async fbIds => {
-    return Promise.all(
-      fbIds.map(async fbId => getPhotoUrlByFbId(fbId, 'normal')),
+export const createUserPhotoUrlLoader = ({
+  authProvider,
+}: Pick<SchemaContext, 'authProvider'>) =>
+  new DataLoader<string, string>(async fbIds => {
+    return bluebird.map(
+      fbIds,
+      async fbId => authProvider.getPhotoUrlByUserId(fbId, 'normal'),
+      { concurrency: 3 },
     );
-  },
-);
+  });
