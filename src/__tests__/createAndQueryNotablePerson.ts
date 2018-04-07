@@ -4,26 +4,27 @@ import { User } from '../database/entities/User';
 
 describe('Create and query a notable person by slug', () => {
   let context: TestContext;
-  // tslint:disable-next-line:mocha-no-side-effect-code
-  const getNotablePersonQuery = gql`
-    query GetNotablePerson($slug: String!) {
-      notablePerson(slug: $slug) {
-        name
-      }
-    }
-  `;
-
-  // tslint:disable-next-line:mocha-no-side-effect-code
-  const createNotablePersonMutation = gql`
-    mutation CreateNotablePerson($input: CreateNotablePersonInput!) {
-      createNotablePerson(input: $input) {
-        name
-      }
-    }
-  `;
+  let getNotablePersonQuery: any;
+  let createNotablePersonMutation: any;
 
   beforeAll(async () => {
     context = await createTestContext();
+
+    getNotablePersonQuery = gql`
+      query GetNotablePerson($slug: String!) {
+        notablePerson(slug: $slug) {
+          name
+        }
+      }
+    `;
+
+    createNotablePersonMutation = gql`
+      mutation CreateNotablePerson($input: CreateNotablePersonInput!) {
+        createNotablePerson(input: $input) {
+          name
+        }
+      }
+    `;
   });
 
   afterAll(async () => {

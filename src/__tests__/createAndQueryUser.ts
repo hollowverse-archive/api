@@ -4,28 +4,29 @@ import { User } from '../database/entities/User';
 
 describe('Create and query new user', () => {
   let context: TestContext;
-  // tslint:disable-next-line:mocha-no-side-effect-code
-  const viewerQuery = gql`
-    query CurrentGetUser {
-      viewer {
-        name
-        email
-      }
-    }
-  `;
-
-  // tslint:disable-next-line:mocha-no-side-effect-code
-  const createUserMutation = gql`
-    mutation CreateUser($input: CreateUserInput!) {
-      createUser(input: $input) {
-        name
-        email
-      }
-    }
-  `;
+  let viewerQuery: any;
+  let createUserMutation: any;
 
   beforeAll(async () => {
     context = await createTestContext();
+
+    viewerQuery = gql`
+      query CurrentGetUser {
+        viewer {
+          name
+          email
+        }
+      }
+    `;
+
+    createUserMutation = gql`
+      mutation CreateUser($input: CreateUserInput!) {
+        createUser(input: $input) {
+          name
+          email
+        }
+      }
+    `;
   });
 
   afterAll(async () => {
