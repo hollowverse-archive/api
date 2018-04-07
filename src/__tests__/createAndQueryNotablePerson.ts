@@ -43,6 +43,8 @@ describe('Create and query a notable person by slug', () => {
   });
 
   it('non-authorized users cannot create a new notable person', async () => {
+    expect.hasAssertions();
+
     try {
       await context.client.request(createNotablePersonMutation, {
         input: {

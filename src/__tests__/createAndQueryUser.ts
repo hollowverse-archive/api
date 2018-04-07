@@ -35,6 +35,8 @@ describe('Create and query new user', () => {
   });
 
   it('`viewer` inaccessible for unauthenticated users', async () => {
+    expect.hasAssertions();
+
     try {
       await context.client.request(viewerQuery);
     } catch (error) {
@@ -92,6 +94,7 @@ describe('Create and query new user', () => {
 
   it('users cannot access viewer info with invalid authentication details', async () => {
     expect.hasAssertions();
+
     context.client.setHeader('Authorization', 'Bearer 000000');
 
     try {
