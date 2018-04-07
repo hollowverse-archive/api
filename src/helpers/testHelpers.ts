@@ -68,19 +68,20 @@ const initializeDb = async (
 
 /**
  * Creates a new API server with a new, empty database instance
- * that have all the required tables.
+ * that has all the required tables.
  *
  * A instance of `GraphQLClient` is returned. The client is configured
  * to call the new API endpoint.
  *
  * A fake authentication provider is used to authenticate users.
+ * This `AuthProvider` instance is also included in the return value.
  * Methods on that provider can be overridden or spied on to
  * test authentication functionality.
- * This `AuthProvider` instance is also included in the return value.
- * Do not replace the `AuthProvider` instance it self as this won't
- * have any effect. Instead, override individual methods on that instance.
+ * Do not replace the `AuthProvider` instance itself as this won't
+ * have any effect (it's marked as `readonly` anyway).
+ * Instead, override individual methods on that instance.
  *
- * Make sure to call `teardown` at the end of each test suite. Otherwise,
+ * Make sure to call `teardown` at the end of each test session. Otherwise,
  * the Node.js process won't exit.
  */
 export const createTestContext = async ({
