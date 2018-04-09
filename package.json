@@ -150,6 +150,7 @@
     "typescript": "^2.8.1",
     "typescript-eslint-parser": "^14.0.0",
     "uuid": "^3.1.0",
+    "wait-for-mysql": "^1.0.0",
     "yarnhook": "^0.1.1"
   },
   "engines": {
@@ -164,6 +165,7 @@
     "transform": {
       "^.+\\.tsx?$": "<rootDir>/node_modules/ts-jest/preprocessor.js"
     },
+    "globalSetup": "./globalTestSetup.js",
     "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
     "moduleFileExtensions": [
       "ts",
