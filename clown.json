@@ -1,0 +1,8 @@
+{
+  "extensions": [
+    "./node_modules/@hollowverse/config/clown/common",
+    "./node_modules/@hollowverse/config/clown/typescript",
+    "./node_modules/@hollowverse/config/clown/jest",
+    "./clownOverrides"
+  ]
+}

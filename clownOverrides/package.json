@@ -1,0 +1,9 @@
+{
+  "scripts": {
+    "check-ts": "tsc --project ./src --noEmit",
+    "validate-filenames": "validate-filenames --config validateFilenames.js",
+    "pre-commit": "yarn common-check",
+    "pre-push": "yarn pretest",
+    "tslint": "yarn lint-ts"
+  }
+}
