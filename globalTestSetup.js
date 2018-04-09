@@ -23,13 +23,16 @@ module.exports = async () => {
       hasConnected = true;
     });
 
-  const delay = bluebird.delay(1500).then(() => {
-    if (hasConnected) {
-      return;
-    }
+  const promises = [waitForConnection];
 
-    console.info('\n');
-    console.info(stripIndent`
+  if (!process.env.CI) {
+    const delay = bluebird.delay(1500).then(() => {
+      if (hasConnected) {
+        return;
+      }
+
+      console.info('\n');
+      console.info(stripIndent`
         Waiting for MySQL server on port ${DB_PORT}...
         This server will be used to create temporary databases for running the
         tests.
@@ -47,11 +50,10 @@ module.exports = async () => {
         
         This will launch a MySQL server with the database data stored in memory.
       `);
-  });
+    });
 
-  if (!process.env.CI) {
-    await Promise.race([delay, waitForConnection]);
+    promises.push(delay);
   }
 
-  return waitForConnection;
+  return Promise.race(promises);
 };
