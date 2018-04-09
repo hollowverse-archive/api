@@ -1,4 +1,5 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
+/* eslint-disable no-console */
 const { stripIndent } = require('common-tags');
 // @ts-ignore
 const waitForMySql = require('wait-for-mysql');
