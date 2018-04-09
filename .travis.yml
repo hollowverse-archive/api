@@ -8,7 +8,7 @@ script:
     -e MYSQL_ROOT_PASSWORD=123456
     --tmpfs=/var/lib/mysql/:rw,noexec,nosuid,size=600m
     --tmpfs=/tmp/:rw,noexec,nosuid,size=50m mysql:5.6 &&
-    
+
     docker run
     --link database:database
     -v $(pwd):/repo
