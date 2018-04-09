@@ -1026,6 +1026,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bignumber.js@2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-2.0.7.tgz#86eb0707cf6a5110909d23e6ea7434c14f500f1c"
+
 bignumber.js@4.0.2:
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/bignumber.js/-/bignumber.js-4.0.2.tgz#2d1dc37ee5968867ecea90b6da4d16e68608d21d"
@@ -1558,6 +1562,12 @@ commander@^2.12.1:
 commander@^2.14.1:
   version "2.14.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
+
+commander@~2.8:
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.8.1.tgz#06be367febfda0c330aa1e2a072d3dc9762425d4"
+  dependencies:
+    graceful-readlink ">= 1.0.0"
 
 common-tags@1.7.2, common-tags@^1.7.2:
   version "1.7.2"
@@ -2103,6 +2113,12 @@ duplexer3@^0.1.4:
 duplexer@^0.1.1, duplexer@~0.1.1:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/duplexer/-/duplexer-0.1.1.tgz#ace6ff808c1ce66b57d1ebf97977acb02334cfc1"
+
+durations@~1:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/durations/-/durations-1.0.2.tgz#7e80e3765c9c266f7e05c2977c19d1d5ce4cd6b1"
+  dependencies:
+    q ">=1.2 <2"
 
 easy-stack@^1.0.0:
   version "1.0.0"
@@ -3051,6 +3067,10 @@ got@^7.1.0:
 graceful-fs@^4.1.11, graceful-fs@^4.1.2, graceful-fs@^4.1.6:
   version "4.1.11"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.1.11.tgz#0e8bdfe4d1ddb8854d64e04ea7c00e2a026e5658"
+
+"graceful-readlink@>= 1.0.0":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/graceful-readlink/-/graceful-readlink-1.0.1.tgz#4cafad76bc62f02fa039b2f94e9a3dd3a391a725"
 
 graphql-code-generator@^0.8.21:
   version "0.8.21"
@@ -5271,6 +5291,13 @@ mysql@^2.14.1:
     safe-buffer "5.1.1"
     sqlstring "2.2.0"
 
+mysql@~2.9:
+  version "2.9.0"
+  resolved "https://registry.yarnpkg.com/mysql/-/mysql-2.9.0.tgz#8b2218a9ddaf92518caefad78d152df1b6b64213"
+  dependencies:
+    bignumber.js "2.0.7"
+    readable-stream "~1.1.13"
+
 mz@^2.4.0:
   version "2.7.0"
   resolved "https://registry.yarnpkg.com/mz/-/mz-2.7.0.tgz#95008057a56cafadc2bc63dde7f9ff6955948e32"
@@ -6142,6 +6169,14 @@ pupa@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/pupa/-/pupa-1.0.0.tgz#9a9568a5af7e657b8462a6e9d5328743560ceff6"
 
+"q@>=1.2 <2":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"
+
+q@~1.4:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/q/-/q-1.4.1.tgz#55705bcd93c5f3673530c2c2cbc0c2b3addc286e"
+
 qs@6.5.1, qs@~6.5.1:
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.1.tgz#349cdf6eef89ec45c12d7d5eb3fc0c870343a6d8"
@@ -6257,7 +6292,7 @@ readable-stream@2.3.3, readable-stream@^2.0.2, readable-stream@^2.0.6, readable-
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^1.0.33, readable-stream@~1.1.9:
+readable-stream@^1.0.33, readable-stream@~1.1.13, readable-stream@~1.1.9:
   version "1.1.14"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-1.1.14.tgz#7cf4c54ef648e3813084c636dd2079e166c081d9"
   dependencies:
@@ -7970,6 +8005,15 @@ w3c-hr-time@^1.0.1:
   resolved "https://registry.yarnpkg.com/w3c-hr-time/-/w3c-hr-time-1.0.1.tgz#82ac2bff63d950ea9e3189a58a65625fedf19045"
   dependencies:
     browser-process-hrtime "^0.1.2"
+
+wait-for-mysql@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/wait-for-mysql/-/wait-for-mysql-1.0.0.tgz#a0e6a6346d804d44fb6f9a430c2be0d13fce7c56"
+  dependencies:
+    commander "~2.8"
+    durations "~1"
+    mysql "~2.9"
+    q "~1.4"
 
 walker@~1.0.5:
   version "1.0.7"

@@ -14,10 +14,10 @@ import { User } from '../database/entities/User';
 import bluebird from 'bluebird';
 import mysql from 'promise-mysql';
 
-const TEST_DB_HOST = process.env.CI ? 'database' : 'localhost';
+const TEST_DB_HOST = process.env.TEST_DB_HOST || 'localhost';
 const TEST_DB_USERNAME = 'root';
 const TEST_DB_PASSWORD = '123456';
-const TEST_DB_PORT = 3306;
+const TEST_DB_PORT = Number(process.env.TEST_DB_PORT) || 3306;
 
 class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
@@ -43,8 +43,8 @@ const initializeDb = async (
 ): Promise<[Connection, PromiseLike<void>]> => {
   const createDatabaseConnection = await mysql.createConnection({
     host: TEST_DB_HOST,
-    password: TEST_DB_PASSWORD,
     port: TEST_DB_PORT,
+    password: TEST_DB_PASSWORD,
     user: TEST_DB_USERNAME,
   });
 
