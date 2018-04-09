@@ -458,7 +458,7 @@
   dependencies:
     "@types/express" "*"
 
-"@types/jest@^22.2.2":
+"@types/jest@^22.2.0":
   version "22.2.2"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-22.2.2.tgz#afe5dacbd00d65325f52da0ed3e76e259629ac9d"
 
@@ -3631,9 +3631,9 @@ http-signature@~1.2.0:
     jsprim "^1.2.2"
     sshpk "^1.7.0"
 
-husky@^0.15.0-rc.8:
-  version "0.15.0-rc.8"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-0.15.0-rc.8.tgz#b658c597a8f9bbcd00a5c039709e7c61e61238e7"
+husky@^0.15.0-rc.13:
+  version "0.15.0-rc.13"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-0.15.0-rc.13.tgz#a27550b7b51d2f472e284b48fc9257a6d6b3f681"
   dependencies:
     cosmiconfig "^4.0.0"
     execa "^0.9.0"
@@ -4601,7 +4601,7 @@ jest-worker@^22.4.3:
   dependencies:
     merge-stream "^1.0.1"
 
-jest@^22.4.3:
+jest@^22.4.2:
   version "22.4.3"
   resolved "https://registry.yarnpkg.com/jest/-/jest-22.4.3.tgz#2261f4b117dc46d9a4a1a673d2150958dee92f16"
   dependencies:
@@ -6247,7 +6247,7 @@ preserve@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/preserve/-/preserve-0.2.0.tgz#815ed1f6ebc65926f865b310c0713bcb3315ce4b"
 
-prettier@1.11.1, prettier@^1.11.1:
+prettier@1.11.1, prettier@^1.10.2:
   version "1.11.1"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.11.1.tgz#61e43fc4cd44e68f2b0dfc2c38cd4bb0fccdcc75"
 
@@ -6869,23 +6869,9 @@ rxjs-tslint-rules@^3.14.0:
     resolve "^1.4.0"
     tslib "^1.8.0"
 
-rxjs-tslint-rules@^3.15.0:
-  version "3.15.0"
-  resolved "https://registry.yarnpkg.com/rxjs-tslint-rules/-/rxjs-tslint-rules-3.15.0.tgz#ea52a096b78567c5b4195426f3f0a1f63c71d540"
-  dependencies:
-    decamelize "^2.0.0"
-    resolve "^1.4.0"
-    tslib "^1.8.0"
-
 rxjs@^5.4.2:
   version "5.5.6"
   resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.6.tgz#e31fb96d6fd2ff1fd84bcea8ae9c02d007179c02"
-  dependencies:
-    symbol-observable "1.0.1"
-
-rxjs@^5.5.7:
-  version "5.5.7"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-5.5.7.tgz#afb3d1642b069b2fbf203903d6501d1acb4cda27"
   dependencies:
     symbol-observable "1.0.1"
 
@@ -7452,7 +7438,7 @@ stylelint@>=5.0.0:
     svg-tags "^1.0.0"
     table "^4.0.1"
 
-stylelint@^8.0.0, stylelint@^8.4.0:
+stylelint@^8.4.0:
   version "8.4.0"
   resolved "https://registry.yarnpkg.com/stylelint/-/stylelint-8.4.0.tgz#c2dbaeb17236917819f9206e1c0df5fddf6f83c3"
   dependencies:
@@ -7766,7 +7752,7 @@ tryit@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/tryit/-/tryit-1.0.3.tgz#393be730a9446fd1ead6da59a014308f36c289cb"
 
-ts-jest@^22.4.2:
+ts-jest@^22.4.1:
   version "22.4.2"
   resolved "https://registry.yarnpkg.com/ts-jest/-/ts-jest-22.4.2.tgz#2137bc0899b14dfb1d58257ee10b18ab8a2d92c5"
   dependencies:
@@ -7814,11 +7800,7 @@ tslint-config-prettier@^1.8.0:
   version "1.10.0"
   resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.10.0.tgz#5063c413d43de4f6988c73727f65ecfc239054ec"
 
-tslint-config-prettier@^1.9.0:
-  version "1.9.0"
-  resolved "https://registry.yarnpkg.com/tslint-config-prettier/-/tslint-config-prettier-1.9.0.tgz#391887644b66de4623f745a6c85672405cbcdcee"
-
-tslint-eslint-rules@^5.0.0, tslint-eslint-rules@^5.1.0:
+tslint-eslint-rules@^5.0.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/tslint-eslint-rules/-/tslint-eslint-rules-5.1.0.tgz#3232b318da55dbb5a83e3f5d657c1ddbb27b9ff2"
   dependencies:
