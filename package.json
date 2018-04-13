@@ -8,7 +8,7 @@
     "lint": "npm-run-all -s generate-graphql-types -p -c common-check validate-queries lint-js lint-ts lint-schema find-breaking-schema-changes check-ts",
     "clean-clients": "del-cli clients",
     "pretest": "run-s lint clean-clients",
-    "test": "jest --colors",
+    "test": "TZ=UTC jest --colors",
     "find-breaking-schema-changes": "node -r 'ts-node/register' src/scripts/findBreakingSchemaChanges.ts",
     "validate-queries": "graphql-validator -s './schema.graphql' '{src,clients}/**/*.graphql'",
     "lint-schema": "graphql-schema-linter schema.graphql",
