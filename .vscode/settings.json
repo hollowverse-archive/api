@@ -1,10 +1,25 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
   "files.exclude": {
-    "**/node_modules": true
+    "**/node_modules": true,
+    "**/node_modules/**": true
   },
   "cSpell.words": [
     "hollowverse",
-    "typeorm"
-  ]
+    "typeorm",
+    "loglevel",
+    "promisify",
+    "webpagetest"
+  ],
+  "editor.tabSize": 2,
+  "editor.formatOnSave": true,
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "typescript.implementationsCodeLens.enabled": true,
+  "typescript.referencesCodeLens.enabled": true,
+  "files.associations": {
+    ".gqlconfig": "javascript",
+    ".stylelintrc": "json"
+  }
 }
