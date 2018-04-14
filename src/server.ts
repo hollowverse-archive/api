@@ -53,14 +53,14 @@ api.use(
   }),
 );
 
-api.use('/', health);
+const playground = playgroundExpress({
+  endpoint: '/graphql',
+});
 
-api.get(
-  '/playground',
-  playgroundExpress({
-    endpoint: '/graphql',
-  }),
-);
+api.get('/playground', playground);
+api.get('/', playground);
+
+api.use('/health', health);
 
 const PORT = process.env.PORT || 8080;
 
@@ -79,10 +79,8 @@ const startServer = async () => {
   );
 
   const server = api.listen(PORT, () => {
-    loggy.info(`API server started on http://localhost:${PORT}`);
-    loggy.info(
-      `API playground accessible on http://localhost:${PORT}/playground`,
-    );
+    loggy.info('API server started');
+    loggy.info(`API playground accessible on http://localhost:${PORT}/`);
     loggy.info(`API endpoint accessible on http://localhost:${PORT}/graphql`);
   });
 
@@ -106,16 +104,16 @@ startServer().catch(error => {
 
        * A development database is running with the same
          development configuration defined in ./src/database/connection.ts
-      
+
          if you haven't created a database for the API before, run:
 
           docker run -d --network=host -p 3306 --name=hollowverse-db \\
             -e MYSQL_ROOT_PASSWORD=123456 -e MYSQL_DATABASE=hollowverse mysql
 
          if you have created a database before but it's not running, run:
-            
+
           docker start hollowverse-db
-          
+
        * The port ${PORT} is not used by another program. If you are not sure,
          try running this command again with a custom port:
 
