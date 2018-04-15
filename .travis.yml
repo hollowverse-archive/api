@@ -13,6 +13,8 @@ script:
     --link database:database
     -v $(pwd):/repo
     -e CI=true
+    -e TERM=xterm-256color
+    -e FORCE_COLOR=true
     -e TEST_DB_HOST=database
     -e TEST_DB_PORT=3306
     -e PROJECT=hollowverse-api
