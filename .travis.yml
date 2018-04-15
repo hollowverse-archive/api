@@ -13,9 +13,9 @@ script:
     --link database:database
     -v $(pwd):/repo
     -e CI=true
+    -e FORCE_COLOR=true
     -e TEST_DB_HOST=database
     -e TEST_DB_PORT=3306
-    -e TERM=xterm-256color
     -e PROJECT=hollowverse-api
     -e BRANCH=$TRAVIS_BRANCH
     -e COMMIT_ID=$TRAVIS_COMMIT
