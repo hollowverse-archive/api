@@ -1,0 +1,38 @@
+service: route-request
+
+plugins:
+  - serverless-webpack
+
+custom:
+  webpack:
+    webpackConfig: webpack.config.ts
+    packager: yarn
+    includeModules:
+      forceExclude:
+        - 'aws-sdk'
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  stage: ${opt:stage, 'development'}
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - elasticbeanstalk:Describe*
+        - apigateway:GET
+        - apigateway:HEAD
+      Resource: "*"
+
+functions:
+  serveApi:
+    memorySize: 1024
+    timeout: 5
+    handler: src/serveApi.serveApi
+
+package:
+  individually: true
+  include:
+    - src/**
+  exclude:
+    - .webpack
+
