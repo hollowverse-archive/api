@@ -41,9 +41,6 @@ node_modules/
 # Builds
 dist
 
-# Editor configs
-.vscode
-
 secrets/**/*
 !secrets/**/*.enc
 !secrets/**/*.d.ts
@@ -59,3 +56,8 @@ build.zip
 src/typings/schema.ts
 schema.json
 clients
+build
+# Created by Serverless
+.build
+.webpack
+.serverless

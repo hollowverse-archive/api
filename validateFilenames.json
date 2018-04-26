@@ -1,0 +1,27 @@
+{
+  "rules": [
+    {
+      "validation": "camelCase",
+      "patterns": ["**/*"]
+    },
+    {
+      "validation": "PascalCase",
+      "patterns": ["src/database/entities/**/*.ts"]
+    },
+    {
+      "validation": "ignore",
+      "patterns": [
+        "**/typings/**/*",
+        "**/__tests__/**/*",
+        "**/__mocks__/**/*",
+        "**/__snapshots__/**/*",
+        "**/docker-compose.yml",
+        "**/Dockerfile*",
+        "**/LICENSE",
+        "**/README.md",
+        "gql-gen.json",
+        "src/database/migrations/**/*.ts"
+      ]
+    }
+  ]
+}
