@@ -4,6 +4,7 @@ import { createConnection, ConnectionOptions } from 'typeorm';
 import { readJson } from '../helpers/readFile';
 import { isUsingProductionDatabase, isProd } from '../env';
 import { entities } from './entities';
+import faker from 'faker';
 
 const {
   // These variables are for the development database
@@ -65,6 +66,7 @@ const getConfig = async (): Promise<ConnectionOptions> => {
   return {
     type: 'mysql',
     ...databaseConfig,
+    name: faker.random.alphaNumeric(10),
     synchronize: false,
     dropSchema: false,
     migrationsRun: false,

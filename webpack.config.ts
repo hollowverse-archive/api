@@ -1,8 +1,11 @@
 // tslint:disable:no-implicit-dependencies
 import webpack from 'webpack';
+// @ts-ignore
 import slsw from 'serverless-webpack';
 import path from 'path';
 import nodeExternals from 'webpack-node-externals';
+// @ts-ignore
+import CopyWebpackPlugin from 'copy-webpack-plugin';
 import { isProd } from '@hollowverse/utils/helpers/env';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
 
@@ -11,6 +14,9 @@ module.exports = {
   entry: slsw.lib.entries,
   target: 'node',
   devtool: 'source-map',
+  node: {
+    __dirname: true,
+  },
   output: {
     libraryTarget: 'commonjs',
     path: path.resolve(__dirname, '.webpack'),
@@ -47,6 +53,15 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  plugins: [new webpack.WatchIgnorePlugin([/node_modules/])],
+  plugins: [
+    // @ts-ignore
+    new CopyWebpackPlugin([
+      {
+        from: 'src/schema.graphql',
+        to: './src',
+      },
+    ]),
+    new webpack.WatchIgnorePlugin([/node_modules/]),
+  ],
   externals: [nodeExternals()],
 };

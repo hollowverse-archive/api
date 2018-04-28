@@ -2,6 +2,10 @@ service: route-request
 
 plugins:
   - serverless-webpack
+  # - serverless-plugin-typescript
+  - serverless-offline
+  - serverless-apigw-binary
+  - serverless-content-encoding
 
 custom:
   webpack:
@@ -10,11 +14,19 @@ custom:
     includeModules:
       forceExclude:
         - 'aws-sdk'
+  apigwBinary:
+    types:
+      - '*/*'
+  contentEncoding:
+    minimumCompressionSize: 0
 
 provider:
   name: aws
   runtime: nodejs8.10
   stage: ${opt:stage, 'development'}
+  region: us-east-1
+  environment:
+    NODE_ENV: ${env:NODE_ENV, self:provider.stage}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -28,6 +40,10 @@ functions:
     memorySize: 1024
     timeout: 5
     handler: src/serveApi.serveApi
+    events:
+      - http:
+          method: ANY
+          path: /{proxy+}
 
 package:
   individually: true

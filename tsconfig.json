@@ -1,17 +1,14 @@
 {
   "extends": "./node_modules/@hollowverse/config/typescript/tsconfig.json",
   "compilerOptions": {
-    "lib": [
-      "es2016",
-      "es2017.object",
-      "dom"
-    ],
+    "lib": ["es2016", "es2017.object"],
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "strictPropertyInitialization": false
+    "strictPropertyInitialization": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "checkJs": false,
+    "allowJs": false
   },
-  "exclude": [
-    "dist",
-    "node_modules"
-  ]
+  "exclude": ["dist", "node_modules"]
 }

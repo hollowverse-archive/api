@@ -73,3 +73,5 @@ export const createApiServer = async () => {
 
   return api;
 };
+
+export const apiServer = createApiServer();

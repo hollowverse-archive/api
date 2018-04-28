@@ -12,7 +12,7 @@ const MASTER_SCHEMA_URL =
   try {
     const [referenceSchema, updatedSchema] = (await Promise.all([
       got(MASTER_SCHEMA_URL).then(response => response.body),
-      readFile('schema.graphql', 'utf8'),
+      readFile('src/schema.graphql', 'utf8'),
     ])).map(buildSchema);
 
     const breakingChanges = findBreakingChanges(referenceSchema, updatedSchema);
