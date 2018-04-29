@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+// @ts-check
+
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-disable no-console */
 const shelljs = require('shelljs');

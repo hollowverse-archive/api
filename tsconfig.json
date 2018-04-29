@@ -7,8 +7,8 @@
     "strictPropertyInitialization": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
-    "checkJs": true,
-    "allowJs": true
+    "checkJs": false,
+    "allowJs": false
   },
   "exclude": ["dist", "node_modules"]
 }
