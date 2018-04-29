@@ -10,17 +10,8 @@ const {
 const {
   executeCommandsInParallel,
 } = require('@hollowverse/utils/helpers/executeCommandsInParallel');
-const { writeJsonFile } = require('@hollowverse/utils/helpers/writeJsonFile');
-const { createZipFile } = require('@hollowverse/utils/helpers/createZipFile');
 
-const {
-  ENC_PASS_DB,
-  ENC_PASS_FB,
-  IS_PULL_REQUEST,
-  PROJECT,
-  BRANCH,
-  COMMIT_ID,
-} = shelljs.env;
+const { ENC_PASS_DB, ENC_PASS_FB, IS_PULL_REQUEST, BRANCH } = shelljs.env;
 
 const isPullRequest = IS_PULL_REQUEST !== 'false';
 
@@ -34,8 +25,6 @@ const secrets = [
     decryptedFilename: 'facebookApp.json',
   },
 ];
-
-const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
   const buildCommands = [
@@ -60,29 +49,8 @@ async function main() {
     'yarn build',
   ];
   const deploymentCommands = [
-    () =>
-      writeJsonFile('env.json', {
-        BRANCH,
-        COMMIT_ID,
-      }),
     () => decryptSecrets(secrets, './secrets'),
-    () =>
-      createZipFile(
-        'build.zip',
-        [
-          'schema.graphql',
-          'dist/**/*',
-          'secrets/**/*',
-          'yarn.lock',
-          'package.json',
-          'env.json',
-          'Dockerfile',
-          '.dockerignore',
-        ],
-        ['secrets/**/*.enc'],
-      ),
-    `eb use ${ebEnvironmentName}`,
-    'eb deploy --staged --debug --timeout 15',
+    'NODE_ENV=production yarn serverless deploy --stage development',
   ];
 
   let isDeployment = false;

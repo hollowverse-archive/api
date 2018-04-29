@@ -31,5 +31,5 @@
     "reportUnusedDisableDirectives": true
   },
   "eslint.validate": ["typescript", "typescriptreact"],
-  "eslint.enable": false
+  "eslint.enable": true
 }

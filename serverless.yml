@@ -1,4 +1,4 @@
-service: route-request
+service: api
 
 plugins:
   - serverless-webpack
@@ -27,6 +27,13 @@ provider:
   region: us-east-1
   environment:
     NODE_ENV: ${env:NODE_ENV, self:provider.stage}
+    TYPEORM_DATABASE: ${file(./secrets/db.${self:provider.stage}.json):database, 'hollowverse-db'}
+    TYPEORM_HOST: ${file(./secrets/db.${self:provider.stage}.json):host, 'localhost'}
+    TYPEORM_PORT: ${file(./secrets/db.${self:provider.stage}.json):port, 3306}
+    TYPEORM_USERNAME: ${file(./secrets/db.${self:provider.stage}.json):username, 'root'}
+    TYPEORM_PASSWORD: ${file(./secrets/db.${self:provider.stage}.json):password, '123456'}
+    FB_APP_ID: ${file(./secrets/facebookApp.json):id}
+    FB_APP_ACCESS_TOKEN: ${file(./secrets/facebookApp.json):accessToken}
   iamRoleStatements:
     - Effect: Allow
       Action:

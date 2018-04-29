@@ -11,6 +11,11 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
 
   constructor(connection: Connection, config: FacebookAppConfig) {
     this.connection = connection;
+
+    if (!config.id || !config.accessToken) {
+      throw new TypeError('Missing configuration for Facebook app');
+    }
+
     this.appAccessToken = config.accessToken;
     this.appId = config.id;
   }

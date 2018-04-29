@@ -1,7 +1,7 @@
 import awsServerlessExpress from 'aws-serverless-express';
-import { apiServer } from './server';
+import { createApiServer } from './server';
 
-const serverPromise = apiServer.then(expressApp =>
+const serverPromise = createApiServer().then(expressApp =>
   awsServerlessExpress.createServer(expressApp as any, undefined, ['*/*']),
 );
 

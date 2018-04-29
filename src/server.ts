@@ -6,10 +6,11 @@ import playgroundExpress from 'graphql-playground-middleware-express';
 
 import { redirectToHttps } from './redirectToHttps';
 import { connectionPromise } from './database/connection';
-import { isProd } from './env';
+import { isProd } from '@hollowverse/utils/helpers/env';
 import { createApiRouter } from './createApiServer';
 import { FacebookAuthProvider } from './authProvider/facebookAuthProvider';
-import { readJson } from './helpers/readFile';
+
+const { FB_APP_ID, FB_APP_ACCESS_TOKEN } = process.env;
 
 export const createApiServer = async () => {
   const api = express();
@@ -59,19 +60,17 @@ export const createApiServer = async () => {
   api.get('/', playground);
 
   const connection = await connectionPromise;
-  const facebookAppConfig = await readJson<FacebookAppConfig>(
-    'secrets/facebookApp.json',
-  );
 
   api.use(
     '/graphql',
     createApiRouter({
       connection,
-      authProvider: new FacebookAuthProvider(connection, facebookAppConfig),
+      authProvider: new FacebookAuthProvider(connection, {
+        accessToken: FB_APP_ACCESS_TOKEN,
+        id: FB_APP_ID,
+      }),
     }),
   );
 
   return api;
 };
-
-export const apiServer = createApiServer();
