@@ -4,7 +4,6 @@ import helmet from 'helmet';
 import moment from 'moment';
 import playgroundExpress from 'graphql-playground-middleware-express';
 
-import { redirectToHttps } from './redirectToHttps';
 import { connectionPromise } from './database/connection';
 import { isProd } from '@hollowverse/utils/helpers/env';
 import { createApiRouter } from './createApiServer';
@@ -20,8 +19,6 @@ export const createApiServer = async () => {
       origin: isProd ? ['https://hollowverse.com', /\.hollowverse\.com$/] : '*',
     }),
   );
-
-  api.use(redirectToHttps);
 
   api.use(
     helmet({
