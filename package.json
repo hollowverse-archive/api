@@ -25,7 +25,7 @@
     "clean": "del-cli '.serverless' '.webpack'",
     "validate-filenames": "validate-filenames",
     "lint-staged": "lint-staged",
-    "deploy": "node ./deploy.js",
+    "deploy": "babel-node ./deploy.js",
     "pre-push": "yarn pretest",
     "pre-commit": "yarn common-check",
     "common-check": "run-p -l -c --aggregate-output validate-filenames 'clown check' check-integrity",
