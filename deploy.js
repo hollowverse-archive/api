@@ -52,12 +52,15 @@ async function main() {
   ];
   const deploymentCommands = [
     () => decryptSecrets(secrets, './secrets'),
-    'NODE_ENV=production yarn serverless deploy --stage development',
+    'NODE_ENV=production yarn serverless deploy --stage production',
   ];
 
   let isDeployment = false;
   if (isPullRequest === true) {
     console.info('Skipping deployment commands in PRs');
+    buildCommands.push(
+      'NODE_ENV=production yarn serverless package --stage production',
+    );
   } else if (secrets.some(secret => secret.password === undefined)) {
     console.info(
       'Skipping deployment commands because some secrets are not provided',
