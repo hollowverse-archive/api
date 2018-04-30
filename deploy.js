@@ -48,7 +48,6 @@ async function main() {
         ),
       ),
     'yarn test',
-    'yarn build',
   ];
   const deploymentCommands = [
     () => decryptSecrets(secrets, './secrets'),
