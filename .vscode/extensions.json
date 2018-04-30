@@ -2,7 +2,6 @@
   "recommendations": [
     "kumar-harsh.graphql-for-vscode",
     "streetsidesoftware.code-spell-checker",
-    "eg2.tslint",
     "esbenp.prettier-vscode",
     "christian-kohler.path-intellisense",
     "christian-kohler.npm-intellisense",
@@ -10,6 +9,10 @@
     "EditorConfig.editorconfig",
     "kisstkondoros.csstriggers",
     "Orta.vscode-jest",
-    "asvetliakov.snapshot-tools"
+    "asvetliakov.snapshot-tools",
+    "codezombiech.gitignore",
+    "pflannery.vscode-versionlens",
+    "dbaeumer.vscode-eslint",
+    "eg2.ts-tslint"
   ]
 }

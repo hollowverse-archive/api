@@ -5,10 +5,12 @@
     "**/node_modules/**": true
   },
   "cSpell.words": [
+    "Serverless",
     "hollowverse",
-    "typeorm",
     "loglevel",
     "promisify",
+    "typeorm",
+    "unhandledrejection",
     "webpagetest"
   ],
   "editor.tabSize": 2,
@@ -20,6 +22,14 @@
   "typescript.referencesCodeLens.enabled": true,
   "files.associations": {
     ".gqlconfig": "javascript",
-    ".stylelintrc": "json"
-  }
+    ".stylelintrc": "json",
+    "**/.babelrc": "jsonc",
+    "**/.babelrc.json": "jsonc",
+    "**/tsconfig.json": "jsonc"
+  },
+  "eslint.options": {
+    "reportUnusedDisableDirectives": true
+  },
+  "eslint.validate": ["typescript", "typescriptreact"],
+  "eslint.enable": true
 }

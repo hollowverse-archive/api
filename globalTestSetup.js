@@ -30,8 +30,6 @@ module.exports = async () => {
   if (!process.env.CI) {
     const delay = bluebird.delay(1500).then(() => {
       if (!hasConnected) {
-        process.env.DELAY_EXCEEDED = 'true';
-
         console.info('\n');
         console.info(stripIndent`
           Waiting for MySQL server on port ${DB_PORT}...

@@ -11,9 +11,9 @@ import { NotablePersonLabel } from '../database/entities/NotablePersonLabel';
 import { EventLabel } from '../database/entities/EventLabel';
 import faker from 'faker';
 import { times, take, uniqBy } from 'lodash';
-import { isUsingProductionDatabase } from '../env';
+import { isProd } from '@hollowverse/utils/helpers/env';
 
-if (isUsingProductionDatabase === false) {
+if (isProd === false) {
   faker.seed(Number(process.env.SEED) || 1);
   connectionPromise
     .then(async db =>

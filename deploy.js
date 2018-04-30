@@ -1,5 +1,7 @@
 #! /usr/bin/env node
 
+// @ts-check
+
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-disable no-console */
 const shelljs = require('shelljs');
@@ -10,17 +12,8 @@ const {
 const {
   executeCommandsInParallel,
 } = require('@hollowverse/utils/helpers/executeCommandsInParallel');
-const { writeJsonFile } = require('@hollowverse/utils/helpers/writeJsonFile');
-const { createZipFile } = require('@hollowverse/utils/helpers/createZipFile');
 
-const {
-  ENC_PASS_DB,
-  ENC_PASS_FB,
-  IS_PULL_REQUEST,
-  PROJECT,
-  BRANCH,
-  COMMIT_ID,
-} = shelljs.env;
+const { ENC_PASS_DB, ENC_PASS_FB, IS_PULL_REQUEST, BRANCH } = shelljs.env;
 
 const isPullRequest = IS_PULL_REQUEST !== 'false';
 
@@ -34,8 +27,6 @@ const secrets = [
     decryptedFilename: 'facebookApp.json',
   },
 ];
-
-const ebEnvironmentName = `${PROJECT}-${BRANCH}`;
 
 async function main() {
   const buildCommands = [
@@ -57,37 +48,18 @@ async function main() {
         ),
       ),
     'yarn test',
-    'yarn build',
   ];
   const deploymentCommands = [
-    () =>
-      writeJsonFile('env.json', {
-        BRANCH,
-        COMMIT_ID,
-      }),
     () => decryptSecrets(secrets, './secrets'),
-    () =>
-      createZipFile(
-        'build.zip',
-        [
-          'schema.graphql',
-          'dist/**/*',
-          'secrets/**/*',
-          'yarn.lock',
-          'package.json',
-          'env.json',
-          'Dockerfile',
-          '.dockerignore',
-        ],
-        ['secrets/**/*.enc'],
-      ),
-    `eb use ${ebEnvironmentName}`,
-    'eb deploy --staged --debug --timeout 15',
+    'NODE_ENV=production yarn serverless deploy --stage production',
   ];
 
   let isDeployment = false;
   if (isPullRequest === true) {
     console.info('Skipping deployment commands in PRs');
+    buildCommands.push(
+      'NODE_ENV=production yarn serverless package --stage production',
+    );
   } else if (secrets.some(secret => secret.password === undefined)) {
     console.info(
       'Skipping deployment commands because some secrets are not provided',
