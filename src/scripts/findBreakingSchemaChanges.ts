@@ -4,7 +4,7 @@ import { readFile } from '../helpers/readFile';
 import got from 'got';
 
 const MASTER_SCHEMA_URL =
-  'https://raw.githubusercontent.com/hollowverse/api/master/schema.graphql';
+  'https://raw.githubusercontent.com/hollowverse/api/master/src/schema.graphql';
 
 // tslint:disable no-console
 // tslint:disable-next-line no-floating-promises
