@@ -13,18 +13,24 @@ const {
   executeCommandsInParallel,
 } = require('@hollowverse/utils/helpers/executeCommandsInParallel');
 
-const { ENC_PASS_DB, ENC_PASS_FB, IS_PULL_REQUEST, BRANCH } = shelljs.env;
+const {
+  ENC_PASS_DB,
+  ENC_PASS_FB,
+  IS_PULL_REQUEST,
+  BRANCH,
+  STAGE = 'development',
+} = shelljs.env;
 
 const isPullRequest = IS_PULL_REQUEST !== 'false';
 
 const secrets = [
   {
     password: ENC_PASS_DB,
-    decryptedFilename: 'db.production.json',
+    decryptedFilename: `db.${STAGE}.json`,
   },
   {
     password: ENC_PASS_FB,
-    decryptedFilename: 'facebookApp.json',
+    decryptedFilename: `facebookApp.${STAGE}.json`,
   },
 ];
 
@@ -51,7 +57,8 @@ async function main() {
   ];
   const deploymentCommands = [
     () => decryptSecrets(secrets, './secrets'),
-    'NODE_ENV=production yarn serverless deploy --stage production',
+    `yarn serverless create_domain --stage ${STAGE}`,
+    `NODE_ENV=production yarn serverless deploy --aws-s3-accelerate --stage ${STAGE}`,
   ];
 
   let isDeployment = false;
