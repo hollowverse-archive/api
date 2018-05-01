@@ -24,7 +24,4 @@ export const connectionPromise = createConnection({
   port: Number(TYPEORM_PORT),
   username: TYPEORM_USERNAME,
   password: TYPEORM_PASSWORD,
-  migrations: isProd
-    ? ['dist/database/migrations/*.js']
-    : ['src/database/migrations/*.ts'],
 });
