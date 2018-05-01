@@ -13,7 +13,7 @@ custom:
       - api-dev.hollowverse.com
     production:
       - api.hollowverse.com
-      - live-api.hollowverse.com
+      - cached-api.hollowverse.com
 
   customDomain:
     domainName: api-apigw-${self:provider.stage}.hollowverse.com
