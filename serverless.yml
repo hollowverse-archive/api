@@ -50,8 +50,8 @@ provider:
     TYPEORM_PORT: ${file(./secrets/db.${self:provider.stage}.json):port, '3306'}
     TYPEORM_USERNAME: ${file(./secrets/db.${self:provider.stage}.json):username, 'root'}
     TYPEORM_PASSWORD: ${file(./secrets/db.${self:provider.stage}.json):password, '123456'}
-    FB_APP_ID: ${file(./secrets/facebookApp.json):id}
-    FB_APP_ACCESS_TOKEN: ${file(./secrets/facebookApp.json):accessToken}
+    FB_APP_ID: ${file(./secrets/facebookApp.${self:provider.stage}.json):id}
+    FB_APP_ACCESS_TOKEN: ${file(./secrets/facebookApp.${self:provider.stage}.json):accessToken}
 
 functions:
   serveApi:
