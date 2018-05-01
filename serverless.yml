@@ -5,8 +5,24 @@ plugins:
   - serverless-offline
   - serverless-apigw-binary
   - serverless-content-encoding
+  - serverless-domain-manager
 
 custom:
+  aliases:
+    development:
+      - api-dev.hollowverse.com
+    production:
+      - api.hollowverse.com
+      - live-api.hollowverse.com
+
+  customDomain:
+    domainName: api-apigw-${self:provider.stage}.hollowverse.com
+    stage: ${self:provider.stage}
+    basePath: ''
+    createRoute53Record: true
+    endpointType: ${self:provider.endpointType}
+    enabled: true
+
   webpack:
     webpackConfig: webpack.config.ts
     packager: yarn
@@ -26,6 +42,7 @@ provider:
   runtime: nodejs8.10
   stage: ${opt:stage, 'development'}
   region: us-east-1
+  endpointType: regional
   environment:
     NODE_ENV: ${env:NODE_ENV, self:provider.stage}
     TYPEORM_DATABASE: ${file(./secrets/db.${self:provider.stage}.json):database, 'hollowverse'}
@@ -39,7 +56,7 @@ provider:
 functions:
   serveApi:
     memorySize: 1024
-    timeout: 60
+    timeout: 5
     handler: src/serveApi.serveApi
     reservedConcurrency: 100
     vpc:
@@ -63,3 +80,53 @@ package:
   exclude:
     - .webpack
 
+
+# Reference: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-product-property-reference.html
+resources:
+   Resources:
+      WebsiteDistribution:
+        Type: 'AWS::CloudFront::Distribution'
+        Properties:
+          DistributionConfig:
+            DefaultCacheBehavior:
+              TargetOriginId: 'ApiOrigin'
+              ViewerProtocolPolicy: 'redirect-to-https'
+              MinTTL: 0
+              AllowedMethods:
+                - GET
+                - HEAD
+                - OPTIONS
+                - POST
+                - PUT
+                - PATCH
+                - DELETE
+              CachedMethods:
+                - GET
+                - HEAD
+                - OPTIONS
+              Compress: true
+              ForwardedValues:
+                Headers:
+                  - Origin
+                  - Authorization
+                QueryString: true
+                Cookies:
+                  Forward: 'whitelist'
+                  WhitelistedNames:
+                    - query
+                    - operationName
+                    - variables
+            Enabled: true
+            PriceClass: 'PriceClass_100'
+            HttpVersion: 'http2'
+            Aliases: ${self:custom.aliases.${self:provider.stage}}
+            ViewerCertificate:
+              AcmCertificateArn: 'arn:aws:acm:us-east-1:251013100663:certificate/ed3ed857-b82f-4e9e-a4ab-9befb2c5e650'
+              MinimumProtocolVersion: TLSv1.1_2016
+              SslSupportMethod: sni-only
+            Origins:
+              -
+                Id: 'ApiOrigin'
+                DomainName: ${self:custom.customDomain.domainName}
+                CustomOriginConfig:
+                  OriginProtocolPolicy: 'https-only'
