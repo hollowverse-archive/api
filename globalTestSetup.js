@@ -1,8 +1,8 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-disable no-console */
 const { stripIndent } = require('common-tags');
-// @ts-ignore
 const waitForMySql = require('wait-for-mysql');
+const loggy = require('loggy');
 const bluebird = require('bluebird');
 
 module.exports = async () => {
@@ -30,8 +30,8 @@ module.exports = async () => {
   if (!process.env.CI) {
     const delay = bluebird.delay(1500).then(() => {
       if (!hasConnected) {
-        console.info('\n');
-        console.info(stripIndent`
+        process.stdout.write('\n');
+        loggy.info(stripIndent`
           Waiting for MySQL server on port ${DB_PORT}...
           This server will be used to create temporary databases for running the
           tests.

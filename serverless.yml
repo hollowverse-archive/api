@@ -35,19 +35,13 @@ provider:
     TYPEORM_PASSWORD: ${file(./secrets/db.${self:provider.stage}.json):password, '123456'}
     FB_APP_ID: ${file(./secrets/facebookApp.json):id}
     FB_APP_ACCESS_TOKEN: ${file(./secrets/facebookApp.json):accessToken}
-  iamRoleStatements:
-    - Effect: Allow
-      Action:
-        - elasticbeanstalk:Describe*
-        - apigateway:GET
-        - apigateway:HEAD
-      Resource: "*"
 
 functions:
   serveApi:
     memorySize: 1024
     timeout: 60
     handler: src/serveApi.serveApi
+    reservedConcurrency: 100
     vpc:
       securityGroupIds:
         - sg-f19e9ab8

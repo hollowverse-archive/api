@@ -2,6 +2,7 @@
   "scripts": {
     "check-ts": "tsc --project ./src --noEmit",
     "pre-commit": "yarn common-check",
-    "pre-push": "yarn pretest"
+    "pre-push": "yarn pretest",
+    "lint-ts": "run-p -c --aggregate-output 'lint-ts/*'"
   }
 }
