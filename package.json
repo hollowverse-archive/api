@@ -19,7 +19,7 @@
     "generate-types-from-template": "gql-gen --file ./schema.json --project src/typings",
     "generate-graphql-types": "run-s introspect-schema generate-types-from-template",
     "generate-graphql-types/dev": "nodemon -q --watch src/schema.graphql --exec 'run-p generate-graphql-types'",
-    "server/dev": "NODE_ENV=development serverless offline start --dontPrintOutput",
+    "server/dev": "NODE_ENV=development serverless offline start --watch --skipCacheInvalidation --dontPrintOutput",
     "dev": "npm-run-all -s generate-graphql-types -p '*/dev'",
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
     "clean": "del-cli '.serverless' '.webpack'",
@@ -28,7 +28,7 @@
     "deploy": "babel-node ./deploy.js",
     "pre-push": "yarn pretest",
     "pre-commit": "yarn common-check",
-    "common-check": "run-p -l -c --aggregate-output validate-filenames 'clown check' check-integrity",
+    "common-check": "run-p -c --aggregate-output validate-filenames 'clown check' check-integrity",
     "tslint": "yarn lint-ts",
     "jest": "TZ=UTC NODE_ENV=test jest",
     "clown": "clown",
@@ -62,7 +62,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "run-p -l -c --aggregate-output lint-staged pre-commit",
+      "pre-commit": "run-p -c --aggregate-output lint-staged pre-commit",
       "pre-push": "yarn pre-push",
       "post-merge": "yarnhook",
       "post-checkout": "yarnhook",
@@ -74,8 +74,8 @@
     "babel-core": "^7.0.0-bridge.0"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.0.0-beta.44",
-    "@babel/runtime": "^7.0.0-beta.44",
+    "@babel/polyfill": "^7.0.0-beta.46",
+    "@babel/runtime": "^7.0.0-beta.46",
     "@hollowverse/class-sanitizer": "^0.1.2",
     "@hollowverse/utils": "^6.0.0",
     "apollo-server-express": "^1.3.2",
@@ -101,20 +101,21 @@
     "node-vibrant": "^3.0.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "^0.1.12",
-    "validator": "^9.0.0"
+    "validator": "^9.0.0",
+    "wait-for-mysql": "^1.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.44",
-    "@babel/core": "^7.0.0-beta.44",
-    "@babel/node": "^7.0.0-beta.44",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.44",
-    "@babel/plugin-transform-runtime": "^7.0.0-beta.44",
-    "@babel/preset-env": "^7.0.0-beta.44",
+    "@babel/cli": "^7.0.0-beta.46",
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/node": "^7.0.0-beta.46",
+    "@babel/plugin-transform-runtime": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
+    "@babel/preset-stage-3": "^7.0.0-beta.46",
     "@creditkarma/graphql-loader": "^0.7.1",
     "@creditkarma/graphql-validator": "^0.5.0",
     "@forabi/graphql-request": "^1.6.8",
     "@hollowverse/clown": "^3.1.1",
-    "@hollowverse/config": "^29.0.0",
+    "@hollowverse/config": "^31.0.0",
     "@hollowverse/validate-filenames": "^3.0.2",
     "@playlyfe/gql": "^2.6.0",
     "@types/aws-serverless-express": "^3.0.1",
@@ -152,7 +153,7 @@
     "graphql-tag": "^2.8.0",
     "husky": "^1.0.0-rc.1",
     "jest": "^22.4.2",
-    "lint-staged": "^7.0.4",
+    "lint-staged": "^7.0.5",
     "nodemon": "^1.11.0",
     "npm-run-all": "^4.1.2",
     "prettier": "^1.12.0",
@@ -176,7 +177,6 @@
     "typescript-eslint-parser": "^15.0.0",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "uuid": "^3.1.0",
-    "wait-for-mysql": "^1.0.0",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.15",
     "webpack-node-externals": "^1.7.2",
@@ -188,7 +188,6 @@
   "jest": {
     "globals": {
       "ts-jest": {
-        "skipBabel": false,
         "useBabelrc": true
       }
     },
