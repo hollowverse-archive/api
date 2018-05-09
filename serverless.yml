@@ -53,9 +53,11 @@ provider:
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Resource:
-        - "${self:custom.secretsArnPrefix}/database"
-        - "${self:custom.secretsArnPrefix}/facebookApp"
+      Conditions:
+        StringEquals:
+          SecretId:
+            - ${self:provider.stage}/database
+            - ${self:provider.stage}/facebookApp
 
 functions:
   serveApi:
