@@ -5,7 +5,6 @@
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
 /* eslint-disable no-console */
 const shelljs = require('shelljs');
-const { decryptSecrets } = require('@hollowverse/utils/helpers/decryptSecrets');
 const {
   executeCommands,
 } = require('@hollowverse/utils/helpers/executeCommands');
@@ -13,26 +12,9 @@ const {
   executeCommandsInParallel,
 } = require('@hollowverse/utils/helpers/executeCommandsInParallel');
 
-const {
-  ENC_PASS_DB,
-  ENC_PASS_FB,
-  IS_PULL_REQUEST,
-  BRANCH,
-  STAGE = 'development',
-} = shelljs.env;
+const { IS_PULL_REQUEST, BRANCH, STAGE = 'development' } = shelljs.env;
 
 const isPullRequest = IS_PULL_REQUEST !== 'false';
-
-const secrets = [
-  {
-    password: ENC_PASS_DB,
-    decryptedFilename: `db.${STAGE}.json`,
-  },
-  {
-    password: ENC_PASS_FB,
-    decryptedFilename: `facebookApp.${STAGE}.json`,
-  },
-];
 
 async function main() {
   const buildCommands = [
@@ -56,7 +38,6 @@ async function main() {
     'yarn test',
   ];
   const deploymentCommands = [
-    () => decryptSecrets(secrets, './secrets'),
     `yarn serverless create_domain --stage ${STAGE}`,
     `NODE_ENV=production yarn serverless deploy --aws-s3-accelerate --stage ${STAGE}`,
   ];
@@ -66,10 +47,6 @@ async function main() {
     console.info('Skipping deployment commands in PRs');
     buildCommands.push(
       'NODE_ENV=production yarn serverless package --stage production',
-    );
-  } else if (secrets.some(secret => secret.password === undefined)) {
-    console.info(
-      'Skipping deployment commands because some secrets are not provided',
     );
   } else if (BRANCH !== 'master') {
     console.info('Skipping deployment because it is not the master branch');

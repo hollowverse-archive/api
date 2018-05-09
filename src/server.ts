@@ -3,16 +3,21 @@ import cors from 'cors';
 import helmet from 'helmet';
 import moment from 'moment';
 import playgroundExpress from 'graphql-playground-middleware-express';
+import { readAwsSecretStringForStage } from '@hollowverse/utils/helpers/readAwsSecretStringForStage';
 
 import { connectionPromise } from './database/connection';
 import { isProd } from '@hollowverse/utils/helpers/env';
 import { createApiRouter } from './createApiServer';
 import { FacebookAuthProvider } from './authProvider/facebookAuthProvider';
 
-const { FB_APP_ID, FB_APP_ACCESS_TOKEN } = process.env;
-
 export const createApiServer = async () => {
   const api = express();
+  const facebookAppConfig: Promise<
+    FacebookAppConfig | undefined
+  > = readAwsSecretStringForStage('facebookApp').then(
+    secretString =>
+      secretString !== undefined ? JSON.parse(secretString) : undefined,
+  );
 
   api.use(
     cors({
@@ -62,10 +67,10 @@ export const createApiServer = async () => {
     '/graphql',
     createApiRouter({
       connection,
-      authProvider: new FacebookAuthProvider(connection, {
-        accessToken: FB_APP_ACCESS_TOKEN,
-        id: FB_APP_ID,
-      }),
+      authProvider: new FacebookAuthProvider(
+        connection,
+        await facebookAppConfig,
+      ),
     }),
   );
 

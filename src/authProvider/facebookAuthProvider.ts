@@ -9,7 +9,7 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
   private appId: string;
   private connection: Connection;
 
-  constructor(connection: Connection, config: FacebookAppConfig) {
+  constructor(connection: Connection, config: FacebookAppConfig = {}) {
     this.connection = connection;
 
     if (!config.id || !config.accessToken) {
