@@ -53,7 +53,7 @@ provider:
     - Effect: Allow
       Action:
         - secretsmanager:GetSecretValue
-      Conditions:
+      Condition:
         StringEquals:
           SecretId:
             - ${self:provider.stage}/database
