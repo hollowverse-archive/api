@@ -6,6 +6,6 @@
     "lint-ts": "run-p -c --aggregate-output 'lint-ts/*'"
   },
   "dependencies": {
-    "@hollowverse/utils": "^7.0.0"
+    "@hollowverse/utils": "^7.0.1"
   }
 }
