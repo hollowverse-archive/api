@@ -281,12 +281,17 @@ type Error {
   message: String!
 }
 
+enum ResultType {
+  success
+  error
+}
+
 type SuccessResult {
-  state: String!
+  state: ResultType!
 }
 
 type ErrorResult {
-  state: String!
+  state: ResultType!
   errors: [Error!]!
 }
 
