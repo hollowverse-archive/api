@@ -134,6 +134,8 @@ input EventsQueryInput {
 
 # A public figure or an influential person
 type NotablePerson {
+  id: ID!
+
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
 
@@ -242,6 +244,49 @@ type CreateNotablePersonPayload {
   name: String!
 }
 
+input SubmitNotablePersonEventInput {
+  # ID of notable person. Can be obtained using `notablePerson` query
+  notablePersonId: ID!
+
+  # Only `quote` is allowed for now
+  type: NotablePersonEventType!
+
+  # Required if the `type` is `quote`, optional otherwise
+  quote: String
+  # Required if the `type` is `quote`, optional otherwise
+  isQuoteByNotablePerson: Boolean
+
+  # The URL to webpage where this quote was found
+  sourceUrl: String!
+
+  # The date the event happened
+  happenedOn: DateOnly
+
+  # An organization, a campaign, a political event... etc.
+  organizationName: String
+
+  # The official website of the organization, campaign, political event... etc., if any
+  organizationWebsiteUrl: String
+
+  # Keywords/tags used to index this quote
+  labels: [String!]
+}
+
+type Error {
+  code: ApiErrorType!
+  message: String!
+}
+
+interface Result {
+  wasSuccessful: Boolean!
+  errors: [Error!]
+}
+
+type SubmitNotablePersonEventPayload implements Result {
+  wasSuccessful: Boolean!
+  errors: [Error!]
+}
+
 type RootMutation {
   # Create a new user using a valid Facebook access token
   # issued for the Hollowverse application.
@@ -253,6 +298,10 @@ type RootMutation {
   createNotablePerson(
     input: CreateNotablePersonInput!
   ): CreateNotablePersonPayload @requireOneOfRoles(roles: [EDITOR])
+
+  submitNotablePersonEvent(
+    input: SubmitNotablePersonEventInput!
+  ): SubmitNotablePersonEventPayload
 }
 
 schema {
