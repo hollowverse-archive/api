@@ -272,8 +272,12 @@ input SubmitNotablePersonEventInput {
   labels: [String!]
 }
 
+enum ErrorCode {
+  NOT_IMPLEMENTED
+}
+
 type Error {
-  code: ApiErrorType!
+  code: ErrorCode!
   message: String!
 }
 
@@ -301,7 +305,7 @@ type RootMutation {
 
   submitNotablePersonEvent(
     input: SubmitNotablePersonEventInput!
-  ): SubmitNotablePersonEventPayload
+  ): SubmitNotablePersonEventPayload @requireAuth
 }
 
 schema {
