@@ -60,7 +60,7 @@ provider:
 functions:
   serveApi:
     memorySize: 1024
-    timeout: 50
+    timeout: 5
     handler: src/serveApi.serveApi
     reservedConcurrency: 100
     vpc:
