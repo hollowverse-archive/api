@@ -31,5 +31,8 @@
     "reportUnusedDisableDirectives": true
   },
   "eslint.validate": ["typescript", "typescriptreact"],
-  "eslint.enable": true
+  "eslint.enable": true,
+  "[handlebars]": {
+    "editor.formatOnSave": false
+  }
 }

@@ -5,6 +5,8 @@ import { Email } from './scalars/email';
 import { Url } from './scalars/url';
 import { HexColor } from './scalars/hexColor';
 
+import { resolvers as resultResolvers } from './unions/result';
+
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
@@ -29,6 +31,10 @@ const scalarTypes = {
   HexColor,
 };
 
+const unionTypes = {
+  ...resultResolvers,
+};
+
 export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
@@ -40,17 +46,7 @@ export const resolvers = merge(
   viewerResolvers,
   photoResolvers,
   scalarTypes,
-  {
-    Result: {
-      __resolveType(obj: any) {
-        if (obj.state === 'success') {
-          return 'SuccessResult';
-        }
-
-        return 'ErrorResult';
-      },
-    },
-  },
+  unionTypes,
 );
 
 export const directiveResolvers = {

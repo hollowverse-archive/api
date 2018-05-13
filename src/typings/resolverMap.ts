@@ -1,4 +1,4 @@
-import { TypesMap, DirectiveMap } from './schema';
+import { TypesMap, DirectiveMap, UnionMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
 import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
@@ -44,6 +44,12 @@ type DirectiveResolver<Args, Context, Source = {}> = (
   info: GraphQLResolveInfo,
 ) => any;
 
+type UnionResolver<Union, PossibleTypeName, Context> = (
+  object: Union,
+  context: Context,
+  info: GraphQLResolveInfo,
+) => PossibleTypeName | Union;
+
 type BuiltInDirectives = 'pick' | 'include' | 'deprecated';
 
 type CustomDirectiveMap = {
@@ -58,4 +64,14 @@ export type DirectiveResolverMap = {
     DirectiveMap[DirectiveName]['args'],
     SchemaContext
   >
+};
+
+export type UnionResolverMap = {
+  [UnionName in keyof UnionMap]: {
+    __resolveType: UnionResolver<
+      UnionMap[UnionName]['unionType'],
+      UnionMap[UnionName]['possibleTypeNames'],
+      SchemaContext
+    >;
+  }
 };

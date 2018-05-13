@@ -113,12 +113,21 @@ export type TypesMap = {
 
 export type DirectiveMap = {
   {{#each definedDirectives}}
-  /** {{ description }} */ 
+  /** {{ description }} */
   {{ name }}: {
     args: {{# if hasArguments }}{{ toPascalCase name }}{{ toPascalCase ../name }}Args{{else}}{ }{{/if}};
   }
   {{/each}}
 };
+
+export type UnionMap = {
+  {{#each unions}}
+  {{ name }}: {
+    unionType: {{name}};
+    possibleTypeNames: {{#each possibleTypes}}'{{this}}'{{#unless @last}} | {{/unless}}{{/each}};
+  }
+  {{/each}}
+}
 
 {{#each definedDirectives}}
     {{#if hasArguments }}
