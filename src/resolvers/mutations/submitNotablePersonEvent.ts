@@ -20,7 +20,7 @@ export const resolvers: Partial<ResolverMap> = {
 
       const notablePeople = connection.getRepository(NotablePerson);
 
-      const notablePerson = await notablePeople.findOneById(notablePersonId);
+      const notablePerson = await notablePeople.findOne(notablePersonId);
 
       if (!notablePerson) {
         return {

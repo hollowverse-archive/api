@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn, Index, OneToOne, JoinColumn } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  Index,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
 import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { ColorPalette } from './ColorPalette';
@@ -52,7 +59,7 @@ export class Photo extends BaseEntity {
 
   @OneToOne(_ => ColorPalette, {
     nullable: true,
-    cascadeAll: true,
+    cascade: ['insert', 'update', 'remove'],
     lazy: true,
   })
   @JoinColumn()
