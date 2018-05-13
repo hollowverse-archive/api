@@ -48,7 +48,7 @@ type UnionResolver<Union, PossibleTypeName, Context> = (
   object: Union,
   context: Context,
   info: GraphQLResolveInfo,
-) => PossibleTypeName | Union;
+) => PossibleTypeName;
 
 type BuiltInDirectives = 'pick' | 'include' | 'deprecated';
 
