@@ -21,11 +21,11 @@ type AwsSecretsManagerDbConfig = {
 const getDatabaseConfig = async () => {
   if (process.env.STAGE === undefined || process.env.STAGE === 'local') {
     const {
-      TYPEORM_DATABASE,
-      TYPEORM_HOST,
-      TYPEORM_PASSWORD,
-      TYPEORM_USERNAME,
-      TYPEORM_PORT,
+      TYPEORM_DATABASE = 'hollowverse',
+      TYPEORM_HOST = 'localhost',
+      TYPEORM_PASSWORD = '123456',
+      TYPEORM_USERNAME = 'root',
+      TYPEORM_PORT = '3306',
     } = process.env;
 
     return {

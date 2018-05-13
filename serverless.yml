@@ -48,7 +48,7 @@ provider:
   endpointType: regional
   environment:
     NODE_ENV: ${env:NODE_ENV, 'development'}
-    STAGE: ${self:provider.stage}
+    STAGE: ${self:provider.stage, 'local'}
   iamRoleStatements:
     - Effect: Allow
       Action:
@@ -60,7 +60,7 @@ provider:
 functions:
   serveApi:
     memorySize: 1024
-    timeout: 5
+    timeout: 50
     handler: src/serveApi.serveApi
     reservedConcurrency: 100
     vpc:

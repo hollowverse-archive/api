@@ -21,7 +21,7 @@
     "generate-types-from-template": "gql-gen --file ./schema.json --project src/typings",
     "generate-graphql-types": "run-s introspect-schema generate-types-from-template",
     "generate-graphql-types/dev": "nodemon -q --watch src/schema.graphql --exec 'run-p generate-graphql-types'",
-    "server/dev": "NODE_ENV=development serverless offline start --watch --skipCacheInvalidation --dontPrintOutput",
+    "server/dev": "NODE_ENV=development serverless offline start --watch --noTimeout --skipCacheInvalidation --dontPrintOutput",
     "dev": "npm-run-all -s generate-graphql-types -p '*/dev'",
     "database/mock": "ts-node src/scripts/insertMockData.ts --project ./src",
     "clean": "del-cli '.serverless' '.webpack'",
