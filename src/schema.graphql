@@ -281,14 +281,20 @@ type Error {
   message: String!
 }
 
-interface Result {
-  wasSuccessful: Boolean!
-  errors: [Error!]
+type SuccessResult {
+  state: String!
 }
 
-type SubmitNotablePersonEventPayload implements Result {
-  wasSuccessful: Boolean!
-  errors: [Error!]
+type ErrorResult {
+  state: String!
+  errors: [Error!]!
+}
+
+union Result = SuccessResult | ErrorResult
+
+type SubmitNotablePersonEventPayload {
+  result: Result
+  id: ID
 }
 
 type RootMutation {
@@ -305,7 +311,7 @@ type RootMutation {
 
   submitNotablePersonEvent(
     input: SubmitNotablePersonEventInput!
-  ): SubmitNotablePersonEventPayload @requireAuth
+  ): SubmitNotablePersonEventPayload! @requireAuth
 }
 
 schema {

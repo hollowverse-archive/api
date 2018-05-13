@@ -10,13 +10,16 @@ export const resolvers: Partial<ResolverMap> = {
     ) {
       if (type !== 'quote') {
         return {
-          wasSuccessful: false,
-          errors: [
-            {
-              code: 'NOT_IMPLEMENTED',
-              message: 'Only events of type "quote" can be submitted currently',
-            },
-          ],
+          result: {
+            state: 'error',
+            errors: [
+              {
+                code: 'NOT_IMPLEMENTED',
+                message:
+                  'Only events of type "quote" can be submitted currently',
+              },
+            ],
+          },
         };
       }
 
@@ -26,18 +29,23 @@ export const resolvers: Partial<ResolverMap> = {
 
       if (!notablePerson) {
         return {
-          wasSuccessful: false,
-          errors: [
-            {
-              code: 'BAD_REQUEST',
-              message: 'No notable person was found with the specified ID',
-            },
-          ],
+          result: {
+            state: 'error',
+            errors: [
+              {
+                code: 'BAD_REQUEST',
+                message: 'No notable person was found with the specified ID',
+              },
+            ],
+          },
         };
       }
 
       return {
-        wasSuccessful: true,
+        result: {
+          state: 'success',
+        },
+        id: 'f29763c1-37a9-4b3a-bae1-0ac433d8d14d',
       };
     },
   },

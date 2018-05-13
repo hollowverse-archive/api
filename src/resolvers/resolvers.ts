@@ -40,6 +40,17 @@ export const resolvers = merge(
   viewerResolvers,
   photoResolvers,
   scalarTypes,
+  {
+    Result: {
+      __resolveType(obj: any) {
+        if (obj.state === 'success') {
+          return 'SuccessResult';
+        }
+
+        return 'ErrorResult';
+      },
+    },
+  },
 );
 
 export const directiveResolvers = {
