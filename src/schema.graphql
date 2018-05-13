@@ -274,6 +274,7 @@ input SubmitNotablePersonEventInput {
 
 enum ErrorCode {
   NOT_IMPLEMENTED
+  BAD_REQUEST
 }
 
 type Error {
