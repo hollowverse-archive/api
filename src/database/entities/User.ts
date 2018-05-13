@@ -37,7 +37,7 @@ export class User extends BaseEntity {
   photoId: string | null;
 
   @OneToMany(_ => NotablePersonEvent, event => event.owner, {
-    cascade: ['insert', 'update', 'remove'],
+    cascade: ['insert', 'update'],
   })
   events: NotablePersonEvent[];
 
