@@ -109,11 +109,11 @@ const waitAndPrintInstructions = async () => {
 
 export const connectionPromise = waitAndPrintInstructions().then(async config =>
   createConnection({
+    ...config,
     type: 'mysql',
+    entities,
+    migrationsRun: isProd,
     synchronize: false,
     dropSchema: false,
-    migrationsRun: isProd,
-    entities,
-    ...config,
   }),
 );
