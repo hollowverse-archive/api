@@ -44,6 +44,14 @@ type DirectiveResolver<Args, Context, Source = {}> = (
   info: GraphQLResolveInfo,
 ) => any;
 
+/**
+ * A union resolver tells GraphQL which one of the types of this union you are returning.
+ *
+ * > When you have a field in your schema that returns a union or interface type,
+ * > you will need to specify an extra `__resolveType` field in your resolver map, which tells
+ * > the GraphQL executor which type the result is, out of the available options.
+ * @see https://www.apollographql.com/docs/graphql-tools/resolvers.html#Unions-and-interfaces
+ */
 type UnionResolver<Union, PossibleTypeName, Context> = (
   object: Union,
   context: Context,
