@@ -12,3 +12,7 @@ To get started with the development of the Hollowverse API, please refer to the 
 
 Hollowverse API is a major component of our overall architecture. You can read more about the role
 it plays in our [architecture documentation](https://github.com/hollowverse/architecture#readme).
+
+---
+
+[If you'd like to tell us something, or need help with anything...](https://github.com/hollowverse/hollowverse/wiki/Help)
