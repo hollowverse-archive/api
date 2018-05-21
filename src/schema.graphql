@@ -243,6 +243,7 @@ type CreateNotablePersonPayload {
 }
 
 input SubmitNotablePersonEventInput {
+  # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
 
   # Only `quote` is allowed for now
