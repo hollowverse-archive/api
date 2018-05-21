@@ -298,7 +298,6 @@ union Result = SuccessResult | ErrorResult
 
 type SubmitNotablePersonEventPayload {
   result: Result
-  id: ID
 }
 
 type RootMutation {

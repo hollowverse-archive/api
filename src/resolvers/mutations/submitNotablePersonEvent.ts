@@ -37,6 +37,13 @@ export const resolvers: Partial<ResolverMap> = {
         };
       }
 
+      if (!viewer) {
+        // This is a server error. `viewer` should have been checked by `requireAuth`.
+        throw new TypeError(
+          'Expected `viewer` to be defined in `submitNotablePersonEvent`',
+        );
+      }
+
       const event = new NotablePersonEvent();
 
       event.sourceUrl = sourceUrl;
@@ -44,13 +51,12 @@ export const resolvers: Partial<ResolverMap> = {
       event.quote = quote;
       event.isQuoteByNotablePerson = isQuoteByNotablePerson;
       event.notablePerson = notablePerson;
-      event.owner = viewer!;
+      event.owner = viewer;
 
       await connection.getRepository(NotablePersonEvent).save(event);
 
       return {
         result: makeSuccessResult(),
-        id: 'f29763c1-37a9-4b3a-bae1-0ac433d8d14d',
       };
     },
   },
