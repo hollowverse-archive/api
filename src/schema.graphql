@@ -134,8 +134,6 @@ input EventsQueryInput {
 
 # A public figure or an influential person
 type NotablePerson {
-  id: ID!
-
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
 
@@ -245,8 +243,7 @@ type CreateNotablePersonPayload {
 }
 
 input SubmitNotablePersonEventInput {
-  # ID of notable person. Can be obtained using `notablePerson` query
-  notablePersonId: ID!
+  slug: String!
 
   # Only `quote` is allowed for now
   type: NotablePersonEventType!

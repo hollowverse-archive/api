@@ -1,13 +1,21 @@
 import { ResolverMap } from '../../typings/resolverMap';
-import { NotablePerson } from '../../database/entities/NotablePerson';
 import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
+import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
     async submitNotablePersonEvent(
       _,
-      { input: { notablePersonId, type } },
-      { connection },
+      {
+        input: {
+          slug,
+          type,
+          sourceUrl,
+          quote = null,
+          isQuoteByNotablePerson = null,
+        },
+      },
+      { notablePersonBySlugLoader, connection, viewer },
     ) {
       if (type !== 'quote') {
         return {
@@ -18,18 +26,27 @@ export const resolvers: Partial<ResolverMap> = {
         };
       }
 
-      const notablePeople = connection.getRepository(NotablePerson);
-
-      const notablePerson = await notablePeople.findOne(notablePersonId);
+      const notablePerson = await notablePersonBySlugLoader.load(slug);
 
       if (!notablePerson) {
         return {
           result: makeErrorResult(
             'BAD_REQUEST',
-            'No notable person was found with the specified ID',
+            'No notable person was found with the specified slug',
           ),
         };
       }
+
+      const event = new NotablePersonEvent();
+
+      event.sourceUrl = sourceUrl;
+      event.type = type;
+      event.quote = quote;
+      event.isQuoteByNotablePerson = isQuoteByNotablePerson;
+      event.notablePerson = notablePerson;
+      event.owner = viewer!;
+
+      await connection.getRepository(NotablePersonEvent).save(event);
 
       return {
         result: makeSuccessResult(),
