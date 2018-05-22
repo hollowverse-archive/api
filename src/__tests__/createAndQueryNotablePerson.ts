@@ -43,21 +43,6 @@ describe('Create and query a notable person by slug', () => {
     });
   });
 
-  it('non-authorized users cannot create a new notable person', async () => {
-    expect.hasAssertions();
-
-    try {
-      await context.client.request(createNotablePersonMutation, {
-        input: {
-          slug: 'Tom_Hanks',
-          name: 'Tom Hanks',
-        },
-      });
-    } catch (err) {
-      expect(err.message).toMatch(/auth/i);
-    }
-  });
-
   it('users with required role can create a new notable person', async () => {
     context.client.setHeader('Authorization', 'Bearer 123');
     context.authProvider.findUserByToken = async () => {
@@ -107,9 +92,25 @@ describe('Create and query a notable person by slug', () => {
     }
   });
 
+  it('non-authorized users cannot create a new notable person', async () => {
+    context.client.setHeader('Authorization', '');
+
+    expect.hasAssertions();
+
+    try {
+      await context.client.request(createNotablePersonMutation, {
+        input: {
+          slug: 'Tom_Hanks',
+          name: 'Tom Hanks',
+        },
+      });
+    } catch (err) {
+      expect(err.message).toMatch(/auth/i);
+    }
+  });
+
   it('newly created notable person can be viewed by all', async () => {
     context.client.setHeader('Authorization', '');
-    context.authProvider.findUserByToken = async () => undefined;
 
     const result = await context.client.request(getNotablePersonQuery, {
       slug: 'Tom_Hanks',

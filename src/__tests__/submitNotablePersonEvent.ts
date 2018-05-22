@@ -87,32 +87,11 @@ describe('Submit a notable person event', () => {
         name: 'Tom Hanks',
       },
     });
-
-    context.client.setHeader('Authorization', '');
-    context.authProvider.findUserByToken = async () => undefined;
   });
 
   afterAll(async () => {
     if (context) {
       await context.teardown();
-    }
-  });
-
-  it('non-authorized users cannot submit a notable person event', async () => {
-    expect.hasAssertions();
-
-    try {
-      await context.client.request(submitNotablePersonEventMutation, {
-        input: {
-          slug: 'Tom_Hanks',
-          type: 'quote',
-          quote: 'Lorem ipsum',
-          sourceUrl: 'https://example.com',
-          isQuoteByNotablePerson: true,
-        },
-      });
-    } catch (err) {
-      expect(err.message).toMatch(/auth/i);
     }
   });
 
@@ -150,9 +129,27 @@ describe('Submit a notable person event', () => {
     });
   });
 
+  it('non-authorized users cannot submit a notable person event', async () => {
+    context.client.setHeader('Authorization', '');
+    expect.hasAssertions();
+
+    try {
+      await context.client.request(submitNotablePersonEventMutation, {
+        input: {
+          slug: 'Tom_Hanks',
+          type: 'quote',
+          quote: 'Lorem ipsum',
+          sourceUrl: 'https://example.com',
+          isQuoteByNotablePerson: true,
+        },
+      });
+    } catch (err) {
+      expect(err.message).toMatch(/auth/i);
+    }
+  });
+
   it('newly submitted event can be viewed by all', async () => {
     context.client.setHeader('Authorization', '');
-    context.authProvider.findUserByToken = async () => undefined;
 
     const result = await context.client.request(getNotablePersonEventsQuery, {
       slug: 'Tom_Hanks',
