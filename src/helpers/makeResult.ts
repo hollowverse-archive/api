@@ -1,4 +1,4 @@
-import { ErrorCode, ErrorResult, SuccessResult } from '../typings/schema';
+import { ErrorCode, ErrorResult, Result } from '../typings/schema';
 
 export function makeErrorResult(
   errorCode: ErrorCode,
@@ -10,7 +10,7 @@ export function makeErrorResult(
   };
 }
 
-export function makeSuccessResult(): SuccessResult {
+export function makeSuccessResult(): Result {
   return {
     state: 'success',
   };

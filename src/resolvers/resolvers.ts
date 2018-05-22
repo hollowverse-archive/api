@@ -5,7 +5,7 @@ import { Email } from './scalars/email';
 import { Url } from './scalars/url';
 import { HexColor } from './scalars/hexColor';
 
-import { resolvers as resultResolvers } from './unions/result';
+import { resolvers as resultResolvers } from './interfaces/result';
 
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
@@ -31,7 +31,9 @@ const scalarTypes = {
   HexColor,
 };
 
-const unionTypes = {
+const unionTypes = {};
+
+const interfaceTypes = {
   ...resultResolvers,
 };
 
@@ -47,6 +49,7 @@ export const resolvers = merge(
   photoResolvers,
   scalarTypes,
   unionTypes,
+  interfaceTypes,
 );
 
 export const directiveResolvers = {

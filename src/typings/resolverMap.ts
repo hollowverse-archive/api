@@ -1,4 +1,4 @@
-import { TypesMap, DirectiveMap, UnionMap } from './schema';
+import { TypesMap, DirectiveMap, UnionMap, InterfaceMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
 import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
@@ -52,8 +52,8 @@ type DirectiveResolver<Args, Context, Source = {}> = (
  * > the GraphQL executor which type the result is, out of the available options.
  * @see https://www.apollographql.com/docs/graphql-tools/resolvers.html#Unions-and-interfaces
  */
-type UnionResolver<Union, PossibleTypeName, Context> = (
-  object: Union,
+type UnionOrInterfaceResolver<UnionOrInterface, PossibleTypeName, Context> = (
+  object: UnionOrInterface,
   context: Context,
   info: GraphQLResolveInfo,
 ) => PossibleTypeName;
@@ -76,9 +76,19 @@ export type DirectiveResolverMap = {
 
 export type UnionResolverMap = {
   [UnionName in keyof UnionMap]: {
-    __resolveType: UnionResolver<
+    __resolveType: UnionOrInterfaceResolver<
       UnionMap[UnionName]['unionType'],
       UnionMap[UnionName]['possibleTypeNames'],
+      SchemaContext
+    >;
+  }
+};
+
+export type InterfaceResolverMap = {
+  [InterfaceName in keyof InterfaceMap]: {
+    __resolveType: UnionOrInterfaceResolver<
+      InterfaceMap[InterfaceName]['interfaceType'],
+      InterfaceMap[InterfaceName]['implementorTypeNames'],
       SchemaContext
     >;
   }

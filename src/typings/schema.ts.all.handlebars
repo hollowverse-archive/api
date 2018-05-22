@@ -129,6 +129,15 @@ export type UnionMap = {
   {{/each}}
 }
 
+export type InterfaceMap = {
+  {{#each interfaces}}
+  {{ name }}: {
+    interfaceType: {{name}};
+    implementorTypeNames: string; // @TODO: improve types
+  }
+  {{/each}}
+}
+
 {{#each definedDirectives}}
     {{#if hasArguments }}
 export interface {{ toPascalCase name }}Args {

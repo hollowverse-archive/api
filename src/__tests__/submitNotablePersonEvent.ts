@@ -28,12 +28,7 @@ describe('Submit a notable person event', () => {
       ) {
         submitNotablePersonEvent(input: $input) {
           result {
-            ... on SuccessResult {
-              state
-            }
-            ... on ErrorResult {
-              state
-            }
+            state
           }
         }
       }

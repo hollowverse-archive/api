@@ -275,7 +275,7 @@ enum ErrorCode {
   BAD_REQUEST
 }
 
-type Error {
+interface Error {
   code: ErrorCode!
   message: String!
 }
@@ -285,16 +285,18 @@ enum ResultType {
   error
 }
 
-type SuccessResult {
+interface Result {
   state: ResultType!
 }
 
-type ErrorResult {
+type ErrorResult implements Result {
   state: ResultType!
   errors: [Error!]!
 }
 
-union Result = SuccessResult | ErrorResult
+type GenericSuccessResult implements Result {
+  state: ResultType!
+}
 
 type SubmitNotablePersonEventPayload {
   result: Result
