@@ -5,10 +5,13 @@ import { Email } from './scalars/email';
 import { Url } from './scalars/url';
 import { HexColor } from './scalars/hexColor';
 
-import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
+import { resolvers as resultResolvers } from './interfaces/result';
+
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
+import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
+import { resolvers as submitNotablePersonEventResolvers } from './mutations/submitNotablePersonEvent';
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
@@ -28,9 +31,16 @@ const scalarTypes = {
   HexColor,
 };
 
+const unionTypes = {};
+
+const interfaceTypes = {
+  ...resultResolvers,
+};
+
 export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
+  submitNotablePersonEventResolvers,
   viewerResolvers,
   notablePersonResolvers,
   notablePeopleResolvers,
@@ -38,6 +48,8 @@ export const resolvers = merge(
   viewerResolvers,
   photoResolvers,
   scalarTypes,
+  unionTypes,
+  interfaceTypes,
 );
 
 export const directiveResolvers = {

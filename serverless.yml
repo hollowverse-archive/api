@@ -48,7 +48,7 @@ provider:
   endpointType: regional
   environment:
     NODE_ENV: ${env:NODE_ENV, 'development'}
-    STAGE: ${self:provider.stage}
+    STAGE: ${self:provider.stage, 'local'}
   iamRoleStatements:
     - Effect: Allow
       Action:

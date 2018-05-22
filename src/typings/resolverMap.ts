@@ -1,4 +1,4 @@
-import { TypesMap, DirectiveMap } from './schema';
+import { TypesMap, DirectiveMap, UnionMap, InterfaceMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
 import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
@@ -44,6 +44,20 @@ type DirectiveResolver<Args, Context, Source = {}> = (
   info: GraphQLResolveInfo,
 ) => any;
 
+/**
+ * A union resolver tells GraphQL which one of the types of this union you are returning.
+ *
+ * > When you have a field in your schema that returns a union or interface type,
+ * > you will need to specify an extra `__resolveType` field in your resolver map, which tells
+ * > the GraphQL executor which type the result is, out of the available options.
+ * @see https://www.apollographql.com/docs/graphql-tools/resolvers.html#Unions-and-interfaces
+ */
+type UnionOrInterfaceResolver<UnionOrInterface, PossibleTypeName, Context> = (
+  object: UnionOrInterface,
+  context: Context,
+  info: GraphQLResolveInfo,
+) => PossibleTypeName;
+
 type BuiltInDirectives = 'pick' | 'include' | 'deprecated';
 
 type CustomDirectiveMap = {
@@ -58,4 +72,24 @@ export type DirectiveResolverMap = {
     DirectiveMap[DirectiveName]['args'],
     SchemaContext
   >
+};
+
+export type UnionResolverMap = {
+  [UnionName in keyof UnionMap]: {
+    __resolveType: UnionOrInterfaceResolver<
+      UnionMap[UnionName]['unionType'],
+      UnionMap[UnionName]['possibleTypeNames'],
+      SchemaContext
+    >;
+  }
+};
+
+export type InterfaceResolverMap = {
+  [InterfaceName in keyof InterfaceMap]: {
+    __resolveType: UnionOrInterfaceResolver<
+      InterfaceMap[InterfaceName]['interfaceType'],
+      InterfaceMap[InterfaceName]['implementorTypeNames'],
+      SchemaContext
+    >;
+  }
 };

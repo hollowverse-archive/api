@@ -17,7 +17,7 @@ import mysql from 'promise-mysql';
 const TEST_DB_HOST = process.env.TEST_DB_HOST || 'localhost';
 const TEST_DB_USERNAME = 'root';
 const TEST_DB_PASSWORD = '123456';
-const TEST_DB_PORT = Number(process.env.TEST_DB_PORT) || 3306;
+const TEST_DB_PORT = Number(process.env.TEST_DB_PORT) || 3307;
 
 class FakeAuthProvider implements AuthProvider {
   findUserByToken = async (_token: string): Promise<User | undefined> =>
@@ -93,7 +93,7 @@ export const createTestContext = async ({
     ...restCreateApiRouterOptions
   } = createApiRouterOptions;
 
-  const databaseName = `hvTestDb${faker.random.alphaNumeric(6)}`;
+  const databaseName = `hvTestDb${faker.random.alphaNumeric(12)}`;
 
   const [
     serverPort,
@@ -130,7 +130,7 @@ export const createTestContext = async ({
     ]);
   };
 
-  return { client, authProvider, teardown };
+  return { client, connection, authProvider, teardown };
 };
 
 type UnPromisify<T> = T extends Promise<infer R> ? R : T;
