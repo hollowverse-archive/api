@@ -68,7 +68,8 @@ export class NotablePerson extends BaseEntity {
   photos: Photo[];
 
   @OneToMany(_ => NotablePersonEvent, event => event.notablePerson, {
-    cascade: ['insert', 'update', 'remove'],
+    cascadeInsert: true,
+    cascadeUpdate: true,
   })
   events: NotablePersonEvent[];
 
@@ -77,7 +78,7 @@ export class NotablePerson extends BaseEntity {
    * which is the content from the old Hollowverse
    */
   @OneToOne(_ => EditorialSummary, {
-    cascade: ['insert'],
+    cascadeInsert: true,
     nullable: true,
     lazy: true,
   })

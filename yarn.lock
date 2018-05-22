@@ -2578,13 +2578,6 @@ buffer@^3.0.1:
     ieee754 "^1.1.4"
     isarray "^1.0.0"
 
-buffer@^5.1.0:
-  version "5.1.0"
-  resolved "https://registry.yarnpkg.com/buffer/-/buffer-5.1.0.tgz#c913e43678c7cb7c8bd16afbcddb6c5505e8f9fe"
-  dependencies:
-    base64-js "^1.0.2"
-    ieee754 "^1.1.4"
-
 builtin-modules@^1.0.0, builtin-modules@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/builtin-modules/-/builtin-modules-1.1.1.tgz#270f076c5a72c02f5b65a47df94c5fe3a278892f"
@@ -2931,7 +2924,7 @@ cli-cursor@^2.1.0:
   dependencies:
     restore-cursor "^2.0.0"
 
-cli-highlight@^1.2.3:
+cli-highlight@^1.1.4:
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/cli-highlight/-/cli-highlight-1.2.3.tgz#b200f97ed0e43d24633e89de0f489a48bb87d2bf"
   dependencies:
@@ -3790,9 +3783,9 @@ dot-prop@^4.1.0:
   dependencies:
     is-obj "^1.0.0"
 
-dotenv@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-5.0.1.tgz#a5317459bd3d79ab88cff6e44057a6a3fbb1fcef"
+dotenv@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-4.0.0.tgz#864ef1379aced55ce6f95debecdce179f7a0cd1d"
 
 download@^5.0.2:
   version "5.0.3"
@@ -6733,14 +6726,14 @@ js-tokens@^3.0.0, js-tokens@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-3.0.2.tgz#9866df395102130e38f7f996bceb65443209c25b"
 
-js-yaml@^3.10.0, js-yaml@^3.9.0, js-yaml@^3.9.1:
+js-yaml@^3.10.0, js-yaml@^3.8.4, js-yaml@^3.9.0, js-yaml@^3.9.1:
   version "3.10.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.10.0.tgz#2e78441646bd4682e963f22b6e92823c309c62dc"
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
 
-js-yaml@^3.11.0, js-yaml@^3.6.1, js-yaml@^3.7.0, js-yaml@^3.8.3:
+js-yaml@^3.6.1, js-yaml@^3.7.0, js-yaml@^3.8.3:
   version "3.11.0"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.11.0.tgz#597c1a8bd57152f26d622ce4117851a51f5ebaef"
   dependencies:
@@ -9064,10 +9057,6 @@ reflect-metadata@^0.1.10:
   version "0.1.10"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.10.tgz#b4f83704416acad89988c9b15635d47e03b9344a"
 
-reflect-metadata@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.12.tgz#311bf0c6b63cd782f228a81abe146a2bfa9c56f2"
-
 regenerate-unicode-properties@^5.1.1:
   version "5.1.3"
   resolved "https://registry.yarnpkg.com/regenerate-unicode-properties/-/regenerate-unicode-properties-5.1.3.tgz#54f5891543468f36f2274b67c6bc4c033c27b308"
@@ -10678,23 +10667,22 @@ typedarray@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-typeorm@^0.2.5:
-  version "0.2.5"
-  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.2.5.tgz#76d94e6edcf6eff30446de35a2dae7dcfa449348"
+typeorm@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/typeorm/-/typeorm-0.1.12.tgz#adcd45f302d21ab4d5b02671bfa8c07cea044af7"
   dependencies:
     app-root-path "^2.0.1"
-    buffer "^5.1.0"
-    chalk "^2.3.2"
-    cli-highlight "^1.2.3"
+    chalk "^2.0.1"
+    cli-highlight "^1.1.4"
     debug "^3.1.0"
-    dotenv "^5.0.1"
+    dotenv "^4.0.0"
     glob "^7.1.2"
-    js-yaml "^3.11.0"
+    js-yaml "^3.8.4"
     mkdirp "^0.5.1"
-    reflect-metadata "^0.1.12"
+    reflect-metadata "^0.1.10"
     xml2js "^0.4.17"
     yargonaut "^1.1.2"
-    yargs "^11.1.0"
+    yargs "^9.0.1"
 
 typescript-eslint-parser@^15.0.0:
   version "15.0.0"
@@ -11407,6 +11395,12 @@ yargs-parser@^5.0.0:
   dependencies:
     camelcase "^3.0.0"
 
+yargs-parser@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-7.0.0.tgz#8d0ac42f16ea55debd332caf4c4038b3e3f5dfd9"
+  dependencies:
+    camelcase "^4.1.0"
+
 yargs-parser@^8.0.0:
   version "8.1.0"
   resolved "https://registry.yarnpkg.com/yargs-parser/-/yargs-parser-8.1.0.tgz#f1376a33b6629a5d063782944da732631e966950"
@@ -11487,6 +11481,24 @@ yargs@^7.0.1:
     which-module "^1.0.0"
     y18n "^3.2.1"
     yargs-parser "^5.0.0"
+
+yargs@^9.0.1:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/yargs/-/yargs-9.0.1.tgz#52acc23feecac34042078ee78c0c007f5085db4c"
+  dependencies:
+    camelcase "^4.1.0"
+    cliui "^3.2.0"
+    decamelize "^1.1.1"
+    get-caller-file "^1.0.1"
+    os-locale "^2.0.0"
+    read-pkg-up "^2.0.0"
+    require-directory "^2.1.1"
+    require-main-filename "^1.0.1"
+    set-blocking "^2.0.0"
+    string-width "^2.0.0"
+    which-module "^2.0.0"
+    y18n "^3.2.1"
+    yargs-parser "^7.0.0"
 
 yargs@~1.2.6:
   version "1.2.6"
