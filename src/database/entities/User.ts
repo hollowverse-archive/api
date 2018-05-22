@@ -37,12 +37,14 @@ export class User extends BaseEntity {
   photoId: string | null;
 
   @OneToMany(_ => NotablePersonEvent, event => event.owner, {
-    cascade: ['insert', 'update'],
+    cascadeInsert: true,
+    cascadeUpdate: true,
   })
   events: NotablePersonEvent[];
 
   @OneToMany(_ => NotablePersonEventComment, comment => comment.owner, {
-    cascade: ['insert', 'update', 'remove'],
+    cascadeInsert: true,
+    cascadeUpdate: true,
   })
   comments: NotablePersonEventComment[];
 

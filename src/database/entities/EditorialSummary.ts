@@ -26,7 +26,8 @@ export class EditorialSummary extends BaseEntity {
    */
 
   @OneToMany(_ => EditorialSummaryNode, node => node.editorialSummary, {
-    cascade: ['insert', 'update', 'remove'],
+    cascadeInsert: true,
+    cascadeUpdate: true,
     eager: false,
   })
   nodes: EditorialSummaryNode[];
