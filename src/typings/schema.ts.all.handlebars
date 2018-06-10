@@ -133,7 +133,7 @@ export type InterfaceMap = {
   {{#each interfaces}}
   {{ name }}: {
     interfaceType: {{name}};
-    implementorTypeNames: string; // @TODO: improve types
+    implementorTypeNames: {{#if hasImplementingTypes}}{{#each implementingTypes}}'{{this}}'{{#unless @last}} | {{/unless}}{{/each}}{{else}}never{{/if}};
   }
   {{/each}}
 }
