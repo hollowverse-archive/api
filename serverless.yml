@@ -18,6 +18,20 @@ custom:
       - api.hollowverse.com
       - cached-api.hollowverse.com
 
+  # In order to connect to the database, the Lambda must be
+  # launched in a VPC. The following VPC configuration is
+  # hardcoded for the time being.
+  # The VPC, security group ID, and subnet IDs are all
+  # managed in hollowverse/infrastructure.
+  # Note: the subnets must all be private
+  vpcConfig:
+    development:
+      securityGroupIds:
+        - sg-bfb817f4 # Security group "access_db" in hollowverse/infrastructure
+      subnetIds: # Must be private subnets
+        - subnet-8708d7db
+        - subnet-0e459b69
+
   customDomain:
     domainName: api-apigw-${self:provider.stage}.hollowverse.com
     stage: ${self:provider.stage}
@@ -54,7 +68,7 @@ provider:
       Action:
         - secretsmanager:GetSecretValue
       Resource:
-        - "${self:custom.secretsArnPrefix}/database-*"
+        - "${self:custom.secretsArnPrefix}/database-8-*"
         - "${self:custom.secretsArnPrefix}/facebookApp-*"
 
 functions:
@@ -63,12 +77,7 @@ functions:
     timeout: 5
     handler: src/serveApi.serveApi
     reservedConcurrency: 100
-    vpc:
-      securityGroupIds:
-        - sg-f19e9ab8
-      subnetIds:
-        - subnet-e558a482
-        - subnet-40678a1c
+    vpc: ${self:custom.vpcConfig.${self:provider.stage}}
     events:
       - http:
           method: ANY
