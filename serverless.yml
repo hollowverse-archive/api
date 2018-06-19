@@ -27,10 +27,16 @@ custom:
   vpcConfig:
     development:
       securityGroupIds:
-        - sg-bfb817f4 # Security group "access_db" in hollowverse/infrastructure
+        - sg-bfb817f4 # Security group "access_db_security_group" in hollowverse/infrastructure
       subnetIds: # Must be private subnets
         - subnet-8708d7db
         - subnet-0e459b69
+    production:
+      securityGroupIds:
+        - sg-fabc0bb1 # Security group "access_db_security_group" in hollowverse/infrastructure
+      subnetIds: # Must be private subnets
+        - subnet-bdc31de1
+        - subnet-52e43d35
 
   customDomain:
     domainName: api-apigw-${self:provider.stage}.hollowverse.com
