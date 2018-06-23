@@ -27,10 +27,10 @@ custom:
   vpcConfig:
     development:
       securityGroupIds:
-        - sg-bfb817f4 # Security group "access_db_security_group" in hollowverse/infrastructure
+        - sg-7b178030 # Security group "access_db_security_group" in hollowverse/infrastructure
       subnetIds: # Must be private subnets
-        - subnet-8708d7db
-        - subnet-0e459b69
+        - subnet-7020fb2c
+        - subnet-66c01a01
     production:
       securityGroupIds:
         - sg-fabc0bb1 # Security group "access_db_security_group" in hollowverse/infrastructure
