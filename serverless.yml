@@ -74,7 +74,7 @@ provider:
       Action:
         - secretsmanager:GetSecretValue
       Resource:
-        - "${self:custom.secretsArnPrefix}/database-8-*"
+        - "${self:custom.secretsArnPrefix}/database-9-*"
         - "${self:custom.secretsArnPrefix}/facebookApp-*"
 
 functions:

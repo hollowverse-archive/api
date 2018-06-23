@@ -37,7 +37,7 @@ const getDatabaseConfig = async () => {
     };
   }
 
-  const rawSecret = await readAwsSecretStringForStage('database-8');
+  const rawSecret = await readAwsSecretStringForStage('database-9');
   if (rawSecret === undefined) {
     throw new TypeError(
       'Could not get database config from AWS Secrets Manager',
