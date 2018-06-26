@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "check-ts": "tsc --project ./src --noEmit",
+    "pre-commit": "yarn common-check",
+    "pre-push": "yarn pretest",
+    "lint-ts/tslint":
+      "tslint '**/*.ts{,x}' --project .  --exclude '**/node_modules/**' --exclude '**/.serverless/**'  --exclude '**/.webpack/**'  --exclude '**/dist/**' --exclude 'src/typings/schema.ts' --exclude 'src/database/migrations/*.ts'"
+  },
+  "devDependencies": {
+    "typescript": "^2.8.1",
+    "typescript-eslint-parser": "^15.0.0"
+  }
+}
