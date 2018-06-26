@@ -149,3 +149,7 @@ resources:
                 DomainName: ${self:custom.customDomain.domainName}
                 CustomOriginConfig:
                   OriginProtocolPolicy: 'https-only'
+            Logging:
+              # Defined in hollowverse/infrastructure
+              Bucket: "hollowverse-logs-${self:provider.stage}.s3.amazonaws.com"
+              Prefix: "api/"
