@@ -46,7 +46,7 @@ module.exports = async () => {
               -e MYSQL_ROOT_PASSWORD=123456 \\
               --tmpfs=/var/lib/mysql/:rw,noexec,nosuid,size=2000m \\
               --tmpfs=/tmp/:rw,noexec,nosuid,size=50m \\
-            mysql:5.6
+            mysql:5.7
 
           This will launch a MySQL server with the database data stored in memory.
 

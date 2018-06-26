@@ -12,6 +12,7 @@ export const resolvers: Partial<ResolverMap> = {
           type,
           sourceUrl,
           quote = null,
+          happenedOn,
           isQuoteByNotablePerson = null,
         },
       },
@@ -52,6 +53,8 @@ export const resolvers: Partial<ResolverMap> = {
       event.isQuoteByNotablePerson = isQuoteByNotablePerson;
       event.notablePerson = notablePerson;
       event.owner = viewer;
+      event.happenedOn = happenedOn || null;
+      event.postedAt = new Date();
 
       await connection.getRepository(NotablePersonEvent).save(event);
 
