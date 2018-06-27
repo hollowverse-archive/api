@@ -15,7 +15,7 @@
     "check-ts": "tsc --project ./src --noEmit",
     "lint-js": "eslint '**/*.js{,x}'",
     "lint-ts/eslint": "eslint '**/*.ts{,x}'",
-    "lint-ts/tslint": "tslint '**/*.ts{,x}' --project .  --exclude '**/node_modules/**' --exclude '**/.serverless/**'  --exclude '**/.webpack/**'  --exclude '**/dist/**' --exclude 'src/typings/schema.ts' --exclude 'src/database/migrations/*.ts'",
+    "lint-ts/tslint": "tslint '**/*.ts{,x}' --project .  --exclude '**/node_modules/**' --exclude '**/.serverless/**'  --exclude '**/.webpack/**'  --exclude '**/dist/**' --exclude 'src/typings/schema.ts' --exclude 'clients/**/*' --exclude 'src/database/migrations/*.ts'",
     "lint-ts": "run-p -c --aggregate-output 'lint-ts/*'",
     "introspect-schema": "apollo-codegen introspect-schema src/schema.graphql --output schema.json",
     "generate-types-from-template": "gql-gen --file ./schema.json --project src/typings --out ./src/typings",
