@@ -15,9 +15,6 @@
   ],
   "editor.tabSize": 2,
   "editor.formatOnSave": true,
-  "[json]": {
-    "editor.formatOnSave": false
-  },
   "typescript.implementationsCodeLens.enabled": true,
   "typescript.referencesCodeLens.enabled": true,
   "files.associations": {
@@ -25,7 +22,10 @@
     ".stylelintrc": "json",
     "**/.babelrc": "jsonc",
     "**/.babelrc.json": "jsonc",
-    "**/tsconfig.json": "jsonc"
+    "**/tsconfig.json": "jsonc",
+    "**/tslint.json": "jsonc",
+    "**/.eslintrc.json": "jsonc",
+    "**/.prettierignore": "gitignore"
   },
   "eslint.options": {
     "reportUnusedDisableDirectives": true

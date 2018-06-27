@@ -2,7 +2,7 @@ import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
-describe('Submit a notable person event', () => {
+describe('submit a notable person event', () => {
   let context: TestContext;
   let submitNotablePersonEventMutation: any;
   let getNotablePersonEventsQuery: any;

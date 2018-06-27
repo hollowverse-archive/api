@@ -1,6 +1,10 @@
-import { ValidatorConstraint, ValidatorConstraintInterface, ValidationArguments } from 'class-validator';
+import {
+  ValidatorConstraint,
+  ValidatorConstraintInterface,
+  ValidationArguments,
+} from 'class-validator';
 
-
+/* eslint-disable class-methods-use-this */
 /** Custom validator to check if a string starts with a particular sequence of characters */
 @ValidatorConstraint()
 export class StartsWith implements ValidatorConstraintInterface {

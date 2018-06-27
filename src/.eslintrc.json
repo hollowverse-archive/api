@@ -2,5 +2,7 @@
   "extends": [
     "../node_modules/@hollowverse/config/eslint/typescript/.eslintrc.json"
   ],
-  "root": true
+  "rules": {
+    "no-shadow-restricted-names": ["off"]
+  }
 }

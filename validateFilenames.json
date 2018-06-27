@@ -20,7 +20,8 @@
         "**/LICENSE",
         "**/README.md",
         "gql-gen.json",
-        "src/database/migrations/**/*.ts"
+        "src/database/migrations/**/*.ts",
+        "**/clownOverrides/c__*"
       ]
     }
   ]

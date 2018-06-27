@@ -150,9 +150,9 @@ export const resolvers: Partial<ResolverMap> = {
               // tslint:disable-next-line:no-http-string
               'http://hollowverse.com',
             ).toString();
-          } else {
-            return new URL(`${slug}`, 'https://hollowverse.com').toString();
           }
+
+          return new URL(`${slug}`, 'https://hollowverse.com').toString();
         }
       }
 

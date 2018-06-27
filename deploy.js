@@ -9,8 +9,8 @@ const {
   executeCommands,
 } = require('@hollowverse/utils/helpers/executeCommands');
 const {
-  executeCommandsInParallel,
-} = require('@hollowverse/utils/helpers/executeCommandsInParallel');
+  executeCommandsConcurrently,
+} = require('@hollowverse/utils/helpers/executeCommandsConcurrently');
 
 const { IS_PULL_REQUEST, BRANCH, STAGE = 'development' } = shelljs.env;
 
@@ -26,7 +26,7 @@ async function main() {
     // The actual validation is performed by `yarn validate-queries`
     // which is run as part of `yarn test`.
     () =>
-      executeCommandsInParallel(
+      executeCommandsConcurrently(
         ['master', 'beta'].map(branch => () =>
           executeCommands([
             `mkdir -p clients/${branch}`,

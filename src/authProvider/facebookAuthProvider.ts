@@ -20,11 +20,12 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     this.appId = config.id;
   }
 
+  // eslint-disable-next-line class-methods-use-this
   async getPhotoUrlByUserId(id: string, type: PhotoSize) {
     const response = await got(`https://graph.facebook.com/${id}/picture`, {
       json: true,
       query: {
-        type: type,
+        type,
         redirect: false,
       },
     });
@@ -97,8 +98,8 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     });
 
     if (response.body.data) {
-      const { app_id, is_valid } = response.body.data;
-      if (is_valid === true && app_id === this.appId) {
+      const { app_id: appId, is_valid: isValid } = response.body.data;
+      if (isValid === true && appId === this.appId) {
         return;
       }
     }

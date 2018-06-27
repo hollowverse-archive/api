@@ -1,4 +1,5 @@
 // tslint:disable no-console max-func-body-length no-implicit-dependencies
+/* eslint-disable no-console */
 import { connectionPromise } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { User } from '../database/entities/User';

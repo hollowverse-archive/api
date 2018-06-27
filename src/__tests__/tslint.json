@@ -3,6 +3,7 @@
   "rules": {
     "no-multiline-string": false,
     "no-implicit-dependencies": false,
-    "no-floating-promises": false
+    "no-floating-promises": false,
+    "no-non-null-assertion": false
   }
 }
