@@ -772,16 +772,16 @@
     lodash "^4.17.4"
     sort-keys "^2.0.0"
 
-"@hollowverse/config@^32.0.0":
-  version "32.0.0"
-  resolved "https://registry.yarnpkg.com/@hollowverse/config/-/config-32.0.0.tgz#0e33d5023fea29a1b697f52ec87c5d3f44929391"
+"@hollowverse/config@^41.0.0":
+  version "41.0.0"
+  resolved "https://registry.yarnpkg.com/@hollowverse/config/-/config-41.0.0.tgz#81cddfa198dbecdabe989da336a56760ab9bcf06"
 
-"@hollowverse/utils@^7.0.1":
-  version "7.0.1"
-  resolved "https://registry.yarnpkg.com/@hollowverse/utils/-/utils-7.0.1.tgz#f3c7175e7395becc11abe966878c1462853ece02"
+"@hollowverse/utils@^8.0.0":
+  version "8.0.0"
+  resolved "https://registry.yarnpkg.com/@hollowverse/utils/-/utils-8.0.0.tgz#0515f2bd65cb13fd6ededeab34ca8653b3bb5112"
   dependencies:
-    "@babel/polyfill" "^7.0.0-beta.44"
-    "@babel/runtime" "^7.0.0-beta.44"
+    "@babel/polyfill" "^7.0.0-beta.46"
+    "@babel/runtime" "^7.0.0-beta.46"
     bluebird "^3.5.1"
     common-tags "^1.7.2"
     glob "^7.1.2"
