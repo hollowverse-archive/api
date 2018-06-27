@@ -5,6 +5,7 @@ import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
 
 type Result<T> = Promise<T> | T;
 
+// eslint-disable-next-line no-use-before-define
 type DeepPartial<T> = { [K in keyof T]?: DeepPartial<T[K]> };
 
 export type GeneratedType<T> = {

@@ -2,7 +2,7 @@ import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
-describe('Create and query a notable person by slug', () => {
+describe('create and query a notable person by slug', () => {
   let context: TestContext;
   let getNotablePersonQuery: any;
   let createNotablePersonMutation: any;

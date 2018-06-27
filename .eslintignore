@@ -1,3 +1,5 @@
 dist/
 node_modules/
 clients/
+src/typings/schema.ts
+**/*.d.ts

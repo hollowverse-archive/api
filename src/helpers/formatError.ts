@@ -17,11 +17,10 @@ function pickSafeProps(error: Error | ValidationError | QueryFailedError) {
   } else if (error instanceof ApiError) {
     // `ApiError` knows how to remove unsafe props. Just return it as-is.
     return error;
-  } else {
-    const { name } = error;
-
-    return { name };
   }
+  const { name } = error;
+
+  return { name };
 }
 
 export function formatError(error: GraphQLError) {

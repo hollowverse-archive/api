@@ -2,7 +2,7 @@ import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
 
-describe('Create and query new user', () => {
+describe('create and query new user', () => {
   let context: TestContext;
   let viewerQuery: any;
   let createUserMutation: any;

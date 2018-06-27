@@ -6,6 +6,7 @@ import got from 'got';
 const MASTER_SCHEMA_URL =
   'https://raw.githubusercontent.com/hollowverse/api/master/src/schema.graphql';
 
+/* eslint-disable no-console */
 // tslint:disable no-console
 // tslint:disable-next-line no-floating-promises
 (async () => {
