@@ -35,14 +35,12 @@ describe('create and query new user', () => {
     }
   });
 
-  it('`viewer` inaccessible for unauthenticated users', async () => {
+  it('`viewer` is `null` for unauthenticated users', async () => {
     expect.hasAssertions();
 
-    try {
-      await context.client.request(viewerQuery);
-    } catch (error) {
-      expect(error.message).toMatch(/auth/i);
-    }
+    const result = (await context.client.request(viewerQuery)) as any;
+
+    expect(result.viewer).toBeNull();
   });
 
   it('visitors can create a new user', async () => {
@@ -98,10 +96,8 @@ describe('create and query new user', () => {
 
     context.client.setHeader('Authorization', 'Bearer 000000');
 
-    try {
-      await context.client.request(viewerQuery);
-    } catch (error) {
-      expect(error.message).toMatch(/auth/i);
-    }
+    const result = (await context.client.request(viewerQuery)) as any;
+
+    expect(result.viewer).toBeNull();
   });
 });
