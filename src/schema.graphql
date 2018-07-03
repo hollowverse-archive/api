@@ -212,7 +212,7 @@ type NotablePersonConnection {
 
 type RootQuery {
   # The authenticated user performing the request
-  viewer: Viewer @requireAuth
+  viewer: Viewer
 
   notablePerson(slug: String!): NotablePerson
 
