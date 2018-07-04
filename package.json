@@ -102,7 +102,6 @@
     "loggy": "^1.0.2",
     "moment": "^2.19.2",
     "mysql": "^2.14.1",
-    "node-vibrant": "^3.0.0",
     "p-memoize": "^2.0.0",
     "reflect-metadata": "^0.1.10",
     "typeorm": "^0.1.12",
