@@ -25,33 +25,6 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     { maxAge: moment.duration(2, 'h').asMilliseconds() },
   );
 
-  findUserByToken = pMemoize(
-    async (fbAccessToken: string) => {
-      // Get Facebook profile ID using the access token
-      const response = await this.sendFacebookAuthenticatedRequest(
-        fbAccessToken,
-        'https://graph.facebook.com/me',
-        {
-          query: {
-            fields: 'id',
-          },
-          json: true,
-        },
-      );
-
-      const fbId: string | undefined = response.body.id;
-
-      if (fbId) {
-        const users = this.connection.getRepository(User);
-
-        return users.findOne({ where: { fbId } });
-      }
-
-      return undefined;
-    },
-    { maxAge: moment.duration(1, 'h').asMilliseconds() },
-  );
-
   private appAccessToken: string;
   private appId: string;
   private connection: Connection;
@@ -93,6 +66,24 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     { maxAge: moment.duration(2, 'h').asMilliseconds() },
   );
 
+  private getFacebookIdByAccessToken = pMemoize(
+    async (fbAccessToken: string) => {
+      const response = await this.sendFacebookAuthenticatedRequest(
+        fbAccessToken,
+        'https://graph.facebook.com/me',
+        {
+          query: {
+            fields: 'id',
+          },
+          json: true,
+        },
+      );
+
+      return response.body.id as string | undefined;
+    },
+    { maxAge: moment.duration(1, 'h').asMilliseconds() },
+  );
+
   constructor(connection: Connection, config: FacebookAppConfig = {}) {
     this.connection = connection;
 
@@ -102,6 +93,18 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
 
     this.appAccessToken = config.accessToken;
     this.appId = config.id;
+  }
+
+  async findUserByToken(fbAccessToken: string) {
+    const fbId = await this.getFacebookIdByAccessToken(fbAccessToken);
+
+    if (fbId) {
+      const users = this.connection.getRepository(User);
+
+      return users.findOne({ where: { fbId } });
+    }
+
+    return undefined;
   }
 
   // eslint-disable-next-line class-methods-use-this
