@@ -336,4 +336,7 @@ enum ApiErrorType {
   # Thrown when the user does not have any of the roles required to perform
   # an operation
   RoleMismatchError
+
+  # Thrown when an unexpected server error occurs
+  InternalError
 }
