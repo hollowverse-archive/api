@@ -73,7 +73,6 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
         throw new ApiError('InvalidAccessTokenError');
       }
 
-      // tslint:disable-next-line await-promise
       const response = await got('https://graph.facebook.com/debug_token', {
         query: {
           access_token: this.appAccessToken,
@@ -132,17 +131,21 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     url: string,
     options: got.GotJSONOptions,
   ) {
-    await this.verifyFacebookAccessToken(accessToken);
+    try {
+      await this.verifyFacebookAccessToken(accessToken);
 
-    return got(url, {
-      ...options,
-      query:
-        typeof options.query !== 'string'
-          ? {
-              access_token: accessToken,
-              ...options.query,
-            }
-          : options.query,
-    });
+      return got(url, {
+        ...options,
+        query:
+          typeof options.query !== 'string'
+            ? {
+                access_token: accessToken,
+                ...options.query,
+              }
+            : options.query,
+      });
+    } catch {
+      throw new ApiError('InternalError');
+    }
   }
 }

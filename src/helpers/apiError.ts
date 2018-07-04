@@ -6,6 +6,7 @@ const messagesByErrorType = {
     'The passed access token is either empty, expired or invalid',
   RoleMismatchError:
     'The requested operation can only be performed by user with specific roles',
+  InternalError: 'An internal API error has occurred',
 };
 
 type ApiErrorType = keyof typeof messagesByErrorType;
