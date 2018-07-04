@@ -3,11 +3,96 @@ import got from 'got';
 import { ApiError } from '../helpers/apiError';
 import { User } from '../database/entities/User';
 import { Connection } from 'typeorm';
+import pMemoize from 'p-memoize';
+import moment from 'moment';
 
 export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
+  getProfileDetailsByToken = pMemoize(
+    async (token: string) => {
+      const response = await this.sendFacebookAuthenticatedRequest(
+        token,
+        'https://graph.facebook.com/me',
+        {
+          query: {
+            fields: ['id', 'name', 'picture'].join(','),
+          },
+          json: true,
+        },
+      );
+
+      return response.body;
+    },
+    { maxAge: moment.duration(2, 'h').asMilliseconds() },
+  );
+
+  findUserByToken = pMemoize(
+    async (fbAccessToken: string) => {
+      // Get Facebook profile ID using the access token
+      const response = await this.sendFacebookAuthenticatedRequest(
+        fbAccessToken,
+        'https://graph.facebook.com/me',
+        {
+          query: {
+            fields: 'id',
+          },
+          json: true,
+        },
+      );
+
+      const fbId: string | undefined = response.body.id;
+
+      if (fbId) {
+        const users = this.connection.getRepository(User);
+
+        return users.findOne({ where: { fbId } });
+      }
+
+      return undefined;
+    },
+    { maxAge: moment.duration(1, 'h').asMilliseconds() },
+  );
+
   private appAccessToken: string;
   private appId: string;
   private connection: Connection;
+
+  /**
+   * Verifies that a received Facebook access token is issued for the Hollowverse
+   * Facebook app. While it is not possible for an attacker to impersonate a user
+   * with a valid access token issued for another user, it is still possible for another
+   * app authorized by the user to use its access token to sign up that user to Hollowverse
+   * without their consent, or worse steal their data.
+   * This verification step prevents that scenario by confirming with Facebook that
+   * the access token was actually issued for the Hollowverse application.
+   *
+   * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
+   */
+  private verifyFacebookAccessToken = pMemoize(
+    async (token: string) => {
+      if (!token) {
+        throw new ApiError('InvalidAccessTokenError');
+      }
+
+      // tslint:disable-next-line await-promise
+      const response = await got('https://graph.facebook.com/debug_token', {
+        query: {
+          access_token: this.appAccessToken,
+          input_token: token,
+        },
+        json: true,
+      });
+
+      if (response.body.data) {
+        const { app_id: appId, is_valid: isValid } = response.body.data;
+        if (isValid === true && appId === this.appId) {
+          return;
+        }
+      }
+
+      throw new ApiError('InvalidAccessTokenError');
+    },
+    { maxAge: moment.duration(2, 'h').asMilliseconds() },
+  );
 
   constructor(connection: Connection, config: FacebookAppConfig = {}) {
     this.connection = connection;
@@ -31,80 +116,6 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
     });
 
     return response.body.data.url as string;
-  }
-
-  async getProfileDetailsByToken(token: string) {
-    const response = await this.sendFacebookAuthenticatedRequest(
-      token,
-      'https://graph.facebook.com/me',
-      {
-        query: {
-          fields: ['id', 'name', 'picture'].join(','),
-        },
-        json: true,
-      },
-    );
-
-    return response.body;
-  }
-
-  async findUserByToken(fbAccessToken: string) {
-    // Get Facebook profile ID using the access token
-    const response = await this.sendFacebookAuthenticatedRequest(
-      fbAccessToken,
-      'https://graph.facebook.com/me',
-      {
-        query: {
-          fields: 'id',
-        },
-        json: true,
-      },
-    );
-
-    const fbId: string | undefined = response.body.id;
-
-    if (fbId) {
-      const users = this.connection.getRepository(User);
-
-      return users.findOne({ where: { fbId } });
-    }
-
-    return undefined;
-  }
-
-  /**
-   * Verifies that a received Facebook access token is issued for the Hollowverse
-   * Facebook app. While it is not possible for an attacker to impersonate a user
-   * with a valid access token issued for another user, it is still possible for another
-   * app authorized by the user to use its access token to sign up that user to Hollowverse
-   * without their consent, or worse steal their data.
-   * This verification step prevents that scenario by confirming with Facebook that
-   * the access token was actually issued for the Hollowverse application.
-   *
-   * @see https://developers.facebook.com/docs/facebook-login/manually-build-a-login-flow#checktoken
-   */
-  private async verifyFacebookAccessToken(token: string) {
-    if (!token) {
-      throw new ApiError('InvalidAccessTokenError');
-    }
-
-    // tslint:disable-next-line await-promise
-    const response = await got('https://graph.facebook.com/debug_token', {
-      query: {
-        access_token: this.appAccessToken,
-        input_token: token,
-      },
-      json: true,
-    });
-
-    if (response.body.data) {
-      const { app_id: appId, is_valid: isValid } = response.body.data;
-      if (isValid === true && appId === this.appId) {
-        return;
-      }
-    }
-
-    throw new ApiError('InvalidAccessTokenError');
   }
 
   /**

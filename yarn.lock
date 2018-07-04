@@ -1003,6 +1003,10 @@
   version "9.4.6"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.6.tgz#d8176d864ee48753d053783e4e463aec86b8d82e"
 
+"@types/p-memoize@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@types/p-memoize/-/p-memoize-1.0.0.tgz#cdd1923d60bb2cd62d3356379bb076a60d9dc5d0"
+
 "@types/prettier@1.13.0":
   version "1.13.0"
   resolved "https://registry.yarnpkg.com/@types/prettier/-/prettier-1.13.0.tgz#18f3b5e27cdb55b0708b833c69ed5aa025249b9c"
@@ -7655,6 +7659,13 @@ mem@^1.1.0:
   dependencies:
     mimic-fn "^1.0.0"
 
+mem@^3.0.0:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/mem/-/mem-3.0.1.tgz#152410d0d7e835e4a4363e626238d9e5be3d6f5a"
+  dependencies:
+    mimic-fn "^1.0.0"
+    p-is-promise "^1.1.0"
+
 memory-fs@^0.4.0, memory-fs@~0.4.1:
   version "0.4.1"
   resolved "https://registry.yarnpkg.com/memory-fs/-/memory-fs-0.4.1.tgz#3a9a20b8462523e447cfbc7e8bb80ed667bfc552"
@@ -8499,6 +8510,13 @@ p-locate@^2.0.0:
 p-map@^1.1.1:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/p-map/-/p-map-1.2.0.tgz#e4e94f311eabbc8633a1e79908165fca26241b6b"
+
+p-memoize@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/p-memoize/-/p-memoize-2.0.0.tgz#ad8e4a509c5a769d92b4a9faa4b066905384a48c"
+  dependencies:
+    mem "^3.0.0"
+    mimic-fn "^1.0.0"
 
 p-reduce@^1.0.0:
   version "1.0.0"
