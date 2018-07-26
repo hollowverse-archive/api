@@ -209,6 +209,11 @@ type NotablePersonEdge {
   node: NotablePerson!
 }
 
+type NotablePersonEventEdge {
+  cursor: ID!
+  node: NotablePersonEvent!
+}
+
 type NotablePersonConnection {
   edges: [NotablePersonEdge!]!
   pageInfo: PageInfo!
@@ -229,6 +234,11 @@ input UsersQueryWhereInput {
   isBanned: Boolean
 }
 
+type NotablePersonEventConnection {
+  edges: [NotablePersonEventEdge!]!
+  pageInfo: PageInfo!
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
@@ -240,6 +250,8 @@ type RootQuery {
 
   users(first: Int!, after: ID, where: UsersQueryWhereInput): UserConnection!
     @requireOneOfRoles(roles: [MODERATOR])
+
+  notablePeopleEvents(first: Int!, after: ID): NotablePersonEventConnection!
 }
 
 input CreateUserInput {
