@@ -180,6 +180,7 @@ type User implements UserInterface {
   id: ID!
   name: String!
   photoUrl: Url
+  isBanned: Boolean! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 # The authenticated user performing the request
@@ -211,6 +212,16 @@ type NotablePersonConnection {
   pageInfo: PageInfo!
 }
 
+type UserEdge {
+  cursor: ID!
+  node: User!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
@@ -219,6 +230,9 @@ type RootQuery {
 
   # Explore notable people
   notablePeople(first: Int!, after: ID): NotablePersonConnection!
+
+  users(first: Int!, after: ID): UserConnection!
+    @requireOneOfRoles(roles: [MODERATOR])
 }
 
 input CreateUserInput {
