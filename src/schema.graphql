@@ -194,6 +194,7 @@ type Viewer implements UserInterface {
   photoUrl: Url
   email: Email
   signedUpAt: DateTime!
+  role: UserRole
 }
 
 type PageInfo {
