@@ -59,7 +59,7 @@ export class User extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
 
-  @Column({ type: 'bool', nullable: false, default: false })
+  @Column({ type: 'tinyint', nullable: false, default: false })
   isBanned: boolean;
 
   @IsNotEmpty()
