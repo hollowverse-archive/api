@@ -5,7 +5,7 @@ import { ResolverMap } from '../../typings/resolverMap';
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
     async notablePeople(_, { after, first }, { connection }) {
-      const skip = (Number(after) || 0) + 1;
+      const skip = Number(after) || 0;
       const query: FindManyOptions<NotablePerson> = {
         order: {
           addedOn: 'DESC',
