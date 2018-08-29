@@ -222,6 +222,10 @@ type UserConnection {
   pageInfo: PageInfo!
 }
 
+input UsersQueryWhereInput {
+  isBanned: Boolean
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
@@ -231,7 +235,7 @@ type RootQuery {
   # Explore notable people
   notablePeople(first: Int!, after: ID): NotablePersonConnection!
 
-  users(first: Int!, after: ID): UserConnection!
+  users(first: Int!, after: ID, where: UsersQueryWhereInput): UserConnection!
     @requireOneOfRoles(roles: [MODERATOR])
 }
 

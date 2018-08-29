@@ -4,9 +4,10 @@ import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
-    async users(_, { after, first }, { connection }) {
+    async users(_, { after, first, where }, { connection }) {
       const skip = Number(after) || 0;
       const query: FindManyOptions<User> = {
+        where: { ...where },
         order: {
           signedUpAt: 'DESC',
         },
