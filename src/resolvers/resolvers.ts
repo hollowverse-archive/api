@@ -15,6 +15,7 @@ import { resolvers as submitNotablePersonEventResolvers } from './mutations/subm
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
+import { resolvers as usersResolvers } from './queries/users';
 
 import { resolvers as requireAuthResolvers } from './directives/requireAuth';
 import { resolvers as requireOneOfRolesResolvers } from './directives/requireOneOfRoles';
@@ -45,6 +46,7 @@ export const resolvers = merge(
   notablePersonResolvers,
   notablePeopleResolvers,
   userResolvers,
+  usersResolvers,
   viewerResolvers,
   photoResolvers,
   scalarTypes,
