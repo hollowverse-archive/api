@@ -180,6 +180,7 @@ type User implements UserInterface {
   id: ID!
   name: String!
   photoUrl: Url
+  email: Email @requireOneOfRoles(roles: [MODERATOR])
   isBanned: Boolean! @requireOneOfRoles(roles: [MODERATOR])
 }
 
