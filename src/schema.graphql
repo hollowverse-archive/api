@@ -201,6 +201,7 @@ type Viewer implements UserInterface {
 
 type PageInfo {
   hasNextPage: Boolean!
+  endCursor: ID
 }
 
 type NotablePersonEdge {
