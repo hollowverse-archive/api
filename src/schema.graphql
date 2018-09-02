@@ -297,7 +297,7 @@ enum ErrorCode {
   NOT_AUTHORIZED
 }
 
-interface Error {
+type Error {
   code: ErrorCode!
   message: String!
 }
