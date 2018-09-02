@@ -41,6 +41,12 @@ export const resolvers: Partial<ResolverMap> = {
         };
       }
 
+      if (user.isBanned === true) {
+        return {
+          result: makeErrorResult('BAD_REQUEST', 'User is already banned'),
+        };
+      }
+
       user.isBanned = true;
 
       await users.save(user);
