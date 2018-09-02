@@ -294,6 +294,7 @@ input SubmitNotablePersonEventInput {
 enum ErrorCode {
   NOT_IMPLEMENTED
   BAD_REQUEST
+  NOT_AUTHORIZED
 }
 
 interface Error {
@@ -323,6 +324,14 @@ type SubmitNotablePersonEventPayload {
   result: Result
 }
 
+input BanUserInput {
+  userId: ID!
+}
+
+type BanUserPayload {
+  result: Result
+}
+
 type RootMutation {
   # Create a new user using a valid Facebook access token
   # issued for the Hollowverse application.
@@ -338,6 +347,9 @@ type RootMutation {
   submitNotablePersonEvent(
     input: SubmitNotablePersonEventInput!
   ): SubmitNotablePersonEventPayload! @requireAuth
+
+  banUser(input: BanUserInput!): BanUserPayload
+    @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {
