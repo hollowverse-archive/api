@@ -324,11 +324,12 @@ type SubmitNotablePersonEventPayload {
   result: Result
 }
 
-input BanUserInput {
+input ChangeUserBanStatusInput {
   userId: ID!
+  newValue: Boolean!
 }
 
-type BanUserPayload {
+type ChangeUserBanStatusPayload {
   result: Result
 }
 
@@ -348,8 +349,9 @@ type RootMutation {
     input: SubmitNotablePersonEventInput!
   ): SubmitNotablePersonEventPayload! @requireAuth
 
-  banUser(input: BanUserInput!): BanUserPayload
-    @requireOneOfRoles(roles: [MODERATOR])
+  changeUserBanStatus(
+    input: ChangeUserBanStatusInput!
+  ): ChangeUserBanStatusPayload @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {
