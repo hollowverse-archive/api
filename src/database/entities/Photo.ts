@@ -10,6 +10,7 @@ import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { ColorPalette } from './ColorPalette';
 import { urlValidationOptions } from '../../helpers/validation';
+import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 
 /** A photo with metadata, including license and copyright information */
 @Entity()
@@ -38,7 +39,11 @@ export class Photo extends BaseEntity {
   @Column({ type: 'varchar', nullable: true })
   credits: string | null;
 
-  @Column({ type: 'tinyint', nullable: true })
+  @Column({
+    type: 'tinyint',
+    nullable: true,
+    transformer: transformTinyIntOrNull,
+  })
   isCopyrighted: boolean | null;
 
   @Column({ type: 'tinyint', nullable: false })
