@@ -34,8 +34,8 @@ export const resolvers: Partial<ResolverMap> = {
         return {
           result: makeErrorResult(
             'NOT_AUTHORIZED',
-            `A user with role ${viewer.role} cannot ban a user with ${
-              user.role === null ? 'no role' : `role ${user.role}`
+            `A user with role "${viewer.role}" cannot ban a user with ${
+              user.role === null ? 'no role' : `role "${user.role}"`
             }`,
           ),
         };
