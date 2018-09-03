@@ -28,6 +28,15 @@ export const resolvers: Partial<ResolverMap> = {
         };
       }
 
+      if (user.id === viewer.id) {
+        return {
+          result: makeErrorResult(
+            'BAD_REQUEST',
+            'Cannot change ban status of oneself',
+          ),
+        };
+      }
+
       const canViewerBanUser = canUserWithRoleXMutateUserWithRoleY({
         roleX: viewer.role,
         roleY: user.role,
