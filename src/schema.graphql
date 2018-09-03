@@ -321,7 +321,7 @@ type GenericSuccessResult implements Result {
 }
 
 type SubmitNotablePersonEventPayload {
-  result: Result
+  result: Result!
 }
 
 input ChangeUserBanStatusInput {
@@ -330,7 +330,7 @@ input ChangeUserBanStatusInput {
 }
 
 type ChangeUserBanStatusPayload {
-  result: Result
+  result: Result!
 }
 
 type RootMutation {
@@ -351,7 +351,7 @@ type RootMutation {
 
   changeUserBanStatus(
     input: ChangeUserBanStatusInput!
-  ): ChangeUserBanStatusPayload @requireOneOfRoles(roles: [MODERATOR])
+  ): ChangeUserBanStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {
