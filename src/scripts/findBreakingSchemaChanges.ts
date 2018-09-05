@@ -23,7 +23,7 @@ const MASTER_SCHEMA_URL =
       for (const { type, description } of breakingChanges) {
         console.log(`  * ${type}\t ${description}`);
       }
-      process.exit(1);
+      process.exit(0);
     } else {
       console.info('No breaking schema changes were found');
       process.exit(0);
