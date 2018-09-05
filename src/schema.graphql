@@ -225,6 +225,7 @@ type UserConnection {
 }
 
 input UsersQueryWhereInput {
+  # If specified, users will be filtered based on whether ther are banned or not
   isBanned: Boolean
 }
 
@@ -324,12 +325,16 @@ type SubmitNotablePersonEventPayload {
   result: Result!
 }
 
-input ChangeUserBanStatusInput {
+input ChangeUserIsBannedStatusInput {
+  # User to change ban status for
   userId: ID!
+
+  # New ban status. Should be `true` if the user will be banned and `false`
+  # if the user is to be unbanned.
   newValue: Boolean!
 }
 
-type ChangeUserBanStatusPayload {
+type ChangeUserIsBannedStatusPayload {
   result: Result!
 }
 
@@ -349,9 +354,9 @@ type RootMutation {
     input: SubmitNotablePersonEventInput!
   ): SubmitNotablePersonEventPayload! @requireAuth
 
-  changeUserBanStatus(
-    input: ChangeUserBanStatusInput!
-  ): ChangeUserBanStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
+  changeUserIsBannedStatus(
+    input: ChangeUserIsBannedStatusInput!
+  ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {

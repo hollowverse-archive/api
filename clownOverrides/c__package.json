@@ -7,6 +7,7 @@
       "tslint '**/*.ts{,x}' --project .  --exclude '**/node_modules/**' --exclude '**/.serverless/**'  --exclude '**/.webpack/**'  --exclude '**/dist/**' --exclude 'src/typings/schema.ts' --exclude 'clients/**/*' --exclude 'src/database/migrations/*.ts'"
   },
   "devDependencies": {
+    "tslint": "^5.11.0",
     "ts-jest": "^23.0.1",
     "typescript": "^3.0.3",
     "typescript-eslint-parser": "^18.0.0"

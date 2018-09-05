@@ -5,7 +5,7 @@ import { canUserWithRoleXMutateUserWithRoleY } from '../../helpers/permissions';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
-    async changeUserBanStatus(
+    async changeUserIsBannedStatus(
       _,
       { input: { userId, newValue } },
       { connection, viewer },
@@ -40,7 +40,7 @@ export const resolvers: Partial<ResolverMap> = {
       const canViewerBanUser = canUserWithRoleXMutateUserWithRoleY({
         roleX: viewer.role,
         roleY: user.role,
-        mutation: 'changeUserBanStatus',
+        mutation: 'changeUserIsBannedStatus',
       });
 
       if (!canViewerBanUser) {

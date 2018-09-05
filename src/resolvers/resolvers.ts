@@ -11,7 +11,7 @@ import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
-import { resolvers as changeUserBanStatusResolvers } from './mutations/changeUserBanStatus';
+import { resolvers as changeUserIsBannedStatusResolvers } from './mutations/changeUserIsBannedStatus';
 import { resolvers as submitNotablePersonEventResolvers } from './mutations/submitNotablePersonEvent';
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
@@ -42,7 +42,7 @@ const interfaceTypes = {
 export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
-  changeUserBanStatusResolvers,
+  changeUserIsBannedStatusResolvers,
   submitNotablePersonEventResolvers,
   viewerResolvers,
   notablePersonResolvers,
