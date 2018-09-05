@@ -36,9 +36,13 @@ export function createConnectionResolverFromEntity<
     { after, first, where },
     { connection }: SchemaContext,
   ) => {
+    if (typeof where === 'string') {
+      throw new TypeError('`where` cannot be a string.');
+    }
+
     const skip = typeof after === 'string' ? (Number(after) || 0) + 1 : 0;
     const query: FindManyOptions<InstanceType<E>> = {
-      where,
+      where: { ...(where as any) },
       order,
     };
     const repo = connection.getRepository<InstanceType<E>>(entity);
