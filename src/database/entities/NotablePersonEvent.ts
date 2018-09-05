@@ -16,6 +16,7 @@ import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { EventLabel } from './EventLabel';
 import { NotablePersonEventType } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
+import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 
 const eventTypes: Record<NotablePersonEventType, string> = {
   quote: '',
@@ -37,7 +38,11 @@ export class NotablePersonEvent extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   quote: string | null;
 
-  @Column({ nullable: true, type: 'tinyint' })
+  @Column({
+    nullable: true,
+    type: 'tinyint',
+    transformer: transformTinyIntOrNull,
+  })
   isQuoteByNotablePerson: boolean | null;
 
   @Column({

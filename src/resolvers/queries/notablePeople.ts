@@ -1,33 +1,15 @@
-import { FindManyOptions } from 'typeorm';
 import { NotablePerson } from '../../database/entities/NotablePerson';
+import { NotablePerson as NodeType } from '../../typings/schema';
 import { ResolverMap } from '../../typings/resolverMap';
+import { createConnectionResolverFromEntity } from '../../helpers/createConnectionResolverFromEntity';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
-    async notablePeople(_, { after, first }, { connection }) {
-      const skip = (Number(after) || 0) + 1;
-      const query: FindManyOptions<NotablePerson> = {
-        order: {
-          addedOn: 'DESC',
-        },
-      };
-      const notablePeople = connection.getRepository(NotablePerson);
-
-      const [people, all] = await notablePeople.findAndCount({
-        ...query,
-        take: first,
-        skip,
-      });
-
-      return {
-        edges: people.map((person, i) => ({
-          node: person,
-          cursor: i + skip,
-        })),
-        pageInfo: {
-          hasNextPage: skip + people.length < all,
-        },
-      };
-    },
+    notablePeople: createConnectionResolverFromEntity<
+      typeof NotablePerson,
+      NodeType
+    >(NotablePerson, {
+      addedOn: 'DESC',
+    }) as any,
   },
 };

@@ -1,12 +1,29 @@
-import { TypesMap, DirectiveMap, UnionMap, InterfaceMap } from './schema';
+import { TypesMap, DirectiveMap, InterfaceMap } from './schema';
 import { SchemaContext } from './schemaContext';
 import { GraphQLResolveInfo } from 'graphql/type';
 import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
 
 type Result<T> = Promise<T> | T;
 
-// eslint-disable-next-line no-use-before-define
-type DeepPartial<T> = { [K in keyof T]?: DeepPartial<T[K]> };
+type NonPartialable =
+  | (() => any)
+  | undefined
+  | void
+  | never
+  | symbol
+  | string
+  | number;
+
+type DeepPartialArray<T> = Array<Partial<T>>;
+
+/* eslint-disable no-use-before-define */
+export type DeepPartial<T> = T extends Array<infer R>
+  ? DeepPartialArray<R>
+  : T extends NonPartialable
+    ? T
+    : {
+        [P in keyof T]?: T[P] extends NonPartialable ? T[P] : DeepPartial<T[P]>
+      };
 
 export type GeneratedType<T> = {
   returnType: T;
@@ -75,15 +92,15 @@ export type DirectiveResolverMap = {
   >
 };
 
-export type UnionResolverMap = {
-  [UnionName in keyof UnionMap]: {
-    __resolveType: UnionOrInterfaceResolver<
-      UnionMap[UnionName]['unionType'],
-      UnionMap[UnionName]['possibleTypeNames'],
-      SchemaContext
-    >;
-  }
-};
+// export type UnionResolverMap = {
+//   [UnionName in keyof UnionMap]: {
+//     __resolveType: UnionOrInterfaceResolver<
+//       UnionMap[UnionName]['unionType'],
+//       UnionMap[UnionName]['possibleTypeNames'],
+//       SchemaContext
+//     >;
+//   }
+// };
 
 export type InterfaceResolverMap = {
   [InterfaceName in keyof InterfaceMap]: {

@@ -39,7 +39,7 @@ export const resolvers: Partial<ResolverMap> = {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
         if (notablePerson) {
-          return notablePerson.relatedPeople;
+          return notablePerson.relatedPeople as Promise<any[]>;
         }
       }
 

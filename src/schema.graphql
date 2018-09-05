@@ -180,6 +180,8 @@ type User implements UserInterface {
   id: ID!
   name: String!
   photoUrl: Url
+  email: Email @requireOneOfRoles(roles: [MODERATOR])
+  isBanned: Boolean! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 # The authenticated user performing the request
@@ -199,6 +201,7 @@ type Viewer implements UserInterface {
 
 type PageInfo {
   hasNextPage: Boolean!
+  endCursor: ID
 }
 
 type NotablePersonEdge {
@@ -211,6 +214,21 @@ type NotablePersonConnection {
   pageInfo: PageInfo!
 }
 
+type UserEdge {
+  cursor: ID!
+  node: User!
+}
+
+type UserConnection {
+  edges: [UserEdge!]!
+  pageInfo: PageInfo!
+}
+
+input UsersQueryWhereInput {
+  # If specified, users will be filtered based on whether ther are banned or not
+  isBanned: Boolean
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
@@ -219,6 +237,9 @@ type RootQuery {
 
   # Explore notable people
   notablePeople(first: Int!, after: ID): NotablePersonConnection!
+
+  users(first: Int!, after: ID, where: UsersQueryWhereInput): UserConnection!
+    @requireOneOfRoles(roles: [MODERATOR])
 }
 
 input CreateUserInput {
@@ -274,9 +295,10 @@ input SubmitNotablePersonEventInput {
 enum ErrorCode {
   NOT_IMPLEMENTED
   BAD_REQUEST
+  NOT_AUTHORIZED
 }
 
-interface Error {
+type Error {
   code: ErrorCode!
   message: String!
 }
@@ -300,7 +322,20 @@ type GenericSuccessResult implements Result {
 }
 
 type SubmitNotablePersonEventPayload {
-  result: Result
+  result: Result!
+}
+
+input ChangeUserIsBannedStatusInput {
+  # User to change ban status for
+  userId: ID!
+
+  # New ban status. Should be `true` if the user will be banned and `false`
+  # if the user is to be unbanned.
+  newValue: Boolean!
+}
+
+type ChangeUserIsBannedStatusPayload {
+  result: Result!
 }
 
 type RootMutation {
@@ -318,6 +353,10 @@ type RootMutation {
   submitNotablePersonEvent(
     input: SubmitNotablePersonEventInput!
   ): SubmitNotablePersonEventPayload! @requireAuth
+
+  changeUserIsBannedStatus(
+    input: ChangeUserIsBannedStatusInput!
+  ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {

@@ -11,10 +11,12 @@ import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
+import { resolvers as changeUserIsBannedStatusResolvers } from './mutations/changeUserIsBannedStatus';
 import { resolvers as submitNotablePersonEventResolvers } from './mutations/submitNotablePersonEvent';
 import { resolvers as userResolvers } from './types/user';
 import { resolvers as viewerResolvers } from './types/viewer';
 import { resolvers as photoResolvers } from './types/photo';
+import { resolvers as usersResolvers } from './queries/users';
 
 import { resolvers as requireAuthResolvers } from './directives/requireAuth';
 import { resolvers as requireOneOfRolesResolvers } from './directives/requireOneOfRoles';
@@ -40,11 +42,13 @@ const interfaceTypes = {
 export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
+  changeUserIsBannedStatusResolvers,
   submitNotablePersonEventResolvers,
   viewerResolvers,
   notablePersonResolvers,
   notablePeopleResolvers,
   userResolvers,
+  usersResolvers,
   viewerResolvers,
   photoResolvers,
   scalarTypes,
