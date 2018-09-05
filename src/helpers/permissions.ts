@@ -10,5 +10,10 @@ export const canUserWithRoleXMutateUserWithRoleY = ({
   roleX,
   roleY,
 }: CanUserWithRoleXMutateUserWithRoleYOptions): boolean => {
-  return roleX === 'MODERATOR' && roleY === null;
+  // This is the only role that can mutate users currently.
+  if (roleX === 'MODERATOR') {
+    return roleY === null;
+  }
+
+  return false;
 };
