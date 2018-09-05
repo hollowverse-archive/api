@@ -3,6 +3,15 @@ type Transform<DatabaseType, EntityType> = {
   to(value: EntityType): DatabaseType;
 };
 
+/**
+ * MySQL does not have a native boolean type, and `tinyint`,
+ * which can only be 0 or 1, is used instead.
+ * TypeORM can handle the transformation between MySQL's
+ * `tinyint` and JavaScript's `boolean` automatically,
+ * but not when the type is also nullable.
+ * A custom value transformer is needed when a boolean type
+ * is nullable.
+ */
 export const transformTinyIntOrNull: Transform<
   number | null,
   boolean | null
