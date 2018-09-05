@@ -3,7 +3,6 @@
     "../node_modules/@hollowverse/config/eslint/typescript/.eslintrc.json"
   ],
   "rules": {
-    "no-shadow-restricted-names": ["off"],
-    "no-parameter-reassignment": ["off"]
+    "no-shadow-restricted-names": ["off"]
   }
 }
