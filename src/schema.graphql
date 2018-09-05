@@ -357,7 +357,7 @@ type SubmitNotablePersonEventPayload {
 }
 
 input ChangeUserIsBannedStatusInput {
-  # User to change ban status for
+  # User ID to change ban status for
   userId: ID!
 
   # New ban status. Should be `true` if the user will be banned and `false`
@@ -366,6 +366,19 @@ input ChangeUserIsBannedStatusInput {
 }
 
 type ChangeUserIsBannedStatusPayload {
+  result: Result!
+}
+
+input ChangeQuoteIsApprovedStatusInput {
+  # Quote ID to change approval status for
+  quoteId: ID!
+
+  # New quote approval status. Should be `true` if the quote will be approved and `false`
+  # if the quote is to be disapproved.
+  newValue: Boolean!
+}
+
+type ChangeQuoteIsApprovedStatusPayload {
   result: Result!
 }
 
@@ -388,6 +401,10 @@ type RootMutation {
   changeUserIsBannedStatus(
     input: ChangeUserIsBannedStatusInput!
   ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
+
+  changeQuoteIsApprovedStatus(
+    input: ChangeQuoteIsApprovedStatusInput!
+  ): ChangeQuoteIsApprovedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {
