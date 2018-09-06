@@ -369,16 +369,15 @@ type ChangeUserIsBannedStatusPayload {
   result: Result!
 }
 
-input ChangeQuoteIsApprovedStatusInput {
-  # Quote ID to change approval status for
-  quoteId: ID!
+input ChangeNotablePersonEventApprovalStatusInput {
+  # Event ID to change approval status for
+  eventId: ID!
 
-  # New quote approval status. Should be `true` if the quote will be approved and `false`
-  # if the quote is to be disapproved.
-  newValue: Boolean!
+  # New event approval status
+  newValue: reviewStatus!
 }
 
-type ChangeQuoteIsApprovedStatusPayload {
+type ChangeNotablePersonEventApprovalStatusPayload {
   result: Result!
 }
 
@@ -402,9 +401,10 @@ type RootMutation {
     input: ChangeUserIsBannedStatusInput!
   ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 
-  changeQuoteIsApprovedStatus(
-    input: ChangeQuoteIsApprovedStatusInput!
-  ): ChangeQuoteIsApprovedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
+  changeNotablePersonEventApprovalStatus(
+    input: ChangeNotablePersonEventApprovalStatusInput!
+  ): ChangeNotablePersonEventApprovalStatusPayload!
+    @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {
