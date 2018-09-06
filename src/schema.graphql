@@ -230,7 +230,7 @@ type UserConnection {
 }
 
 input UsersQueryWhereInput {
-  # If specified, users will be filtered based on whether ther are banned or not
+  # If specified, users will be filtered based on whether they are banned or not
   isBanned: Boolean
 }
 
