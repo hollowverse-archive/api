@@ -9,6 +9,7 @@ import { resolvers as resultResolvers } from './interfaces/result';
 
 import { resolvers as notablePersonResolvers } from './queries/notablePerson';
 import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
+import { resolvers as notablePeopleEventsResolvers } from './queries/notablePeopleEvents';
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
 import { resolvers as changeUserIsBannedStatusResolvers } from './mutations/changeUserIsBannedStatus';
@@ -47,6 +48,7 @@ export const resolvers = merge(
   viewerResolvers,
   notablePersonResolvers,
   notablePeopleResolvers,
+  notablePeopleEventsResolvers,
   userResolvers,
   usersResolvers,
   viewerResolvers,

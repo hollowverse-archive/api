@@ -54,6 +54,11 @@ enum NotablePersonEventType {
   appearance
 }
 
+enum NotablePersonEventReviewStatus {
+  APPROVED
+  DISAPPROVED
+}
+
 enum EditorialSummaryNodeType {
   quote
   heading
@@ -97,6 +102,10 @@ type NotablePersonEvent {
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
+
+  # Whether this event was reviewed by a moderator on Hollowverse and approved
+  # or disapproved. `null` if not reviewed.
+  reviewStatus: NotablePersonEventReviewStatus
 }
 
 type EditorialSummary {
@@ -209,6 +218,11 @@ type NotablePersonEdge {
   node: NotablePerson!
 }
 
+type NotablePersonEventEdge {
+  cursor: ID!
+  node: NotablePersonEvent!
+}
+
 type NotablePersonConnection {
   edges: [NotablePersonEdge!]!
   pageInfo: PageInfo!
@@ -225,8 +239,18 @@ type UserConnection {
 }
 
 input UsersQueryWhereInput {
-  # If specified, users will be filtered based on whether ther are banned or not
+  # If specified, users will be filtered based on whether they are banned or not
   isBanned: Boolean
+}
+
+type NotablePersonEventConnection {
+  edges: [NotablePersonEventEdge!]!
+  pageInfo: PageInfo!
+}
+
+input NotablePersonEventsQueryWhereInput {
+  # If specified, quotes will be filtered based on whether they are approved, disapproved, or not reviewd at all
+  reviewStatus: NotablePersonEventReviewStatus
 }
 
 type RootQuery {
@@ -240,6 +264,12 @@ type RootQuery {
 
   users(first: Int!, after: ID, where: UsersQueryWhereInput): UserConnection!
     @requireOneOfRoles(roles: [MODERATOR])
+
+  notablePeopleEvents(
+    first: Int!
+    after: ID
+    where: NotablePersonEventsQueryWhereInput
+  ): NotablePersonEventConnection!
 }
 
 input CreateUserInput {
@@ -304,8 +334,8 @@ type Error {
 }
 
 enum ResultType {
-  success
-  error
+  SUCCESS
+  ERROR
 }
 
 interface Result {
@@ -365,18 +395,23 @@ schema {
 }
 
 enum ApiErrorType {
-  # Thrown when an operation requires that the request is authorized
-  MustBeAuthorizedError
+  # Thrown when an operation requires that the request is authenticated but
+  # does not have any authentication details
+  NOT_AUTHENTICATED
 
-  OperationNotAllowedError
+  # Thrown when an operation requires special access permissions
+  # but was not issued by a user with an authorized role
+  NOT_AUTHORIZED
+
+  OPERATION_NOT_ALLOWED
 
   # Thrown when an access token is empty, invalid or expired
-  InvalidAccessTokenError
+  INVALID_ACCESS_TOKEN
 
   # Thrown when the user does not have any of the roles required to perform
   # an operation
-  RoleMismatchError
+  ROLE_MISMATCH
 
   # Thrown when an unexpected server error occurs
-  InternalError
+  INTERNAL
 }

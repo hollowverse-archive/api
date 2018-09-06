@@ -5,7 +5,11 @@ import { ApiError } from '../../helpers/apiError';
 export const resolvers: Pick<DirectiveResolverMap, 'requireOneOfRoles'> = {
   async requireOneOfRoles(next, _source, { roles }, { viewer }) {
     if (!viewer) {
-      throw new ApiError('MustBeAuthorizedError');
+      throw new ApiError('NOT_AUTHENTICATED');
+    }
+
+    if (viewer.role === null) {
+      throw new ApiError('NOT_AUTHORIZED');
     }
 
     if (viewer.role && roles.includes(viewer.role)) {
@@ -24,6 +28,6 @@ export const resolvers: Pick<DirectiveResolverMap, 'requireOneOfRoles'> = {
       `;
     }
 
-    throw new ApiError('RoleMismatchError', errorMessage);
+    throw new ApiError('ROLE_MISMATCH', errorMessage);
   },
 };

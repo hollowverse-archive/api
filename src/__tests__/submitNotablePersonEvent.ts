@@ -118,7 +118,7 @@ describe('submit a notable person event', () => {
     expect(result).toEqual({
       submitNotablePersonEvent: {
         result: {
-          state: 'success',
+          state: 'SUCCESS',
         },
       },
     });

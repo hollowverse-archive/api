@@ -43,7 +43,7 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
   private verifyFacebookAccessToken = pMemoize(
     async (token: string) => {
       if (!token) {
-        throw new ApiError('InvalidAccessTokenError');
+        throw new ApiError('INVALID_ACCESS_TOKEN');
       }
 
       const response = await got('https://graph.facebook.com/debug_token', {
@@ -61,7 +61,7 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
         }
       }
 
-      throw new ApiError('InvalidAccessTokenError');
+      throw new ApiError('INVALID_ACCESS_TOKEN');
     },
     { maxAge: moment.duration(2, 'h').asMilliseconds() },
   );
@@ -148,7 +148,7 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
             : options.query,
       });
     } catch {
-      throw new ApiError('InternalError');
+      throw new ApiError('INTERNAL');
     }
   }
 }
