@@ -395,18 +395,23 @@ schema {
 }
 
 enum ApiErrorType {
-  # Thrown when an operation requires that the request is authorized
-  MustBeAuthorizedError
+  # Thrown when an operation requires that the request is authenticated but
+  # does not have any authentication details
+  NOT_AUTHENTICATED
 
-  OperationNotAllowedError
+  # Thrown when an operation requires special access permissions
+  # but was not issued by a user with an authorized role
+  NOT_AUTHORIZED
+
+  OPERATION_NOT_ALLOWED
 
   # Thrown when an access token is empty, invalid or expired
-  InvalidAccessTokenError
+  INVALID_ACCESS_TOKEN
 
   # Thrown when the user does not have any of the roles required to perform
   # an operation
-  RoleMismatchError
+  ROLE_MISMATCH
 
   # Thrown when an unexpected server error occurs
-  InternalError
+  INTERNAL
 }

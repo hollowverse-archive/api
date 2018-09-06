@@ -7,6 +7,6 @@ export const resolvers: Pick<DirectiveResolverMap, 'requireAuth'> = {
       return next();
     }
 
-    throw new ApiError('MustBeAuthorizedError');
+    throw new ApiError('NOT_AUTHENTICATED');
   },
 };

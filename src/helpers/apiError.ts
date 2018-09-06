@@ -1,15 +1,18 @@
-const messagesByErrorType = {
-  OperationNotAllowedError: 'This operation is not allowed',
-  MustBeAuthorizedError:
-    'This operation requires that the request is authenticated',
-  InvalidAccessTokenError:
-    'The passed access token is either empty, expired or invalid',
-  RoleMismatchError:
-    'The requested operation can only be performed by user with specific roles',
-  InternalError: 'An internal API error has occurred',
-};
+import { ApiErrorType } from '../typings/schema';
+import { oneLine } from 'common-tags';
 
-type ApiErrorType = keyof typeof messagesByErrorType;
+const messagesByErrorType: Record<ApiErrorType, string> = {
+  OPERATION_NOT_ALLOWED: 'This operation is not allowed',
+  NOT_AUTHENTICATED:
+    'This operation requires that the request is authenticated',
+  NOT_AUTHORIZED:
+    'This operation can only be performed by users with specific roles',
+  INVALID_ACCESS_TOKEN:
+    'The passed access token is either empty, expired or invalid',
+  ROLE_MISMATCH: oneLine`The requested operation can only be performed by users with specific roles,
+    but was made by a user with a different role`,
+  INTERNAL: 'An internal API error has occurred',
+};
 
 type ApiErrorOptions = {
   isSensitive: boolean;

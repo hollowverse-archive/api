@@ -19,7 +19,7 @@ export const resolvers: Partial<ResolverMap> = {
     ) {
       if (viewer) {
         throw new ApiError(
-          'OperationNotAllowedError',
+          'OPERATION_NOT_ALLOWED',
           'Cannot create a new user because the request is already authenticated',
         );
       }
