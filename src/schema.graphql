@@ -369,7 +369,7 @@ type ChangeUserIsBannedStatusPayload {
   result: Result!
 }
 
-input ChangeNotablePersonEventApprovalStatusInput {
+input ChangeNotablePersonEventReviewStatusInput {
   # Event ID to change approval status for
   eventId: ID!
 
@@ -377,7 +377,7 @@ input ChangeNotablePersonEventApprovalStatusInput {
   newValue: NotablePersonEventReviewStatus!
 }
 
-type ChangeNotablePersonEventApprovalStatusPayload {
+type ChangeNotablePersonEventReviewStatusPayload {
   result: Result!
 }
 
@@ -401,9 +401,9 @@ type RootMutation {
     input: ChangeUserIsBannedStatusInput!
   ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
 
-  changeNotablePersonEventApprovalStatus(
-    input: ChangeNotablePersonEventApprovalStatusInput!
-  ): ChangeNotablePersonEventApprovalStatusPayload!
+  changeNotablePersonEventReviewStatus(
+    input: ChangeNotablePersonEventReviewStatusInput!
+  ): ChangeNotablePersonEventReviewStatusPayload!
     @requireOneOfRoles(roles: [MODERATOR])
 }
 

@@ -5,7 +5,7 @@ import { ApiError } from '../../helpers/apiError';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
-    async changeNotablePersonEventApprovalStatus(
+    async changeNotablePersonEventReviewStatus(
       _,
       { input: { eventId, newValue } },
       { connection, viewer },
