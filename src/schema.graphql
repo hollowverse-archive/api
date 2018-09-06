@@ -239,6 +239,11 @@ type NotablePersonEventConnection {
   pageInfo: PageInfo!
 }
 
+input NotablePersonEventsQueryWhereInput {
+  # If specified, quotes will be filtered based on whether they are approved or not
+  isApproved: Boolean
+}
+
 type RootQuery {
   # The authenticated user performing the request
   viewer: Viewer
@@ -251,7 +256,11 @@ type RootQuery {
   users(first: Int!, after: ID, where: UsersQueryWhereInput): UserConnection!
     @requireOneOfRoles(roles: [MODERATOR])
 
-  notablePeopleEvents(first: Int!, after: ID): NotablePersonEventConnection!
+  notablePeopleEvents(
+    first: Int!
+    after: ID
+    where: NotablePersonEventsQueryWhereInput
+  ): NotablePersonEventConnection!
 }
 
 input CreateUserInput {
