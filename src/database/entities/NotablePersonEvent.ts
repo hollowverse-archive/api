@@ -14,7 +14,10 @@ import { NotablePerson } from './NotablePerson';
 import { User } from './User';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { EventLabel } from './EventLabel';
-import { NotablePersonEventType } from '../../typings/schema';
+import {
+  NotablePersonEventType,
+  NotablePersonEventReviewStatus,
+} from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 
@@ -22,6 +25,11 @@ const eventTypes: Record<NotablePersonEventType, string> = {
   quote: '',
   donation: '',
   appearance: '',
+};
+
+const reviewStatuses: Record<NotablePersonEventReviewStatus, string> = {
+  APPROVED: '',
+  DISAPPROVED: '',
 };
 
 export type EventType = keyof typeof eventTypes;
@@ -52,6 +60,14 @@ export class NotablePersonEvent extends BaseEntity {
     enum: Object.keys(eventTypes),
   })
   type: EventType;
+
+  @Column({
+    nullable: false,
+    type: 'enum',
+    default: null,
+    enum: Object.keys(reviewStatuses),
+  })
+  reviewStatus: NotablePersonEventReviewStatus;
 
   @IsUrl(urlValidationOptions)
   @Trim()

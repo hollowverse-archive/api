@@ -54,6 +54,11 @@ enum NotablePersonEventType {
   appearance
 }
 
+enum NotablePersonEventReviewStatus {
+  APPROVED
+  DISAPPROVED
+}
+
 enum EditorialSummaryNodeType {
   quote
   heading
@@ -97,6 +102,10 @@ type NotablePersonEvent {
     @deprecated(
       reason: "We decided to remove events on comments in favor of Facebook comments. See https://github.com/hollowverse/hollowverse/issues/207 for discussion."
     )
+
+  # Whether this event was reviewed by a moderator on Hollowverse and approved
+  # or disapproved. `null` if not reviewed.
+  reviewStatus: NotablePersonEventReviewStatus
 }
 
 type EditorialSummary {
@@ -240,8 +249,8 @@ type NotablePersonEventConnection {
 }
 
 input NotablePersonEventsQueryWhereInput {
-  # If specified, quotes will be filtered based on whether they are approved or not
-  isApproved: Boolean
+  # If specified, quotes will be filtered based on whether they are approved, disapproved, or not reviewd at all
+  reviewStatus: NotablePersonEventReviewStatus
 }
 
 type RootQuery {
