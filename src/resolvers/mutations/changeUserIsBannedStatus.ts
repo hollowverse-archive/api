@@ -2,6 +2,7 @@ import { User } from '../../database/entities/User';
 import { ResolverMap } from '../../typings/resolverMap';
 import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
 import { canUserWithRoleXMutateUserWithRoleY } from '../../helpers/permissions';
+import { ApiError } from '../../helpers/apiError';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
@@ -12,7 +13,7 @@ export const resolvers: Partial<ResolverMap> = {
     ) {
       if (!viewer) {
         // This is a server error. `viewer` should have been checked by `requireOneOfRoles`.
-        throw new TypeError('Expected `viewer` to be defined in `banUser`');
+        throw new ApiError('INTERNAL', 'Expected `viewer` to be defined');
       }
 
       const users = connection.getRepository(User);

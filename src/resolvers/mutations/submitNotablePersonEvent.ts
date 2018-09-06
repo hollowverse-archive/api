@@ -1,6 +1,7 @@
 import { ResolverMap } from '../../typings/resolverMap';
 import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
+import { ApiError } from '../../helpers/apiError';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {
@@ -40,7 +41,8 @@ export const resolvers: Partial<ResolverMap> = {
 
       if (!viewer) {
         // This is a server error. `viewer` should have been checked by `requireAuth`.
-        throw new TypeError(
+        throw new ApiError(
+          'INTERNAL',
           'Expected `viewer` to be defined in `submitNotablePersonEvent`',
         );
       }

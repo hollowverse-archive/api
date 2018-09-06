@@ -374,7 +374,7 @@ input ChangeNotablePersonEventApprovalStatusInput {
   eventId: ID!
 
   # New event approval status
-  newValue: reviewStatus!
+  newValue: NotablePersonEventReviewStatus!
 }
 
 type ChangeNotablePersonEventApprovalStatusPayload {
