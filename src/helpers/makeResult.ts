@@ -5,13 +5,13 @@ export function makeErrorResult(
   errorMessage: string,
 ): ErrorResult {
   return {
-    state: 'error',
+    state: 'ERROR',
     errors: [{ code: errorCode, message: errorMessage }],
   };
 }
 
 export function makeSuccessResult(): Result {
   return {
-    state: 'success',
+    state: 'SUCCESS',
   };
 }

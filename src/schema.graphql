@@ -334,8 +334,8 @@ type Error {
 }
 
 enum ResultType {
-  success
-  error
+  SUCCESS
+  ERROR
 }
 
 interface Result {
