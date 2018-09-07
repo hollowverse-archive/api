@@ -88,7 +88,7 @@ const waitAndPrintInstructions = async () => {
 
           if you haven't created a database for the API before, run:
 
-            docker run -d --network=host -p ${port}:3306 --name=hollowverse-db \\
+            docker run -d -p ${port}:3306 --name=hollowverse-db \\
               -e MYSQL_ROOT_PASSWORD=${password} -e MYSQL_DATABASE=${database} mysql
 
           if you have run this command before, the database server may be stopped,

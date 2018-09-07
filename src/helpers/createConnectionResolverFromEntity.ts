@@ -31,11 +31,7 @@ export function createConnectionResolverFromEntity<
   entity: E,
   order: FindManyOptions<InstanceType<E>>['order'],
 ): FnResolver<Connection<NodeType>, any, ConnectionArgs<E>, SchemaContext> {
-  return async (
-    _: any,
-    { after, first, where },
-    { connection }: SchemaContext,
-  ) => {
+  return async (_, { after, first, where }, { connection }) => {
     if (typeof where === 'string') {
       throw new TypeError('`where` cannot be a string.');
     }

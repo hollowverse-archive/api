@@ -12,6 +12,10 @@ import { resolvers as notablePeopleResolvers } from './queries/notablePeople';
 import { resolvers as notablePeopleEventsResolvers } from './queries/notablePeopleEvents';
 import { resolvers as createNotablePersonResolvers } from './mutations/createNotablePerson';
 import { resolvers as createUserResolvers } from './mutations/createUser';
+// prettier-ignore
+import {
+  resolvers as changeNotablePersonEventReviewStatusResolvers
+} from './mutations/changeNotablePersonEventReviewStatus';
 import { resolvers as changeUserIsBannedStatusResolvers } from './mutations/changeUserIsBannedStatus';
 import { resolvers as submitNotablePersonEventResolvers } from './mutations/submitNotablePersonEvent';
 import { resolvers as userResolvers } from './types/user';
@@ -43,6 +47,7 @@ const interfaceTypes = {
 export const resolvers = merge(
   createUserResolvers,
   createNotablePersonResolvers,
+  changeNotablePersonEventReviewStatusResolvers,
   changeUserIsBannedStatusResolvers,
   submitNotablePersonEventResolvers,
   viewerResolvers,

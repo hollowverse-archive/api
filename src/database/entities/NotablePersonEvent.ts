@@ -6,6 +6,7 @@ import {
   OneToMany,
   ManyToMany,
   JoinTable,
+  Index,
 } from 'typeorm';
 import { IsUrl, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
@@ -48,6 +49,7 @@ export class NotablePersonEvent extends BaseEntity {
     nullable: false,
     type: 'varchar',
   })
+  @Index()
   type: NotablePersonEventType;
 
   @ValidateIf((_, v) => {
@@ -59,6 +61,7 @@ export class NotablePersonEvent extends BaseEntity {
     default: NotablePersonEventReviewStatusEnum.NOT_REVIEWED,
     type: 'varchar',
   })
+  @Index()
   reviewStatus: NotablePersonEventReviewStatus;
 
   @IsUrl(urlValidationOptions)

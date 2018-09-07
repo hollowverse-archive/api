@@ -250,7 +250,7 @@ type NotablePersonEventConnection {
 }
 
 input NotablePersonEventsQueryWhereInput {
-  # If specified, quotes will be filtered based on whether they are approved, disapproved, or not reviewd at all
+  # If specified, events will be filtered based on whether they were allowed by a moderator, removed, or not reviewd at all
   reviewStatus: NotablePersonEventReviewStatus
 }
 
@@ -299,12 +299,12 @@ input SubmitNotablePersonEventInput {
   # The part of the URL to that notable person's page, e.g. Tom_Hanks
   slug: String!
 
-  # Only `quote` is allowed for now
+  # Only `QUOTE` is allowed for now
   type: NotablePersonEventType!
 
-  # Required if the `type` is `quote`, optional otherwise
+  # Required if the `type` is `QUOTE`, optional otherwise
   quote: String
-  # Required if the `type` is `quote`, optional otherwise
+  # Required if the `type` is `QUOTE`, optional otherwise
   isQuoteByNotablePerson: Boolean
 
   # The URL to webpage where this quote was found
@@ -357,7 +357,7 @@ type SubmitNotablePersonEventPayload {
 }
 
 input ChangeUserIsBannedStatusInput {
-  # User to change ban status for
+  # User ID to change ban status for
   userId: ID!
 
   # New ban status. Should be `true` if the user will be banned and `false`
@@ -366,6 +366,18 @@ input ChangeUserIsBannedStatusInput {
 }
 
 type ChangeUserIsBannedStatusPayload {
+  result: Result!
+}
+
+input ChangeNotablePersonEventReviewStatusInput {
+  # Event ID to change approval status for
+  eventId: ID!
+
+  # New event approval status
+  newValue: NotablePersonEventReviewStatus!
+}
+
+type ChangeNotablePersonEventReviewStatusPayload {
   result: Result!
 }
 
@@ -388,6 +400,11 @@ type RootMutation {
   changeUserIsBannedStatus(
     input: ChangeUserIsBannedStatusInput!
   ): ChangeUserIsBannedStatusPayload! @requireOneOfRoles(roles: [MODERATOR])
+
+  changeNotablePersonEventReviewStatus(
+    input: ChangeNotablePersonEventReviewStatusInput!
+  ): ChangeNotablePersonEventReviewStatusPayload!
+    @requireOneOfRoles(roles: [MODERATOR])
 }
 
 schema {

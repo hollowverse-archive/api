@@ -1,4 +1,10 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  Index,
+} from 'typeorm';
 import { IsEmail, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
 import { normalizeEmail, isEmail } from 'validator';
@@ -56,12 +62,14 @@ export class User extends BaseEntity {
   @Column({ type: 'datetime', nullable: false })
   signedUpAt: Date;
 
+  @Index()
   @Column({ type: 'tinyint', nullable: false, default: false })
   isBanned: boolean;
 
   @IsNotEmpty()
   @Column({ type: 'varchar', nullable: false, unique: true })
   fbId: string;
+
   async validate() {
     if (typeof this.email === 'string' && isEmail(this.email)) {
       this.email = normalizeEmail(this.email, { lowercase: true }) || null;
