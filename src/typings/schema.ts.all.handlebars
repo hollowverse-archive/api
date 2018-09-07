@@ -55,6 +55,8 @@ export interface {{ toPascalCase name }}{{ toPascalCase ../name }}Args {
 /** {{ description }} */
 export type {{ name }} = {{#each values }}"{{ value }}"{{#unless @last}} | {{/unless}}{{/each}};
 
+export const {{ name }}Tuple: {{name}}[] = [{{#each values }}"{{ value }}"{{#unless @last}}, {{/unless}}{{/each}}];
+
 {{/each}}
 
 // endregion Enums
