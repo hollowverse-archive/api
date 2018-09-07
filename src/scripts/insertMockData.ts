@@ -3,10 +3,7 @@
 import { connectionPromise } from '../database/connection';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { User } from '../database/entities/User';
-import {
-  NotablePersonEvent,
-  EventType,
-} from '../database/entities/NotablePersonEvent';
+import { NotablePersonEvent } from '../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../database/entities/NotablePersonEventComment';
 import { NotablePersonLabel } from '../database/entities/NotablePersonLabel';
 import { EventLabel } from '../database/entities/EventLabel';
@@ -92,7 +89,7 @@ if (isProd === false) {
           event.id = faker.random.uuid();
           event.happenedOn = faker.date.past();
           event.postedAt = new Date();
-          event.type = faker.helpers.randomize<EventType>([
+          event.type = faker.helpers.randomize<(typeof event)['type']>([
             'donation',
             'quote',
             'appearance',

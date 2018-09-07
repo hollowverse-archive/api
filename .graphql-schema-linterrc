@@ -1,9 +1,11 @@
 {
   "rules": [
     "deprecations-have-a-reason",
+    "types-are-capitalized",
     "fields-are-camel-cased",
     "input-object-values-are-camel-cased",
     "input-object-values-have-descriptions",
-    "types-are-capitalized"
+    "types-are-capitalized",
+    "relay-connection-types-spec"
   ]
 }

@@ -52,11 +52,15 @@ enum NotablePersonEventType {
   quote
   donation
   appearance
+  QUOTE
+  DONATION
+  APPEARANCE
 }
 
 enum NotablePersonEventReviewStatus {
-  APPROVED
-  DISAPPROVED
+  NOT_REVIEWED
+  ALLOWED
+  REMOVED
 }
 
 enum EditorialSummaryNodeType {
@@ -66,6 +70,12 @@ enum EditorialSummaryNodeType {
   text
   emphasis
   link
+  QUOTE
+  HEADING
+  PARAGRAPH
+  TEXT
+  EMPHASIS
+  LINK
 }
 
 type EditorialSummaryNode {
