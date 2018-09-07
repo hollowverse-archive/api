@@ -90,13 +90,13 @@ if (isProd === false) {
           event.happenedOn = faker.date.past();
           event.postedAt = new Date();
           event.type = faker.helpers.randomize<(typeof event)['type']>([
-            'donation',
-            'quote',
-            'appearance',
+            'DONATION',
+            'QUOTE',
+            'APPEARANCE',
           ]);
           const quote = faker.lorem.sentence();
           event.quote =
-            event.type === 'quote'
+            event.type === 'QUOTE'
               ? quote
               : faker.helpers.randomize([quote, null]);
           event.isQuoteByNotablePerson = event.quote
@@ -106,7 +106,7 @@ if (isProd === false) {
 
           const entityName = faker.company.companyName();
           event.organizationName =
-            event.type !== 'quote'
+            event.type !== 'QUOTE'
               ? entityName
               : faker.helpers.randomize([null, entityName]);
 

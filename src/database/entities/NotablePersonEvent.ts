@@ -119,7 +119,7 @@ export class NotablePersonEvent extends BaseEntity {
       }
     }
 
-    if (this.type === 'quote') {
+    if (this.type === 'QUOTE') {
       if (!this.quote) {
         if (typeof this.isQuoteByNotablePerson === 'boolean') {
           throw new TypeError(
