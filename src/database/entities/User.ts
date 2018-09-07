@@ -47,6 +47,7 @@ export class User extends BaseEntity {
   @Column({
     nullable: true,
     default: null,
+    type: 'varchar',
   })
   role: UserRole | null;
 
