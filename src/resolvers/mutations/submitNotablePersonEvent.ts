@@ -18,7 +18,7 @@ export const resolvers: Partial<ResolverMap> = {
       },
       { notablePersonBySlugLoader, connection, viewer },
     ) {
-      if (type !== 'quote') {
+      if (type !== 'QUOTE') {
         return {
           result: makeErrorResult(
             'NOT_IMPLEMENTED',

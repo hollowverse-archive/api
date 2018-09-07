@@ -107,7 +107,7 @@ describe('submit a notable person event', () => {
       {
         input: {
           slug: 'Tom_Hanks',
-          type: 'quote',
+          type: 'QUOTE',
           quote: 'Lorem ipsum',
           sourceUrl: 'https://example.com',
           isQuoteByNotablePerson: true,
@@ -132,7 +132,7 @@ describe('submit a notable person event', () => {
       await context.client.request(submitNotablePersonEventMutation, {
         input: {
           slug: 'Tom_Hanks',
-          type: 'quote',
+          type: 'QUOTE',
           quote: 'Lorem ipsum',
           sourceUrl: 'https://example.com',
           isQuoteByNotablePerson: true,
@@ -149,7 +149,7 @@ describe('submit a notable person event', () => {
     const result = await context.client.request(getNotablePersonEventsQuery, {
       slug: 'Tom_Hanks',
       eventsQuery: {
-        type: 'quote',
+        type: 'QUOTE',
       },
     });
 
