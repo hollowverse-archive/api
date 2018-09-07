@@ -42,7 +42,9 @@ export class User extends BaseEntity {
   })
   comments: NotablePersonEventComment[];
 
-  @ValidateIf((_, v) => v !== null)
+  @ValidateIf((_, v) => {
+    return v !== undefined && v !== null;
+  })
   @IsIn(UserRoleTuple)
   @Column({
     nullable: true,

@@ -19,6 +19,7 @@ import {
   NotablePersonEventReviewStatus,
   NotablePersonEventTypeTuple,
   NotablePersonEventReviewStatusTuple,
+  NotablePersonEventReviewStatusEnum,
 } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
@@ -49,9 +50,13 @@ export class NotablePersonEvent extends BaseEntity {
   })
   type: NotablePersonEventType;
 
+  @ValidateIf((_, v) => {
+    return v !== undefined;
+  })
   @IsIn(NotablePersonEventReviewStatusTuple)
   @Column({
     nullable: false,
+    default: NotablePersonEventReviewStatusEnum.NOT_REVIEWED,
     type: 'varchar',
   })
   reviewStatus: NotablePersonEventReviewStatus;

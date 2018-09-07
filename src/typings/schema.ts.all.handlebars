@@ -57,6 +57,10 @@ export type {{ name }} = {{#each values }}"{{ value }}"{{#unless @last}} | {{/un
 
 export const {{ name }}Tuple: {{name}}[] = [{{#each values }}"{{ value }}"{{#unless @last}}, {{/unless}}{{/each}}];
 
+export enum {{name}}Enum {
+  {{#each values }}{{value}} = "{{ value }}",
+  {{/each}}
+}
 {{/each}}
 
 // endregion Enums
