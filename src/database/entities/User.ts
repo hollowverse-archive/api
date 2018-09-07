@@ -1,17 +1,11 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { IsEmail, IsNotEmpty, ValidateIf } from 'class-validator';
+import { IsEmail, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
 import { normalizeEmail, isEmail } from 'validator';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
-import { UserRole } from '../../typings/schema';
-
-const userRoles: Record<UserRole, string> = {
-  EDITOR: '',
-  CONTRIBUTOR: '',
-  MODERATOR: '',
-};
+import { UserRole, UserRoleTuple } from '../../typings/schema';
 
 /**
  * A Hollowverse user
@@ -48,11 +42,11 @@ export class User extends BaseEntity {
   })
   comments: NotablePersonEventComment[];
 
+  @ValidateIf((_, v) => v !== null)
+  @IsIn(UserRoleTuple)
   @Column({
     nullable: true,
-    type: 'enum',
     default: null,
-    enum: Object.keys(userRoles),
   })
   role: UserRole | null;
 

@@ -5,22 +5,14 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
+import { IsNotEmpty, ValidateIf, IsUrl, IsIn } from 'class-validator';
 import { BaseEntity } from './BaseEntity';
 import { EditorialSummary } from './EditorialSummary';
-import { EditorialSummaryNodeType } from '../../typings/schema';
+import {
+  EditorialSummaryNodeType,
+  EditorialSummaryNodeTypeTuple,
+} from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
-
-const nodeTypes: Record<EditorialSummaryNodeType, string> = {
-  quote: '',
-  heading: '',
-  paragraph: '',
-  text: '',
-  link: '',
-  emphasis: '',
-};
-
-export type NodeType = keyof typeof nodeTypes;
 
 /**
  * Editorial content from the old Hollowverse website
@@ -39,13 +31,12 @@ export class EditorialSummaryNode extends BaseEntity {
   })
   order: number;
 
+  @IsIn(EditorialSummaryNodeTypeTuple)
   @Column({
     nullable: false,
-    type: 'enum',
-    default: null,
-    enum: Object.keys(nodeTypes),
+    type: 'varchar',
   })
-  type: NodeType;
+  type: EditorialSummaryNodeType;
 
   @Column('varchar', {
     nullable: true,

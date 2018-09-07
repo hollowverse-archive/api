@@ -7,7 +7,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-import { IsUrl, IsNotEmpty, ValidateIf } from 'class-validator';
+import { IsUrl, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
 import { BaseEntity } from './BaseEntity';
 import { NotablePerson } from './NotablePerson';
@@ -17,22 +17,11 @@ import { EventLabel } from './EventLabel';
 import {
   NotablePersonEventType,
   NotablePersonEventReviewStatus,
+  NotablePersonEventTypeTuple,
+  NotablePersonEventReviewStatusTuple,
 } from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
 import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
-
-const eventTypes: Record<NotablePersonEventType, string> = {
-  quote: '',
-  donation: '',
-  appearance: '',
-};
-
-const reviewStatuses: Record<NotablePersonEventReviewStatus, string> = {
-  APPROVED: '',
-  DISAPPROVED: '',
-};
-
-export type EventType = keyof typeof eventTypes;
 
 /**
  * An event about a notable person
@@ -53,19 +42,17 @@ export class NotablePersonEvent extends BaseEntity {
   })
   isQuoteByNotablePerson: boolean | null;
 
+  @IsIn(NotablePersonEventTypeTuple)
   @Column({
     nullable: false,
-    type: 'enum',
-    default: null,
-    enum: Object.keys(eventTypes),
+    type: 'varchar',
   })
-  type: EventType;
+  type: NotablePersonEventType;
 
+  @IsIn(NotablePersonEventReviewStatusTuple)
   @Column({
     nullable: false,
-    type: 'enum',
-    default: null,
-    enum: Object.keys(reviewStatuses),
+    type: 'varchar',
   })
   reviewStatus: NotablePersonEventReviewStatus;
 
