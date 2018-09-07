@@ -5,6 +5,7 @@
     "fields-are-camel-cased",
     "input-object-values-are-camel-cased",
     "input-object-values-have-descriptions",
+    "enum-values-all-caps",
     "types-are-capitalized",
     "relay-connection-types-spec"
   ]
