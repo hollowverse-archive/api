@@ -106,7 +106,7 @@ type NotablePersonEvent {
 
   # Whether this event was reviewed by a moderator on Hollowverse and approved
   # or disapproved. `null` if not reviewed.
-  reviewStatus: NotablePersonEventReviewStatus
+  reviewStatus: NotablePersonEventReviewStatus!
 
   submittedBy: User!
 
