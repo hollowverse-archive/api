@@ -90,6 +90,7 @@ export class NotablePersonEvent extends BaseEntity {
 
   @ManyToOne(_ => NotablePerson, notablePerson => notablePerson.events, {
     nullable: false,
+    eager: true,
   })
   notablePerson: NotablePerson;
 

@@ -60,8 +60,8 @@ export const resolvers: Partial<ResolverMap> = {
             order: {
               postedAt: 'DESC',
             },
-            relations: ['labels'],
-          });
+            relations: ['labels', 'submittedBy', 'notablePerson'],
+          }) as Promise<any[]>;
         }
       }
 

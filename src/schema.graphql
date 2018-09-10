@@ -109,6 +109,8 @@ type NotablePersonEvent {
   reviewStatus: NotablePersonEventReviewStatus
 
   submittedBy: User!
+
+  notablePerson: NotablePerson!
 }
 
 type EditorialSummary {
