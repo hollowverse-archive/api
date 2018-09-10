@@ -60,7 +60,7 @@ export const resolvers: Partial<ResolverMap> = {
             order: {
               postedAt: 'DESC',
             },
-            relations: ['labels', 'submittedBy', 'notablePerson'],
+            relations: ['labels'],
           }) as Promise<any[]>;
         }
       }
@@ -169,6 +169,32 @@ export const resolvers: Partial<ResolverMap> = {
         },
         relations: ['owner'],
       });
+    },
+
+    async submittedBy(event, _, { connection }) {
+      const repo = connection.getRepository(NotablePersonEvent);
+
+      const { submittedBy } = (await repo.findOne({
+        where: {
+          id: event.id,
+        },
+        relations: ['submittedBy'],
+      }))!;
+
+      return submittedBy;
+    },
+
+    async notablePerson(event, _, { connection }) {
+      const repo = connection.getRepository(NotablePersonEvent);
+
+      const { notablePerson } = (await repo.findOne({
+        where: {
+          id: event.id,
+        },
+        relations: ['notablePerson'],
+      }))!;
+
+      return notablePerson as any;
     },
   },
 };
