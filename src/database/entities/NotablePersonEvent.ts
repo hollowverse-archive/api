@@ -96,7 +96,7 @@ export class NotablePersonEvent extends BaseEntity {
   @ManyToOne(_ => User, user => user.events, {
     nullable: false,
   })
-  owner: User;
+  submittedBy: User;
 
   /**
    * @deprecated

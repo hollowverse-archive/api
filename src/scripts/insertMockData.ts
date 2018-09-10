@@ -115,7 +115,7 @@ if (isProd === false) {
             : null;
 
           event.notablePerson = faker.helpers.randomize(notablePeople);
-          event.owner = faker.helpers.randomize(users);
+          event.submittedBy = faker.helpers.randomize(users);
           event.labels = take(
             faker.helpers.shuffle(eventLabels),
             Math.min(4, faker.random.number(eventLabels.length)),

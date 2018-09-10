@@ -36,7 +36,7 @@ export class User extends BaseEntity {
   @Column({ type: 'text', nullable: true })
   photoId: string | null;
 
-  @OneToMany(_ => NotablePersonEvent, event => event.owner, {
+  @OneToMany(_ => NotablePersonEvent, event => event.submittedBy, {
     cascadeInsert: true,
     cascadeUpdate: true,
   })
