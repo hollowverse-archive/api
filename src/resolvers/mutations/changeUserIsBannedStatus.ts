@@ -1,8 +1,8 @@
 import { User } from '../../database/entities/User';
-import { ResolverMap } from '../../typings/resolverMap';
+import { ApiError } from '../../helpers/apiError';
 import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
 import { canUserWithRoleXMutateUserWithRoleY } from '../../helpers/permissions';
-import { ApiError } from '../../helpers/apiError';
+import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {

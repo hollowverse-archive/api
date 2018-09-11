@@ -1,7 +1,7 @@
 import { FindManyOptions } from 'typeorm';
-import { SchemaContext } from '../typings/schemaContext';
 import { entities } from '../database/entities';
 import { FnResolver } from '../typings/resolverMap';
+import { SchemaContext } from '../typings/schemaContext';
 
 type Connection<Node> = {
   edges: [

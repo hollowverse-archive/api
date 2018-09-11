@@ -1,7 +1,7 @@
 import {
+  ValidationArguments,
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments,
 } from 'class-validator';
 
 /* eslint-disable class-methods-use-this */

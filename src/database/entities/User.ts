@@ -1,25 +1,26 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  Index,
-} from 'typeorm';
-import { IsEmail, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
-import { normalizeEmail, isEmail } from 'validator';
+import { IsEmail, IsIn, IsNotEmpty, ValidateIf } from 'class-validator';
+import {
+  Column,
+  Entity,
+  Index,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { isEmail, normalizeEmail } from 'validator';
+import { UserRole, UserRoleTuple } from '../../typings/schema';
+import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
-import { UserRole, UserRoleTuple } from '../../typings/schema';
-import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 
 /**
  * A Hollowverse user
  */
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ValidateIf((_, v) => typeof v === 'string')
   @IsEmail({

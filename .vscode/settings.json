@@ -34,5 +34,8 @@
   "eslint.enable": true,
   "[handlebars]": {
     "editor.formatOnSave": false
+  },
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": true
   }
 }

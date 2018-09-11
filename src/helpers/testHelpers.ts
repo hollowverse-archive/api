@@ -1,18 +1,18 @@
 // tslint:disable:no-implicit-dependencies
 
-import express from 'express';
-import getPort from 'get-port';
-import { createApiRouter, CreateApiOptions } from '../createApiServer';
 import { GraphQLClient } from '@forabi/graphql-request';
-import { createConnection, Connection } from 'typeorm';
-import { entities } from '../database/entities';
-import faker from 'faker';
-import { Server } from 'http';
 import { Options } from '@forabi/graphql-request/dist/src/types';
-import { AuthProvider } from '../authProvider/types';
-import { User } from '../database/entities/User';
 import bluebird from 'bluebird';
+import express from 'express';
+import faker from 'faker';
+import getPort from 'get-port';
+import { Server } from 'http';
 import mysql from 'promise-mysql';
+import { Connection, createConnection } from 'typeorm';
+import { AuthProvider } from '../authProvider/types';
+import { CreateApiOptions, createApiRouter } from '../createApiServer';
+import { entities } from '../database/entities';
+import { User } from '../database/entities/User';
 
 const TEST_DB_HOST = process.env.TEST_DB_HOST || 'localhost';
 const TEST_DB_USERNAME = 'root';

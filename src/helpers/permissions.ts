@@ -1,4 +1,4 @@
-import { UserRole, RootMutation } from '../typings/schema';
+import { RootMutation, UserRole } from '../typings/schema';
 
 type CanUserWithRoleXMutateUserWithRoleYOptions = {
   roleX: UserRole | null;

@@ -1,5 +1,5 @@
-import { Result } from '../../typings/schema';
 import { InterfaceResolverMap } from '../../typings/resolverMap';
+import { Result } from '../../typings/schema';
 
 export const resolvers: Pick<InterfaceResolverMap, 'Result'> = {
   Result: {

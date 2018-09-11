@@ -1,36 +1,37 @@
+import { Trim } from '@hollowverse/class-sanitizer';
+import { IsIn, IsNotEmpty, IsUrl, ValidateIf } from 'class-validator';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
+  Index,
+  JoinTable,
+  ManyToMany,
   ManyToOne,
   OneToMany,
-  ManyToMany,
-  JoinTable,
-  Index,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsUrl, IsNotEmpty, ValidateIf, IsIn } from 'class-validator';
-import { Trim } from '@hollowverse/class-sanitizer';
-import { BaseEntity } from './BaseEntity';
-import { NotablePerson } from './NotablePerson';
-import { User } from './User';
-import { NotablePersonEventComment } from './NotablePersonEventComment';
-import { EventLabel } from './EventLabel';
-import {
-  NotablePersonEventType,
-  NotablePersonEventReviewStatus,
-  NotablePersonEventTypeTuple,
-  NotablePersonEventReviewStatusTuple,
-  NotablePersonEventReviewStatusEnum,
-} from '../../typings/schema';
 import { urlValidationOptions } from '../../helpers/validation';
+import {
+  NotablePersonEventReviewStatus,
+  NotablePersonEventReviewStatusEnum,
+  NotablePersonEventReviewStatusTuple,
+  NotablePersonEventType,
+  NotablePersonEventTypeTuple,
+} from '../../typings/schema';
 import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
+import { BaseEntity } from './BaseEntity';
+import { EventLabel } from './EventLabel';
+import { NotablePerson } from './NotablePerson';
+import { NotablePersonEventComment } from './NotablePersonEventComment';
+import { User } from './User';
 
 /**
  * An event about a notable person
  */
 @Entity()
 export class NotablePersonEvent extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()

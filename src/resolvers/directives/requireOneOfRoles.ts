@@ -1,6 +1,6 @@
-import { DirectiveResolverMap } from '../../typings/resolverMap';
 import { oneLine } from 'common-tags';
 import { ApiError } from '../../helpers/apiError';
+import { DirectiveResolverMap } from '../../typings/resolverMap';
 import { resolvers as requireAuthResolvers } from './requireAuth';
 
 const { requireAuth } = requireAuthResolvers;

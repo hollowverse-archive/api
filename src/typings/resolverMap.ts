@@ -1,7 +1,7 @@
-import { TypesMap, DirectiveMap, InterfaceMap } from './schema';
-import { SchemaContext } from './schemaContext';
-import { GraphQLResolveInfo } from 'graphql/type';
 import { NextResolverFn } from 'graphql-tools/dist/Interfaces';
+import { GraphQLResolveInfo } from 'graphql/type';
+import { DirectiveMap, InterfaceMap, TypesMap } from './schema';
+import { SchemaContext } from './schemaContext';
 
 type Result<T> = Promise<T> | T;
 
@@ -27,6 +27,7 @@ export type DeepPartialResult<T> = T extends Array<infer R>
           ? Result<T[P]>
           : Result<DeepPartialResult<T[P]>>
       };
+/* eslint-enable no-use-before-define */
 
 export type GeneratedType<T> = {
   returnType: T;

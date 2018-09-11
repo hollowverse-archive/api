@@ -1,12 +1,12 @@
-import 'reflect-metadata';
-import waitForMySql from 'wait-for-mysql';
-import bluebird from 'bluebird';
-import { createConnection } from 'typeorm';
 import { isProd } from '@hollowverse/utils/helpers/env';
 import { readAwsSecretStringForStage } from '@hollowverse/utils/helpers/readAwsSecretStringForStage';
-import { entities } from './entities';
+import bluebird from 'bluebird';
 import { stripIndent } from 'common-tags';
 import loggy from 'loggy';
+import 'reflect-metadata';
+import { createConnection } from 'typeorm';
+import waitForMySql from 'wait-for-mysql';
+import { entities } from './entities';
 
 type AwsSecretsManagerDbConfig = {
   username: string;

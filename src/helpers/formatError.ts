@@ -1,5 +1,5 @@
-import { GraphQLError } from 'graphql/error';
 import { ValidationError } from 'class-validator';
+import { GraphQLError } from 'graphql/error';
 import { QueryFailedError } from 'typeorm';
 import { ApiError } from './apiError';
 
@@ -14,10 +14,13 @@ function pickSafeProps(error: Error | ValidationError | QueryFailedError) {
     const { property, constraints } = error;
 
     return { property, constraints };
-  } else if (error instanceof ApiError) {
+  }
+
+  if (error instanceof ApiError) {
     // `ApiError` knows how to remove unsafe props. Just return it as-is.
     return error;
   }
+
   const { name } = error;
 
   return { name };
@@ -32,7 +35,9 @@ export function formatError(error: GraphQLError) {
       result: originalError.map(pickSafeProps),
       ...rest,
     };
-  } else if (originalError) {
+  }
+
+  if (originalError) {
     return {
       ...pickSafeProps(originalError),
       ...rest,

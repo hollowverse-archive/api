@@ -1,25 +1,26 @@
+import { IsIn, IsNotEmpty, IsUrl, ValidateIf } from 'class-validator';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   ManyToOne,
   OneToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsNotEmpty, ValidateIf, IsUrl, IsIn } from 'class-validator';
-import { BaseEntity } from './BaseEntity';
-import { EditorialSummary } from './EditorialSummary';
+import { urlValidationOptions } from '../../helpers/validation';
 import {
   EditorialSummaryNodeType,
   EditorialSummaryNodeTypeTuple,
 } from '../../typings/schema';
-import { urlValidationOptions } from '../../helpers/validation';
+import { BaseEntity } from './BaseEntity';
+import { EditorialSummary } from './EditorialSummary';
 
 /**
  * Editorial content from the old Hollowverse website
  */
 @Entity()
 export class EditorialSummaryNode extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   /**
    * The order of the editorial summary node in the

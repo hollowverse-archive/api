@@ -1,8 +1,7 @@
 import { makeExecutableSchema } from 'graphql-tools';
-import { readFile } from './helpers/readFile';
 import path from 'path';
-
-import { resolvers, directiveResolvers } from './resolvers/resolvers';
+import { readFile } from './helpers/readFile';
+import { directiveResolvers, resolvers } from './resolvers/resolvers';
 
 export const schema = readFile(
   path.join(__dirname, 'schema.graphql'),
