@@ -3,6 +3,7 @@ import { NotablePersonEventComment } from '../../database/entities/NotablePerson
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
 import { ResolverMap } from '../../typings/resolverMap';
 import { URL } from 'url';
+import { ApiError } from '../../helpers/apiError';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {
@@ -174,27 +175,35 @@ export const resolvers: Partial<ResolverMap> = {
     async submittedBy(event, _, { connection }) {
       const repo = connection.getRepository(NotablePersonEvent);
 
-      const { submittedBy } = (await repo.findOne({
+      const result = await repo.findOne({
         where: {
           id: event.id,
         },
         relations: ['submittedBy'],
-      }))!;
+      });
 
-      return submittedBy;
+      if (!result) {
+        throw new ApiError('INTERNAL', 'Expected event to be defined');
+      }
+
+      return result.submittedBy;
     },
 
     async notablePerson(event, _, { connection }) {
       const repo = connection.getRepository(NotablePersonEvent);
 
-      const { notablePerson } = (await repo.findOne({
+      const result = await repo.findOne({
         where: {
           id: event.id,
         },
         relations: ['notablePerson'],
-      }))!;
+      });
 
-      return notablePerson as any;
+      if (!result) {
+        throw new ApiError('INTERNAL', 'Expected event to be defined');
+      }
+
+      return result.notablePerson as any;
     },
   },
 };
