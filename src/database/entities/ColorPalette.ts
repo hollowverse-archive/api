@@ -1,13 +1,14 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsHexColor, ValidateIf, Validate } from 'class-validator';
 import { ToLowerCase } from '@hollowverse/class-sanitizer';
-import { BaseEntity } from './BaseEntity';
+import { IsHexColor, Validate, ValidateIf } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { StartsWith } from '../customValidators/startsWith';
+import { BaseEntity } from './BaseEntity';
 
 /** A color palette of a photo */
 @Entity()
 export class ColorPalette extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'varchar', nullable: true, default: null })
   @ValidateIf((_, v) => typeof v === 'string')

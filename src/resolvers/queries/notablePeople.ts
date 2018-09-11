@@ -1,7 +1,7 @@
 import { NotablePerson } from '../../database/entities/NotablePerson';
-import { NotablePerson as NodeType } from '../../typings/schema';
-import { ResolverMap } from '../../typings/resolverMap';
 import { createConnectionResolverFromEntity } from '../../helpers/createConnectionResolverFromEntity';
+import { ResolverMap } from '../../typings/resolverMap';
+import { NotablePerson as NodeType } from '../../typings/schema';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {

@@ -1,6 +1,6 @@
-import { BeforeInsert, BeforeUpdate } from 'typeorm';
-import { validateOrReject } from 'class-validator';
 import { sanitizeAsync } from '@hollowverse/class-sanitizer';
+import { validateOrReject } from 'class-validator';
+import { BeforeInsert, BeforeUpdate } from 'typeorm';
 
 /**
  * Base entity for the database layer.

@@ -1,7 +1,7 @@
 #! /usr/bin/env node
-import { findBreakingChanges, buildSchema } from 'graphql';
-import { readFile } from '../helpers/readFile';
 import got from 'got';
+import { buildSchema, findBreakingChanges } from 'graphql';
+import { readFile } from '../helpers/readFile';
 
 const MASTER_SCHEMA_URL =
   'https://raw.githubusercontent.com/hollowverse/api/master/src/schema.graphql';

@@ -1,6 +1,6 @@
-import { TestContext, createTestContext } from '../helpers/testHelpers';
 import gql from 'graphql-tag';
 import { User } from '../database/entities/User';
+import { createTestContext, TestContext } from '../helpers/testHelpers';
 
 describe('create and query a notable person by slug', () => {
   let context: TestContext;

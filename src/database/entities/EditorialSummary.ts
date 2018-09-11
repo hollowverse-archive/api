@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { IsNotEmpty, ValidateIf } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
+import { IsNotEmpty, ValidateIf } from 'class-validator';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { EditorialSummaryNode } from './EditorialSummaryNode';
 
@@ -9,7 +9,8 @@ import { EditorialSummaryNode } from './EditorialSummaryNode';
  */
 @Entity()
 export class EditorialSummary extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'date', nullable: true })
   lastUpdatedOn: Date | null;

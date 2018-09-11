@@ -1,29 +1,30 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  JoinColumn,
-  OneToMany,
-  OneToOne,
-  ManyToMany,
-  JoinTable,
-  AfterLoad,
-} from 'typeorm';
 import { Trim } from '@hollowverse/class-sanitizer';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
+import {
+  AfterLoad,
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { URL } from 'url';
 import { BaseEntity } from './BaseEntity';
+import { EditorialSummary } from './EditorialSummary';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonLabel } from './NotablePersonLabel';
-import { EditorialSummary } from './EditorialSummary';
 import { Photo } from './Photo';
-import { URL } from 'url';
 
 /**
  * A public figure or an influential person
  */
 @Entity()
 export class NotablePerson extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Trim()
   @IsNotEmpty()

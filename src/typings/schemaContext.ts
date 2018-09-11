@@ -1,8 +1,8 @@
-import { User } from '../database/entities/User';
-import { NotablePerson } from '../database/entities/NotablePerson';
 import DataLoader from 'dataloader';
 import { Connection } from 'typeorm';
 import { AuthProvider } from '../authProvider/types';
+import { NotablePerson } from '../database/entities/NotablePerson';
+import { User } from '../database/entities/User';
 
 export type SchemaContext = {
   connection: Connection;

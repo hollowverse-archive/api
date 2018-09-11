@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
-import { IsNotEmpty } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
+import { IsNotEmpty } from 'class-validator';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { User } from './User';
@@ -10,7 +10,8 @@ import { User } from './User';
  */
 @Entity()
 export class NotablePersonEventComment extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Column({ type: 'text', nullable: false })
   @Trim()

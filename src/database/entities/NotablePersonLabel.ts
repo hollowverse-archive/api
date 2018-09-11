@@ -1,6 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-import { IsNotEmpty } from 'class-validator';
 import { Trim } from '@hollowverse/class-sanitizer';
+import { IsNotEmpty } from 'class-validator';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './BaseEntity';
 
 /**
@@ -9,7 +9,8 @@ import { BaseEntity } from './BaseEntity';
  */
 @Entity()
 export class NotablePersonLabel extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Trim()
   @IsNotEmpty()

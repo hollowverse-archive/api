@@ -1,8 +1,8 @@
+import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
-import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
-import { ResolverMap } from '../../typings/resolverMap';
 import { ApiError } from '../../helpers/apiError';
+import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   RootQuery: {

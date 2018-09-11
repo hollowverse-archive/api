@@ -1,6 +1,5 @@
 import { User } from '../../database/entities/User';
 import { ApiError } from '../../helpers/apiError';
-
 import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {

@@ -1,10 +1,10 @@
-import { AuthProvider, PhotoSize } from './types';
 import got from 'got';
-import { ApiError } from '../helpers/apiError';
-import { User } from '../database/entities/User';
-import { Connection } from 'typeorm';
-import pMemoize from 'p-memoize';
 import moment from 'moment';
+import pMemoize from 'p-memoize';
+import { Connection } from 'typeorm';
+import { User } from '../database/entities/User';
+import { ApiError } from '../helpers/apiError';
+import { AuthProvider, PhotoSize } from './types';
 
 export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
   getProfileDetailsByToken = pMemoize(
@@ -26,7 +26,9 @@ export class FacebookAuthProvider implements AuthProvider<FacebookAppConfig> {
   );
 
   private appAccessToken: string;
+
   private appId: string;
+
   private connection: Connection;
 
   /**

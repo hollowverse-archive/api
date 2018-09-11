@@ -1,22 +1,23 @@
+import { IsNotEmpty, IsUrl, ValidateIf } from 'class-validator';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
+  Entity,
   Index,
-  OneToOne,
   JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
-import { IsNotEmpty, ValidateIf, IsUrl } from 'class-validator';
-import { BaseEntity } from './BaseEntity';
-import { ColorPalette } from './ColorPalette';
 import { urlValidationOptions } from '../../helpers/validation';
 import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
+import { BaseEntity } from './BaseEntity';
+import { ColorPalette } from './ColorPalette';
 
 /** A photo with metadata, including license and copyright information */
 @Entity()
 @Index(['sourceUrl', 's3Path'], { unique: true })
 export class Photo extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid') id: string;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()

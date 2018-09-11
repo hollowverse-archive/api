@@ -1,5 +1,5 @@
-import { ApiErrorType } from '../typings/schema';
 import { oneLine } from 'common-tags';
+import { ApiErrorType } from '../typings/schema';
 
 const messagesByErrorType: Record<ApiErrorType, string> = {
   OPERATION_NOT_ALLOWED: 'This operation is not allowed',

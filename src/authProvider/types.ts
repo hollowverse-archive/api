@@ -1,5 +1,5 @@
-import { User } from '../database/entities/User';
 import { Connection } from 'typeorm';
+import { User } from '../database/entities/User';
 
 export type PhotoSize = 'small' | 'normal' | 'large';
 

@@ -1,6 +1,5 @@
-import DataLoader from 'dataloader';
 import bluebird from 'bluebird';
-
+import DataLoader from 'dataloader';
 import { SchemaContext } from '../typings/schemaContext';
 
 export const createUserPhotoUrlLoader = ({

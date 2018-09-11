@@ -1,15 +1,14 @@
-import express from 'express';
-import bodyParser from 'body-parser';
-import moment from 'moment';
-
 import { graphqlExpress } from 'apollo-server-express';
-import { schema } from './schema';
-import { formatError } from './helpers/formatError';
-import { SchemaContext } from './typings/schemaContext';
-import { createNotablePersonBySlugLoader } from './dataLoaders/notablePerson';
-import { createUserPhotoUrlLoader } from './dataLoaders/user';
-import { createPhotoUrlLoader } from './dataLoaders/photoUrl';
+import bodyParser from 'body-parser';
+import express from 'express';
+import moment from 'moment';
 import { Connection } from 'typeorm';
+import { createNotablePersonBySlugLoader } from './dataLoaders/notablePerson';
+import { createPhotoUrlLoader } from './dataLoaders/photoUrl';
+import { createUserPhotoUrlLoader } from './dataLoaders/user';
+import { formatError } from './helpers/formatError';
+import { schema } from './schema';
+import { SchemaContext } from './typings/schemaContext';
 
 const PRIVATE_CACHE_CONTROL = 'private, no-store';
 const MAX_RESPONSE_CACHE_AGE = moment.duration(6, 'h').asSeconds();

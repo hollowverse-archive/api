@@ -1,14 +1,13 @@
-import express from 'express';
+import { isProd } from '@hollowverse/utils/helpers/env';
+import { readAwsSecretStringForStage } from '@hollowverse/utils/helpers/readAwsSecretStringForStage';
 import cors from 'cors';
+import express from 'express';
+import playgroundExpress from 'graphql-playground-middleware-express';
 import helmet from 'helmet';
 import moment from 'moment';
-import playgroundExpress from 'graphql-playground-middleware-express';
-import { readAwsSecretStringForStage } from '@hollowverse/utils/helpers/readAwsSecretStringForStage';
-
-import { connectionPromise } from './database/connection';
-import { isProd } from '@hollowverse/utils/helpers/env';
-import { createApiRouter } from './createApiServer';
 import { FacebookAuthProvider } from './authProvider/facebookAuthProvider';
+import { createApiRouter } from './createApiServer';
+import { connectionPromise } from './database/connection';
 
 export const createApiServer = async () => {
   const api = express();

@@ -1,8 +1,7 @@
-import DataLoader from 'dataloader';
 import bluebird from 'bluebird';
-
-import { Photo } from '../database/entities/Photo';
+import DataLoader from 'dataloader';
 import { URL } from 'url';
+import { Photo } from '../database/entities/Photo';
 import { SchemaContext } from '../typings/schemaContext';
 
 export const createPhotoUrlLoader = ({

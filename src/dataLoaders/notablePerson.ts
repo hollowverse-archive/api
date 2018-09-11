@@ -1,6 +1,5 @@
-import DataLoader from 'dataloader';
 import bluebird from 'bluebird';
-
+import DataLoader from 'dataloader';
 import { NotablePerson } from '../database/entities/NotablePerson';
 import { SchemaContext } from '../typings/schemaContext';
 

@@ -1,7 +1,7 @@
 import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
-import { ResolverMap } from '../../typings/resolverMap';
-import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
 import { ApiError } from '../../helpers/apiError';
+import { makeErrorResult, makeSuccessResult } from '../../helpers/makeResult';
+import { ResolverMap } from '../../typings/resolverMap';
 
 export const resolvers: Partial<ResolverMap> = {
   RootMutation: {

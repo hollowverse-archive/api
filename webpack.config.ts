@@ -1,14 +1,14 @@
 // tslint:disable:no-implicit-dependencies
 /* eslint import/no-extraneous-dependencies: ["error", {"devDependencies": true}] */
-import webpack from 'webpack';
-// @ts-ignore
-import slsw from 'serverless-webpack';
-import path from 'path';
-import nodeExternals from 'webpack-node-externals';
+import { isProd } from '@hollowverse/utils/helpers/env';
 // @ts-ignore
 import CopyWebpackPlugin from 'copy-webpack-plugin';
-import { isProd } from '@hollowverse/utils/helpers/env';
+import path from 'path';
+// @ts-ignore
+import slsw from 'serverless-webpack';
 import UglifyJsPlugin from 'uglifyjs-webpack-plugin';
+import webpack from 'webpack';
+import nodeExternals from 'webpack-node-externals';
 
 module.exports = {
   mode: isProd ? 'production' : 'development',

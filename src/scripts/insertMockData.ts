@@ -1,15 +1,15 @@
 // tslint:disable no-console max-func-body-length no-implicit-dependencies
 /* eslint-disable no-console */
+import { isProd } from '@hollowverse/utils/helpers/env';
+import faker from 'faker';
+import { take, times, uniqBy } from 'lodash';
 import { connectionPromise } from '../database/connection';
+import { EventLabel } from '../database/entities/EventLabel';
 import { NotablePerson } from '../database/entities/NotablePerson';
-import { User } from '../database/entities/User';
 import { NotablePersonEvent } from '../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../database/entities/NotablePersonEventComment';
 import { NotablePersonLabel } from '../database/entities/NotablePersonLabel';
-import { EventLabel } from '../database/entities/EventLabel';
-import faker from 'faker';
-import { times, take, uniqBy } from 'lodash';
-import { isProd } from '@hollowverse/utils/helpers/env';
+import { User } from '../database/entities/User';
 
 if (isProd === false) {
   faker.seed(Number(process.env.SEED) || 1);
