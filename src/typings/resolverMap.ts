@@ -7,6 +7,7 @@ type Result<T> = Promise<T> | T;
 
 type NonPartialable =
   | (() => any)
+  | null
   | undefined
   | void
   | never
@@ -17,12 +18,14 @@ type NonPartialable =
 type DeepPartialArray<T> = Array<Partial<T>>;
 
 /* eslint-disable no-use-before-define */
-export type DeepPartial<T> = T extends Array<infer R>
-  ? DeepPartialArray<R>
+export type DeepPartialResult<T> = T extends Array<infer R>
+  ? Result<DeepPartialArray<R>>
   : T extends NonPartialable
-    ? T
+    ? Result<T>
     : {
-        [P in keyof T]?: T[P] extends NonPartialable ? T[P] : DeepPartial<T[P]>
+        [P in keyof T]?: T[P] extends NonPartialable
+          ? Result<T[P]>
+          : Result<DeepPartialResult<T[P]>>
       };
 
 export type GeneratedType<T> = {
@@ -35,7 +38,7 @@ export type FnResolver<ReturnType, Source, Args, Context> = (
   args: Args,
   context: Context,
   info: GraphQLResolveInfo,
-) => Result<DeepPartial<ReturnType> | undefined | null>;
+) => Result<DeepPartialResult<ReturnType> | undefined | null>;
 
 export type TypeResolver<Type extends GeneratedType<any>, Context> =
   | Partial<
@@ -45,7 +48,7 @@ export type TypeResolver<Type extends GeneratedType<any>, Context> =
           args: Type['argsByField'][K],
           context: Context,
           info: GraphQLResolveInfo,
-        ) => Result<DeepPartial<Type['returnType'][K]>>
+        ) => Result<DeepPartialResult<Type['returnType'][K]>>
       }
     >
   | (FnResolver<Type['returnType'], undefined, undefined, Context>);

@@ -34,7 +34,7 @@ export class NotablePersonEvent extends BaseEntity {
 
   @ValidateIf((_, v) => typeof v === 'string')
   @IsNotEmpty()
-  @Column({ type: 'text', nullable: true })
+  @Column({ type: 'varchar', length: 1000, nullable: true, unique: true })
   quote: string | null;
 
   @Column({
@@ -96,7 +96,7 @@ export class NotablePersonEvent extends BaseEntity {
   @ManyToOne(_ => User, user => user.events, {
     nullable: false,
   })
-  owner: User;
+  submittedBy: User;
 
   /**
    * @deprecated

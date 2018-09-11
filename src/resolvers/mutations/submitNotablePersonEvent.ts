@@ -54,7 +54,7 @@ export const resolvers: Partial<ResolverMap> = {
       event.quote = quote;
       event.isQuoteByNotablePerson = isQuoteByNotablePerson;
       event.notablePerson = notablePerson;
-      event.owner = viewer;
+      event.submittedBy = viewer;
       event.happenedOn = happenedOn || null;
       event.postedAt = new Date();
 
