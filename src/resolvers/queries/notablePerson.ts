@@ -127,12 +127,7 @@ export const resolvers: Partial<ResolverMap> = {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
 
         if (notablePerson && notablePerson.mainPhoto) {
-          const { colorPalette, ...rest } = notablePerson.mainPhoto;
-
-          return {
-            ...rest,
-            colorPalette: await colorPalette,
-          };
+          return notablePerson.mainPhoto;
         }
       }
 
@@ -186,7 +181,7 @@ export const resolvers: Partial<ResolverMap> = {
         throw new ApiError('INTERNAL', 'Expected event to be defined');
       }
 
-      return result.submittedBy;
+      return result.submittedBy as any;
     },
 
     async notablePerson(event, _, { connection }) {
