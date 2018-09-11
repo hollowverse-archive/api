@@ -7,6 +7,7 @@ import {
   OneToOne,
   ManyToMany,
   JoinTable,
+  AfterLoad,
 } from 'typeorm';
 import { Trim } from '@hollowverse/class-sanitizer';
 import { IsNotEmpty, ValidateIf } from 'class-validator';
@@ -15,6 +16,7 @@ import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonLabel } from './NotablePersonLabel';
 import { EditorialSummary } from './EditorialSummary';
 import { Photo } from './Photo';
+import { URL } from 'url';
 
 /**
  * A public figure or an influential person
@@ -97,4 +99,46 @@ export class NotablePerson extends BaseEntity {
 
   @Column({ type: 'date', nullable: true, default: null })
   addedOn: Date | null;
+
+  /** Photo URL computed from `photoId`, not an actual column. */
+
+  photoUrl: string | null = null;
+
+  /**
+   * This is used to load Facebook comments on the client.
+   *
+   * This should be treated as an opaque value because the protocol and path parts
+   * of this URL might be different depending on whether the notable person
+   * was imported from the old Hollowverse website or not. The trailing slash may
+   * also be included or removed.
+   * @example: http://hollowverse.com/tom-hanks/ or https://hollowverse.com/Bill_Gates
+   */
+
+  commentsUrl: string;
+
+  @AfterLoad()
+  setCommentsUrl() {
+    if (this.oldSlug !== null) {
+      this.commentsUrl = new URL(
+        `${this.oldSlug}/`,
+        // tslint:disable-next-line:no-http-string
+        'http://hollowverse.com',
+      ).toString();
+    }
+
+    this.commentsUrl = new URL(
+      `${this.slug}`,
+      'https://hollowverse.com',
+    ).toString();
+  }
+
+  @AfterLoad()
+  setPhotoUrl() {
+    if (this.photoId !== null) {
+      this.photoUrl = new URL(
+        `notable-people/${this.photoId}`,
+        'https://photos.hollowverse.com',
+      ).toString();
+    }
+  }
 }

@@ -2,7 +2,6 @@ import { NotablePersonEvent } from '../../database/entities/NotablePersonEvent';
 import { NotablePersonEventComment } from '../../database/entities/NotablePersonEventComment';
 import { EditorialSummaryNode } from '../../database/entities/EditorialSummaryNode';
 import { ResolverMap } from '../../typings/resolverMap';
-import { URL } from 'url';
 import { ApiError } from '../../helpers/apiError';
 
 export const resolvers: Partial<ResolverMap> = {
@@ -11,14 +10,9 @@ export const resolvers: Partial<ResolverMap> = {
       const person = await notablePersonBySlugLoader.load(slug);
 
       if (person) {
-        const { name, summary, oldSlug } = person;
+        const { events, relatedPeople, editorialSummary, ...rest } = person;
 
-        return {
-          name,
-          slug,
-          oldSlug,
-          summary,
-        };
+        return rest;
       }
 
       return null;
@@ -104,55 +98,16 @@ export const resolvers: Partial<ResolverMap> = {
       return null;
     },
 
-    /** @deprecated */
-    async photoUrl({ slug }, _, { notablePersonBySlugLoader }) {
-      if (slug) {
-        const notablePerson = await notablePersonBySlugLoader.load(slug);
-        if (notablePerson) {
-          const { photoId } = notablePerson;
-          if (photoId) {
-            return new URL(
-              `notable-people/${photoId}`,
-              'https://photos.hollowverse.com',
-            ).toString();
-          }
-        }
-      }
-
-      return null;
-    },
-
     async mainPhoto({ slug }, _, { notablePersonBySlugLoader }) {
       if (slug) {
         const notablePerson = await notablePersonBySlugLoader.load(slug);
 
-        if (notablePerson && notablePerson.mainPhoto) {
+        if (notablePerson) {
           return notablePerson.mainPhoto;
         }
       }
 
       return null;
-    },
-
-    async commentsUrl({ slug }, _, { notablePersonBySlugLoader }) {
-      if (slug) {
-        const notablePerson = await notablePersonBySlugLoader.load(slug);
-        if (notablePerson) {
-          const { oldSlug } = notablePerson;
-
-          if (oldSlug !== null) {
-            return new URL(
-              `${oldSlug}/`,
-              // tslint:disable-next-line:no-http-string
-              'http://hollowverse.com',
-            ).toString();
-          }
-
-          return new URL(`${slug}`, 'https://hollowverse.com').toString();
-        }
-      }
-
-      throw new TypeError();
     },
   },
   NotablePersonEvent: {
