@@ -12,6 +12,7 @@ import { BaseEntity } from './BaseEntity';
 import { NotablePersonEvent } from './NotablePersonEvent';
 import { NotablePersonEventComment } from './NotablePersonEventComment';
 import { UserRole, UserRoleTuple } from '../../typings/schema';
+import { transformTinyIntOrNull } from '../valueTransfomers/tinyIntOrNull';
 
 /**
  * A Hollowverse user
@@ -63,7 +64,12 @@ export class User extends BaseEntity {
   signedUpAt: Date;
 
   @Index()
-  @Column({ type: 'tinyint', nullable: false, default: false })
+  @Column({
+    type: 'tinyint',
+    nullable: false,
+    default: false,
+    transformer: transformTinyIntOrNull,
+  })
   isBanned: boolean;
 
   @IsNotEmpty()

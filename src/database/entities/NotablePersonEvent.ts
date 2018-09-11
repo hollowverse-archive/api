@@ -38,8 +38,8 @@ export class NotablePersonEvent extends BaseEntity {
   quote: string | null;
 
   @Column({
-    nullable: true,
     type: 'tinyint',
+    nullable: true,
     transformer: transformTinyIntOrNull,
   })
   isQuoteByNotablePerson: boolean | null;

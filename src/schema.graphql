@@ -1,6 +1,6 @@
 # Indicates that a specific field or object is only accessible to authenticated
 # users.
-directive @requireAuth on FIELD_DEFINITION
+directive @requireAuth(allowBanned: Boolean) on FIELD_DEFINITION
 
 enum UserRole {
   EDITOR
@@ -424,6 +424,11 @@ enum ApiErrorType {
   # Thrown when an operation requires special access permissions
   # but was not issued by a user with an authorized role
   NOT_AUTHORIZED
+
+  # Thrown when an operation requires authentication (and possibly authorization)
+  # but the user performing the request has been banned on Hollowverse by a
+  # moderator
+  BANNED
 
   OPERATION_NOT_ALLOWED
 
