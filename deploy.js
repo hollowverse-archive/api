@@ -30,7 +30,7 @@ async function main() {
         ['master', 'beta'].map(branch => () =>
           executeCommands([
             `mkdir -p clients/${branch}`,
-            `wget -qO- https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}` +
+            `curl -SL --silent https://api.github.com/repos/hollowverse/hollowverse/tarball/${branch}` +
               ` | tar xz -C clients/${branch}`,
           ]),
         ),
