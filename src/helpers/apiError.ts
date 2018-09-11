@@ -12,6 +12,8 @@ const messagesByErrorType: Record<ApiErrorType, string> = {
   ROLE_MISMATCH: oneLine`The requested operation can only be performed by users with specific roles,
     but was made by a user with a different role`,
   INTERNAL: 'An internal API error has occurred',
+  BANNED: oneLine`This operation requires authentication (and possibly a specific user
+    role), but the request was made by a user that has been banned by a moderator`,
 };
 
 type ApiErrorOptions = {

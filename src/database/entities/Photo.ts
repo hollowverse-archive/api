@@ -46,7 +46,11 @@ export class Photo extends BaseEntity {
   })
   isCopyrighted: boolean | null;
 
-  @Column({ type: 'tinyint', nullable: false })
+  @Column({
+    type: 'tinyint',
+    nullable: false,
+    transformer: transformTinyIntOrNull,
+  })
   isAttributionRequired: boolean;
 
   @IsUrl(urlValidationOptions)
