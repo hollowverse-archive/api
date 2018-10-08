@@ -115,5 +115,6 @@ export const connectionPromise = waitAndPrintInstructions().then(async config =>
     migrationsRun: isProd,
     synchronize: false,
     dropSchema: false,
+    connectTimeout: 20000,
   }),
 );
